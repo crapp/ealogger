@@ -1,0 +1,17 @@
+#ignore out of source build directories
+build*/
+
+#ignore emacs buffer temp files
+*#*#
+
+#ignore vim swp files
+*.swp
+
+#ignore cmake user files
+CMakeLists.txt.*
+
+#ignore QT-Creator autosave files
+*.autosave
+
+#ignore gdb history files
+.gdb_history

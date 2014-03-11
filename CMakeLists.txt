@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 2.8)
+project(SimpleLogger)
+
+# Version Number
+
+set(${PROJECT_NAME}_VERSION_MAJOR 0)
+set(${PROJECT_NAME}_VERSION_MINOR 1)
+set(${PROJECT_NAME}_VERSION_PATCH 0)
+
+add_subdirectory(include/simplelogger)
+add_subdirectory(src)
