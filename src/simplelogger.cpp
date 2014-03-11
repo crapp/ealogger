@@ -18,10 +18,12 @@
 #include "simplelogger.h"
 
 SimpleLogger::SimpleLogger(SimpleLogger::logLevels minLvl, bool logToSTDOUT,
-                           bool logToFile, std::string logfile) :
+                           bool logToFile, std::string dateTimeFormat,
+                           std::string logfile) :
     minLevel(minLvl), logToSTDOUT(logToSTDOUT), logToFile(logToFile),
-    logfilePath(logfile)
+    dateTimeFormat(dateTimeFormat), logfilePath(logfile)
 {
+    //TODO: Make registration of signal handler configurable
     SimpleLogger::receivedSIGUSR1 = false;
     if (signal(SIGUSR1, SimpleLogger::logrotate) == SIG_ERR)
         throw std::runtime_error("Could not create signal handler for SIGUSR1");
@@ -56,53 +58,52 @@ void SimpleLogger::writeLog(SimpleLogger::logLevels lvl, std::string msg)
         this->logFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     }
     //lock mutex because std::cout is not threadsafe
+    //TODO: Use ScopeLocks to lock mutexes as it is much saver.
     this->mtx.lock();
     if (lvl >= this->minLevel)
     {
         try 
         {
-            //TODO: Make the TimeString formatter configurable
             switch (lvl)
             {
             case SimpleLogger::logLevels::DEBUG:
                 if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] DEBUG: " << msg << std::endl;
                 if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] DEBUG: " << msg << std::endl;
-
                 break;
             case SimpleLogger::logLevels::INFO:
                 if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] INFO: " << msg << std::endl;
                 if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] INFO: " << msg << std::endl;
                 break;
             case SimpleLogger::logLevels::WARNING:
                 if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] WARNING: " << msg << std::endl;
                 if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] WARNING: " << msg << std::endl;
                 break;
             case SimpleLogger::logLevels::ERROR:
                 if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] ERROR: " << msg << std::endl;
                 if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] ERROR: " << msg << std::endl;
                 break;
             case SimpleLogger::logLevels::FATAL:
                 if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] FATAL: " << msg << std::endl;
                 if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString("%H:%M:%S") <<
+                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
                             "] FATAL: " << msg << std::endl;
                 break;
             default:

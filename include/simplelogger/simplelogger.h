@@ -27,9 +27,24 @@
 
 #include "helpers.h"
 
+/**
+ * @brief The heart of Simple Logger
+ * @author Christian Rapp (crapp)
+ *
+ * The SimpleLogger class provides all the functionality you need for your application
+ * to log messages to stdout and in a logfile. The logger uses a mutex for mutual
+ * exclusion. This way thread safety is guaranteed (as long as you only use one
+ * instance of this class)
+ */
 class SimpleLogger
 {
 public:
+    /**
+     * @brief An enumaration representing the supported loglevels.
+     *
+     * This enum is used to define the severity of a log message and to set the
+     * minimum loglevel.
+     */
     enum logLevels
     {
         DEBUG = 0,
@@ -39,11 +54,61 @@ public:
         FATAL = 4
     };
 
+    /**
+     * @brief SimpleLogger constructor
+     * @param minLvl Minim loglevel, all messages with a lower severity will be discarded
+     * @param logToSTDOUT Boolean to indicate whether or not to write to stdout. Can be changed on runtime
+     * @param logToFile Boolean to indicate whether or not to write to a logfile. Can be changed on runtime
+     * @param dateTimeFormat The Date Time format specifiers.
+     * @param logfile The logfile to use
+     *
+     * Internally std::strftime is used from header ctime to create time string.
+     * So for parameter dateTimeFormat you have to use format specifiers that are
+     * recognised by strftime. See [en.cppreference.com](http://en.cppreference.com/w/cpp/chrono/c/strftime)
+     * for details.
+     *
+     * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
+     *
+     * The logfile parameter must contain the path and the filename of the logfile.
+     * Make sure your application ahs write permissions at the specified location.
+     *
+     * The constructor automatically registers a signal handler for SIGUSR1. This
+     * allows logrotation with logrotate
+     */
     SimpleLogger(logLevels minLvl, bool logToSTDOUT, bool logToFile,
+                 std::string dateTimeFormat,
                  std::string logfile);
     ~SimpleLogger();
 
+    /**
+     * @brief Issue a Logmessage
+     * @param lvl The severity of the message
+     * @param msg The message text
+     */
     void writeLog(SimpleLogger::logLevels lvl, std::string msg);
+
+    //getters and setters for private members we want to expose
+
+    /**
+     * @brief Set the Date Time format specifier
+     * @param s Format specifier string
+     */
+    void setDateTimeFormat(const std::string s);
+    std::string getDateTimeFormat();
+
+    /**
+     * @brief Enable/Disable logging to stdout
+     * @param b
+     */
+    void setLogToSTDOUT(bool b);
+    bool getLogToSTDOUT();
+
+    /**
+     * @brief Enable/Disable logging to logfile
+     * @param b
+     */
+    void setLogToFile(bool b);
+    bool getLogToFile();
 
 private:
     std::mutex mtx;
@@ -54,6 +119,7 @@ private:
     bool logToSTDOUT;
     bool logToFile;
 
+    std::string dateTimeFormat;
     std::string logfilePath;
     std::ofstream logFile;
 

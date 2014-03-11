@@ -1,3 +1,20 @@
+/*  This is a very simple logger for c++
+    Copyright (C) 2013, 2014 Christian Rapp
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef HELPERS_H
 #define HELPERS_H
 
@@ -29,7 +46,6 @@ namespace helpers
         return (std::string(buffer));
     }
 
-
     inline std::string getFormattedTimeString(std::time_t t, const std::string &timeFormat)
     {
         //time struct
@@ -42,35 +58,7 @@ namespace helpers
         std::strftime(buffer, 80, timeFormat.c_str(), timeinfo);
         return (std::string(buffer));
     }
-
-
-
-//    inline uint8_t flipBits( uint8_t n )
-//    {
-////        const uint8_t LOOKUPTABLE_UINT8[16] = {
-////           0x0, 0x8, 0x4, 0xC,
-////           0x2, 0xA, 0x6, 0xE,
-////           0x1, 0x9, 0x5, 0xD,
-////           0x3, 0xB, 0x7, 0xF };
-//       //http://stackoverflow.com/a/2603254
-//       //This should be just as fast and it is easier to understand.
-////       return (helpers::global_constants::LOOKUPTABLE_UINT8.at(n&0x0F) << 4) |
-////               helpers::global_constants::LOOKUPTABLE_UINT8.at(n>>4);
-//    }
 }
 
-namespace global_constants
-{
-    /*
-     * Global identifier and constants that are used application wide
-     */
-    const static int SENSOR_GROVEDUST = 1;
-    const static int SENSOR_SHARPDUST = 2;
-    const static int SENSOR_DSMDUST = 3;
-    const static int SENSOR_MICSNO = 4;
-    const static int SENSOR_DSBTEMP = 5;
-
-    const static int VENTILATOR = 100;
-}
 
 #endif // HELPERS_H
