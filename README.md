@@ -1,4 +1,4 @@
-#Simple Logger#
+#Simplelogger#
 
 This library provides a very simple logging funtionality for c++ applications. 
 You can use it to log to stdout and to a logfile. The library registers a signal 
@@ -30,11 +30,13 @@ project files in order to build the library.
 
 ##Usage##
 
-Usage of this Library is quite simple. We provide a simple tester that you can build a long.
+Usage of this Library is quite simple. We provide a simple tester that you can also build.
 Use the cmake command line argument **-DBUILD_TEST=ON**.
+    
+###Minimum Code example###
+Here is a small example. First we instantiate a new Logger object, than we print some messages.
 
-Here is a small example. First instantiate a new Logger object, than we print some messages.
-```C++
+```c++
 std::unique_ptr<SimpleLogger> log = std::unique_ptr<SimpleLogger>(
     new SimpleLogger(SimpleLogger::logLevels::INFO,
                      true,
@@ -59,10 +61,28 @@ This will output:
 As you can see the DEBUG level message is not printed. This is because of the minimum severity
 we set when we created the object. 
 
-We all know large logfiles are difficult to read so some sort of color highlighting might be 
-useful. If you are using a unix system you may use [multitail](http://www.vanheusden.com/multitail/)
+###Colorized Logfiles with multitail###
+We all know large logfiles are difficult to read. So some sort of color highlighting might be 
+useful. If you are using a unix system you may try [multitail](http://www.vanheusden.com/multitail/)
 
-Please also refer to the html documentation of the library located in the [doc](https://github.com/crapp/simplelogger/tree/master/doc) folder.
+Here is a screenshot how this might look like
+![simplelogger multitail](http://crapp.github.io/simplelogger/screenshots/SimpleLoggerMultitail.jpeg "Simplelogger multitail")
+
+The color scheme for multitail I used to genrate the above colors in the screenshot looks like this
+
+    colorscheme:simpleLogger
+    cs_re:,magenta,bold:^.+FATAL:.+
+    cs_re:,red,bold:^.+ERROR:.+
+    cs_re:,blue:^.+WARNING:.+
+    cs_re:,green:^.+INFO:.+
+
+Put it in ~/.multitailrc and start mutlitail
+```shell
+multitail -cS simpleLogger mylogfile.log
+```
+##Source Code Documentation##
+
+Is available as doxygen generated html documentation. It is located in the [doc](https://github.com/crapp/simplelogger/tree/master/doc) folder.
 
 ##License##
 
