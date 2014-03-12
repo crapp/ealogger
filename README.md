@@ -1,7 +1,7 @@
 #Simple Logger#
 
-This library provides a very simpleLogging funtionality for c++ applications. 
-You can use to log to stdout and to a logfile. The library registers a signal 
+This library provides a very simple logging funtionality for c++ applications. 
+You can use it to log to stdout and to a logfile. The library registers a signal 
 handler for SIGUSR1 and is compatible with logrotate.
 
 
@@ -14,6 +14,8 @@ required apart from CMake >= 2.8 and a **c++11** compatible compiler.
 Example for building a shared library without debug symbols. We are using an
 out of source build here.
 ```shell
+git clone https://github.com/crapp/simplelogger.git simplelogger
+cd simplelogger
 mkdir build
 cd build
 cmake ../ -G "Unix Makefiles" -DCMAKE_RELEASE_TYPE=Release
@@ -24,11 +26,12 @@ sudo make install
 This will install libsimplelogger to /usr/local/include on Unix systems.
 You may also use different generators for other platforms. This is useful
 on MacOs or Windows. CMake allows you to generate Visual Studio or XCode
-project files to build the library.
+project files in order to build the library.
 
-##Usage## 
+##Usage##
 
-Usage of this Library is quite simple.
+Usage of this Library is quite simple. Please refer to the html documentation of
+the library located in the [doc](https://github.com/crapp/simplelogger/tree/master/doc) folder.
 
 ##License##
 
