@@ -119,6 +119,36 @@ void SimpleLogger::writeLog(SimpleLogger::logLevels lvl, std::string msg)
     this->mtx.unlock();
 }
 
+void SimpleLogger::setDateTimeFormat(const std::string s)
+{
+    this->dateTimeFormat = s;
+}
+
+std::string SimpleLogger::getDateTimeFormat()
+{
+    return this->dateTimeFormat;
+}
+
+void SimpleLogger::setLogToSTDOUT(bool b)
+{
+    this->logToSTDOUT = b;
+}
+
+bool SimpleLogger::getLogToSTDOUT()
+{
+    return this->logToSTDOUT;
+}
+
+void SimpleLogger::setLogToFile(bool b)
+{
+    this->logToFile = b;
+}
+
+bool SimpleLogger::getLogToFile()
+{
+    return this->logToFile;
+}
+
 void SimpleLogger::logrotate(int signo)
 {
     if (signo == SIGUSR1)
