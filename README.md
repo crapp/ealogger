@@ -4,6 +4,16 @@ This library provides a very simple logging funtionality for c++ applications.
 You can use it to log to stdout and to a logfile. The library registers a signal 
 handler for SIGUSR1 and is compatible with logrotate.
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Simplelogger](#simplelogger)
+	- [Compilation](#compilation)
+	- [Usage](#usage)
+		- [Minimum Code example](#minimum-code-example)
+		- [Colorized Logfiles with multitail](#colorized-logfiles-with-multitail)
+	- [Source Code Documentation](#source-code-documentation)
+	- [License](#license)
+
 
 ##Compilation##
 
