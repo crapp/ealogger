@@ -30,8 +30,39 @@ project files in order to build the library.
 
 ##Usage##
 
-Usage of this Library is quite simple. Please refer to the html documentation of
-the library located in the [doc](https://github.com/crapp/simplelogger/tree/master/doc) folder.
+Usage of this Library is quite simple. We provide a simple tester that you can build a long.
+Use the cmake command line argument **-DBUILD_TEST=ON**.
+
+Here is a small example. First instantiate a new Logger object, than we print some messages.
+```C++
+std::unique_ptr<SimpleLogger> log = std::unique_ptr<SimpleLogger>(
+    new SimpleLogger(SimpleLogger::logLevels::INFO,
+                     true,
+                     true,
+                     "%H:%M:%S",
+                     "logToMe.log"));
+log->writeLog(SimpleLogger::logLevels::DEBUG,
+             "Do you see me?");
+log->writeLog(SimpleLogger::logLevels::WARNING,
+             "A warning message");
+log->writeLog(SimpleLogger::logLevels::ERROR,
+             "An error message");
+log->writeLog(SimpleLogger::logLevels::FATAL,
+             "A fatal message");
+```
+This will output:
+
+    [17:55:28] WARNING: A warning message
+    [17:55:28] ERROR: An error message
+    [17:55:28] FATAL: A fatal message
+
+As you can see the DEBUG level message is not printed. This is because of the minimum severity
+we set when we created the object. 
+
+We all know large logfiles are difficult to read so some sort of color highlighting might be 
+useful. If you are using a unix system you may use [multitail](http://www.vanheusden.com/multitail/)
+
+Please also refer to the html documentation of the library located in the [doc](https://github.com/crapp/simplelogger/tree/master/doc) folder.
 
 ##License##
 
