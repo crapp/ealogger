@@ -57,7 +57,6 @@ public:
 
     typedef logmessage std::pair<SimpleLogger::logLevels, std::string>;
 
-
     /**
      * @brief SimpleLogger constructor
      * @param minLvl Minim loglevel, all messages with a lower severity will be discarded
@@ -79,7 +78,10 @@ public:
      * The constructor automatically registers a signal handler for SIGUSR1. This
      * allows logrotation with logrotate
      */
-    SimpleLogger(logLevels minLvl, bool logToSTDOUT, bool logToFile,
+    SimpleLogger(logLevels minLvl,
+                 bool logToSTDOUT,
+                 bool logToFile,
+                 bool multithreading,
                  std::string dateTimeFormat,
                  std::string logfile);
     ~SimpleLogger();
@@ -122,6 +124,7 @@ private:
 
     bool logToSTDOUT;
     bool logToFile;
+    bool multithreading;
 
     std::string dateTimeFormat;
     std::string logfilePath;
