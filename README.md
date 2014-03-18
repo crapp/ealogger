@@ -2,7 +2,8 @@
 
 This library provides a very simple logging funtionality for c++ applications. 
 You can use it to log to stdout and to a logfile. The library registers a signal 
-handler for SIGUSR1 and is compatible with logrotate.
+handler for SIGUSR1 (only available on linux currently) and is compatible with 
+logrotate.
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -19,7 +20,8 @@ handler for SIGUSR1 and is compatible with logrotate.
 
 the Library uses the [CMake](http://cmake.org/) build system. This way you 
 can easily build it on different platforms. No special dependencies are
-required apart from CMake >= 2.8 and a **c++11** compatible compiler.
+required apart from CMake >= 2.8 and a **c++11** compatible compiler (e.g. gcc 
+>=4.7; Visual Studio 2013 (2010 and 2012 are not supported)).
 
 Example for building a shared library without debug symbols. We are using an
 out of source build here.

@@ -17,22 +17,31 @@
 
 #include "simplelogger.h"
 
-SimpleLogger::SimpleLogger(SimpleLogger::logLevels minLvl, bool logToSTDOUT,
-                           bool logToFile, std::string dateTimeFormat,
+SimpleLogger::SimpleLogger(SimpleLogger::logLevels minLvl,
+                           bool logToSTDOUT,
+                           bool logToFile,
+                           bool multithreading,
+                           std::string dateTimeFormat,
                            std::string logfile) :
-    minLevel(minLvl), logToSTDOUT(logToSTDOUT), logToFile(logToFile),
-    dateTimeFormat(dateTimeFormat), logfilePath(logfile)
+    minLevel(minLvl), logToSTDOUT(logToSTDOUT),
+    logToFile(logToFile),
+    multithreading(multithreading),
+    dateTimeFormat(dateTimeFormat),
+    logfilePath(logfile)
 {
     //TODO: Make registration of signal handler configurable
     SimpleLogger::receivedSIGUSR1 = false;
+#ifdef __linux__
     if (signal(SIGUSR1, SimpleLogger::logrotate) == SIG_ERR)
         throw std::runtime_error("Could not create signal handler for SIGUSR1");
+#endif
 
     this->logFile.open(this->logfilePath, std::ios::out | std::ios::app);
     if (!this->logFile)
         throw std::runtime_error("Can not open logfile: " + this->logfilePath);
     //set exception mask for the file stream
     this->logFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+    //http://codexpert.ro/blog/2013/03/01/cpp11-concurrency-condition-variables/
 }
 
 SimpleLogger::~SimpleLogger()
@@ -151,9 +160,11 @@ bool SimpleLogger::getLogToFile()
 
 void SimpleLogger::logrotate(int signo)
 {
+#ifdef __linux__
     if (signo == SIGUSR1)
     {
         SimpleLogger::receivedSIGUSR1 = true;
     }
+#endif
 }
 bool SimpleLogger::receivedSIGUSR1;

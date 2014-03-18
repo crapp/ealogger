@@ -24,6 +24,7 @@
 #include <fstream>
 #include <csignal>
 #include <stdexcept>
+#include <queue>
 
 #include "helpers.h"
 
@@ -53,6 +54,9 @@ public:
         ERROR = 3,
         FATAL = 4
     };
+
+    typedef logmessage std::pair<SimpleLogger::logLevels, std::string>;
+
 
     /**
      * @brief SimpleLogger constructor
@@ -122,6 +126,8 @@ private:
     std::string dateTimeFormat;
     std::string logfilePath;
     std::ofstream logFile;
+
+    std::queue<std::pair<SimpleLogger::logLevels, std::string> messageQueue;
 
     static void logrotate(int signo);
 };
