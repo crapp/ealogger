@@ -2,8 +2,7 @@
 
 This library provides a very simple logging funtionality for c++ applications. 
 You can use it to log to stdout and to a logfile. The library registers a signal 
-handler for SIGUSR1 (only available on linux currently) and is compatible with 
-logrotate.
+handler for SIGUSR1 and is compatible with logrotate (only available on linux currently). 
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
@@ -53,6 +52,7 @@ std::unique_ptr<SimpleLogger> log = std::unique_ptr<SimpleLogger>(
     new SimpleLogger(SimpleLogger::logLevels::INFO,
                      true,
                      true,
+                     false,
                      "%H:%M:%S",
                      "logToMe.log"));
 log->writeLog(SimpleLogger::logLevels::DEBUG,
@@ -63,15 +63,21 @@ log->writeLog(SimpleLogger::logLevels::ERROR,
              "An error message");
 log->writeLog(SimpleLogger::logLevels::FATAL,
              "A fatal message");
+log->printStackTrace(10);
 ```
 This will output:
 
     [17:55:28] WARNING: A warning message
     [17:55:28] ERROR: An error message
     [17:55:28] FATAL: A fatal message
+    [17:55:28] Stacktrace:
+        .../libsimplelogger.so(_ZN12SimpleLogger15printStackTraceEj+0xb1) [0x7fb21db14ce3]
+	    .../logtest(main+0x6f6) [0x402cb3]
+	    /usr/lib/libc.so.6(__libc_start_main+0xf5) [0x7fb21cd3bb05]
+	    .../logtest() [0x4024f9]
 
 As you can see the DEBUG level message is not printed. This is because of the minimum severity
-we set when we created the object. 
+we set when we created the object. At the end we are printing a Stacktrace. c++ methods are not demangeld currently.
 
 ###Colorized Logfiles with multitail###
 We all know large logfiles are difficult to read. So some sort of color highlighting might be 
