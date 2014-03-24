@@ -12,8 +12,10 @@ public:
      * @brief The LOGTYPE enum stands for the LogMessage type
      */
     enum LOGTYPE {
-        DEFAULT = 0, /** A normal log message */
-        STACK /** A log message with a vector of stack elements */
+        /** Normal log message */
+        DEFAULT = 0,
+        /** Log message with a vector of stack elements */
+        STACK
     };
 
     /**
@@ -23,9 +25,9 @@ public:
 
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message
+     * @param severity Is the severity of the message, SimpleLogger#logLevels
      * @param message Message as std::string
-     * @param logType @see LOGTYPE
+     * @param logType LogMessage#LOGTYPE
      */
     LogMessage(int severity, std::string message, LOGTYPE logType) :
         severity(severity), message(message), logType(logType)
@@ -34,9 +36,9 @@ public:
     }
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message
+     * @param severity Is the severity of the message, SimpleLogger#logLevels
      * @param messageVec A vector<std::string> containing the stack elements
-     * @param logType @see LOGTYPE
+     * @param logType LogMessage#LOGTYPE
      */
     LogMessage(int severity, std::vector<std::string> messageVec, LOGTYPE logType) :
         severity(severity), messageVec(messageVec), logType(logType)
@@ -47,7 +49,7 @@ public:
 
     /**
      * @brief Returns the severity of the message
-     * @return Severity returned as int
+     * @return Severity returned as int, SimpleLogger#logLevels
      */
     int getSeverity()
     {
@@ -64,7 +66,7 @@ public:
 
     /**
      * @brief Get the log message type
-     * @return @see LOGTYPE
+     * @return LogMessage#LOGTYPE
      */
     LOGTYPE getLogType()
     {
@@ -73,7 +75,7 @@ public:
 
     /**
      * @brief Returns a constant iterator pointing the begin of the message vector
-     * @return @see stackMsgIt
+     * @return #stackMsgIt
      */
     stackMsgIt getStackElementsBegin()
     {
@@ -81,7 +83,7 @@ public:
     }
     /**
      * @brief Returns a constant iterator pointing the end of the message vector
-     * @return @see stackMsgIt
+     * @return #stackMsgIt
      */
     stackMsgIt getStackElementsEnd()
     {
@@ -96,10 +98,10 @@ private:
     int severity;
     /** The log message */
     std::string message;
-    /** The log message type */
-    LOGTYPE logType;
     /** A vector of stack elements */
     std::vector<std::string> messageVec;
+    /** The log message type */
+    LOGTYPE logType;
 };
 
 #endif // LOGMESSAGE_H

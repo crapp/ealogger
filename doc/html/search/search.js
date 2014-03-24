@@ -7,11 +7,13 @@
 
 var indexSectionsWithContent =
 {
-  0: "lsw",
-  1: "s",
-  2: "sw",
-  3: "l",
-  4: "s"
+  0: "defgilpsw",
+  1: "ls",
+  2: "eglpsw",
+  3: "s",
+  4: "l",
+  5: "defisw",
+  6: "s"
 };
 
 var indexSectionNames =
@@ -19,8 +21,10 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "functions",
-  3: "enums",
-  4: "pages"
+  3: "typedefs",
+  4: "enums",
+  5: "enumvalues",
+  6: "pages"
 };
 
 function convertToId(search)

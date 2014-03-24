@@ -69,7 +69,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="functions.html"><span>All</span></a></li>
       <li class="current"><a href="functions_func.html"><span>Functions</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
       <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
+      <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -78,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -89,6 +91,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="contents">
 &#160;<ul>
+<li>empty()
+: <a class="el" href="class_log_queue.html#a09bf63a9f1352a71f565c71a4877b9cc">LogQueue</a>
+</li>
+<li>getLogType()
+: <a class="el" href="struct_log_message.html#a10b18e21da7694d2db38fac714955751">LogMessage</a>
+</li>
+<li>getMessage()
+: <a class="el" href="struct_log_message.html#a6233457aa2b360df4adbfba9aa1b1eae">LogMessage</a>
+</li>
+<li>getSeverity()
+: <a class="el" href="struct_log_message.html#a446b588b0f9366a80069a2fb4f1c88a8">LogMessage</a>
+</li>
+<li>getStackElementsBegin()
+: <a class="el" href="struct_log_message.html#a6c656dac57a78ebaec7fb0329165e6ba">LogMessage</a>
+</li>
+<li>getStackElementsEnd()
+: <a class="el" href="struct_log_message.html#a7f191f4e28fc27cea811e018339ea043">LogMessage</a>
+</li>
+<li>LogMessage()
+: <a class="el" href="struct_log_message.html#a5b84ef49948cacfb5d86a214d37c76d9">LogMessage</a>
+</li>
+<li>pop()
+: <a class="el" href="class_log_queue.html#a82f79d0ade84c6de921ebb11fc0d518d">LogQueue</a>
+</li>
+<li>printStackTrace()
+: <a class="el" href="class_simple_logger.html#ae0e2abfd0e9ea7e4afb0d9bb4b3cd3ec">SimpleLogger</a>
+</li>
+<li>push()
+: <a class="el" href="class_log_queue.html#aea24575b248b3a3a2951fb45a9dfe630">LogQueue</a>
+</li>
 <li>setDateTimeFormat()
 : <a class="el" href="class_simple_logger.html#a09131abe6a9d899454bed18c5a256068">SimpleLogger</a>
 </li>
@@ -99,7 +131,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_simple_logger.html#a83965f3c2cfa49709844ac7cd7ca30bc">SimpleLogger</a>
 </li>
 <li>SimpleLogger()
-: <a class="el" href="class_simple_logger.html#aafbe4dd116dfd929031a0d0fc0bb185a">SimpleLogger</a>
+: <a class="el" href="class_simple_logger.html#a8a7937e04b16fb2e3335ed2113edf9d8">SimpleLogger</a>
 </li>
 <li>writeLog()
 : <a class="el" href="class_simple_logger.html#a64de8dcc4d534c079f732fa033aa3b2e">SimpleLogger</a>
@@ -108,7 +140,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 11 2014 15:11:18 for SimpleLogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Mar 24 2014 16:25:22 for SimpleLogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

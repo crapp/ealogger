@@ -60,11 +60,11 @@ public:
      */
     enum logLevels
     {
-        DEBUG = 0,
-        INFO = 1,
-        WARNING = 2,
-        ERROR = 3,
-        FATAL = 4
+        DEBUG = 0, /**< Debug message */
+        INFO = 1, /**< Info message */
+        WARNING = 2, /**< Warning message */
+        ERROR = 3, /**< Error message */
+        FATAL = 4 /**< Fatal Message */
     };
 
     /**
@@ -83,7 +83,8 @@ public:
      *
      * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
      *
-     * You can swith logging to stdout or a logfile on and off seperatly. @see logToSTDOUT @see logToFile
+     * You can swith logging to stdout or a logfile on and off seperatly.
+     *
      * Use the Paramter multithreading to activa a background logger thread. This way
      * logging will no longer slow down your application which is important for high
      * performance or time ciritcal events. The only overhead is creating a LogMessage
@@ -105,7 +106,7 @@ public:
 
     /**
      * @brief Issue a Logmessage
-     * @param lvl The severity of the message @see logLevels
+     * @param lvl The severity of the message, SimpleLogger#logLevels
      * @param msg The message text
      */
     void writeLog(SimpleLogger::logLevels lvl, std::string msg);
