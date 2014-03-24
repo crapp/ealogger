@@ -24,9 +24,10 @@ add_library(simplelogger SHARED ${SOURCE} ${HEADERS})
 target_link_libraries(simplelogger ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS simplelogger DESTINATION lib)
-#foreach(header ${HEADERS})
-install(FILES ${PROJECT_SOURCE_DIR}/include/simplelogger/simplelogger.h DESTINATION include/simplelogger)
-#endforeach(header)
+foreach(header ${HEADERS})
+#install(FILES ${PROJECT_SOURCE_DIR}/include/simplelogger/simplelogger.h DESTINATION include/simplelogger)
+    install(FILES ${header} DESTINATION include/simplelogger)
+endforeach(header)
 
 #this can be done after we set our target
 #FIXME check ${CMAKE_GENERATOR} for used generator and remove APPLE_USE_XCODE
