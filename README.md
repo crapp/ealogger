@@ -19,8 +19,8 @@ handler for SIGUSR1 and is compatible with logrotate (only available on linux cu
 
 the Library uses the [CMake](http://cmake.org/) build system. This way you 
 can easily build it on different platforms. No special dependencies are
-required apart from CMake >= 2.8 and a **c++11** compatible compiler (e.g. gcc 
->=4.7; Visual Studio 2013 (2010 and 2012 are not supported)).
+required apart from CMake >= 2.8 and a **c++11** compatible compiler (e.g. gcc >=4.7; 
+Visual Studio 2013 (2010 and 2012 are not supported)).
 
 Example for building a shared library without debug symbols. We are using an
 out of source build here.
