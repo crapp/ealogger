@@ -8,6 +8,7 @@ int main(int argc, const char* argv[])
                 new SimpleLogger(SimpleLogger::logLevels::INFO,
                                  true,
                                  true,
+                                 true,
                                  "%H:%M:%S",
                                  "logToMe.log"));
 
@@ -44,23 +45,6 @@ int main(int argc, const char* argv[])
                  "Format specifiers changed");
     log->writeLog(SimpleLogger::logLevels::INFO,
                  "Releasing Logtester unique pointer");
-    //release the unique pointer
-    log.release();
-    try
-    {
-        //this should fail if your application does not have write permissions
-        log = std::unique_ptr<SimpleLogger>(
-                        new SimpleLogger(SimpleLogger::logLevels::DEBUG,
-                                         true,
-                                         true,
-                                         "%H:%M:%S",
-                                         "/var/log/logtester.log"));
-    }
-    catch(const std::runtime_error &ex)
-    {
-        std::cerr << ex.what() << std::endl;
-        return 1;
-    }
-
+    log->printStackTrace(10);
     return 0;
 }

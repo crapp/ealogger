@@ -41,11 +41,38 @@ SimpleLogger::SimpleLogger(SimpleLogger::logLevels minLvl,
         throw std::runtime_error("Can not open logfile: " + this->logfilePath);
     //set exception mask for the file stream
     this->logFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
-    //http://codexpert.ro/blog/2013/03/01/cpp11-concurrency-condition-variables/
+
+    if(this->multithreading)
+    {
+        backgroundLoggerStop = false;
+        backgroundLogger = std::thread(&SimpleLogger::logThreadFunc, this);
+    }
 }
 
 SimpleLogger::~SimpleLogger()
 {
+    if(this->multithreading)
+    {
+        // wait for queue to be emptied. after 1 second we will exit the background logger thread
+        int i = 0;
+        while(!logDataQueue.empty())
+        {
+            if (i == 100)
+                break;
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            i++;
+        }
+        this->backgroundLoggerStop = true;
+        this->writeLog(SimpleLogger::logLevels::INFO, "Logger exit");
+        try {
+            backgroundLogger.join();
+        }
+        catch(const std::system_error &ex)
+        {
+            std::cerr << "Could not join with logger background thread: " <<
+                         ex.what() << std::endl;
+        }
+    }
     if (this->logFile.is_open())
     {
         this->logFile.flush();
@@ -55,77 +82,33 @@ SimpleLogger::~SimpleLogger()
 
 void SimpleLogger::writeLog(SimpleLogger::logLevels lvl, std::string msg)
 {
-    if (SimpleLogger::receivedSIGUSR1)
+    std::shared_ptr<LogMessage> m;
+    if (multithreading)
     {
-        SimpleLogger::receivedSIGUSR1 = false;
-        this->logFile.flush();
-        this->logFile.close();
-        this->logFile.open(this->logfilePath, std::ios::out | std::ios::app);
-        if (!this->logFile)
-            throw std::runtime_error("Can not open logfile: " + this->logfilePath);
-        //set exception mask for the file stream
-        this->logFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+        m = std::make_shared<LogMessage>(lvl, msg, LogMessage::LOGTYPE::DEFAULT);
+        this->logDataQueue.push(m);
+    } else {
+        m = std::make_shared<LogMessage>(lvl, msg, LogMessage::LOGTYPE::DEFAULT);
+        this->internalLogRoutine(m);
     }
-    //lock mutex because std::cout is not threadsafe
-    //TODO: Use ScopeLocks to lock mutexes as it is much saver.
-    this->mtx.lock();
-    if (lvl >= this->minLevel)
-    {
-        try 
-        {
-            switch (lvl)
-            {
-            case SimpleLogger::logLevels::DEBUG:
-                if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] DEBUG: " << msg << std::endl;
-                if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] DEBUG: " << msg << std::endl;
-                break;
-            case SimpleLogger::logLevels::INFO:
-                if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] INFO: " << msg << std::endl;
-                if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] INFO: " << msg << std::endl;
-                break;
-            case SimpleLogger::logLevels::WARNING:
-                if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] WARNING: " << msg << std::endl;
-                if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] WARNING: " << msg << std::endl;
-                break;
-            case SimpleLogger::logLevels::ERROR:
-                if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] ERROR: " << msg << std::endl;
-                if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] ERROR: " << msg << std::endl;
-                break;
-            case SimpleLogger::logLevels::FATAL:
-                if (this->logToSTDOUT)
-                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] FATAL: " << msg << std::endl;
-                if (this->logToFile)
-                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
-                            "] FATAL: " << msg << std::endl;
-                break;
-            default:
-                break;
-            }
-        }
-        catch (const std::ios_base::failure &fail)
-        {
-            std::cerr << "Can not write to Logfile stream" << std::endl;
-            //std::cerr << "Error: " << fail << std::endl;
-        }
-    }
-    this->mtx.unlock();
+}
+
+void SimpleLogger::printStackTrace(uint size)
+{
+    void *addrlist[size+1];
+
+    size_t noOfStackAddresses = backtrace(addrlist, sizeof(addrlist) / sizeof(void*));
+    char **tempSymbols = backtrace_symbols(addrlist, noOfStackAddresses);
+
+    std::vector<std::string> symbollist(tempSymbols, tempSymbols + noOfStackAddresses);
+    // tempSymbols has to be freed
+    free(tempSymbols);
+    std::shared_ptr<LogMessage> m = std::make_shared<LogMessage>(
+                SimpleLogger::logLevels::DEBUG,
+                symbollist,
+                LogMessage::LOGTYPE::STACK);
+    this->logDataQueue.push(m);
+
 }
 
 void SimpleLogger::setDateTimeFormat(const std::string s)
@@ -166,5 +149,113 @@ void SimpleLogger::logrotate(int signo)
         SimpleLogger::receivedSIGUSR1 = true;
     }
 #endif
+}
+
+void SimpleLogger::logThreadFunc()
+{
+    //while(!this->backgroundLoggerStop && !logDataQueue.empty())
+    while(!this->backgroundLoggerStop)
+    {
+        std::shared_ptr<LogMessage> m = this->logDataQueue.pop();
+        this->internalLogRoutine(m);
+    }
+}
+
+void SimpleLogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
+{
+    //lock mutex because iostreams or fstreams are not threadsafe
+    if(!this->multithreading)
+        std::lock_guard<std::mutex> lock(this->mtx);
+    if (SimpleLogger::receivedSIGUSR1)
+    {
+        SimpleLogger::receivedSIGUSR1 = false;
+        this->logFile.flush();
+        this->logFile.close();
+        this->logFile.open(this->logfilePath, std::ios::out | std::ios::app);
+        if (!this->logFile)
+            throw std::runtime_error("Can not open logfile: " + this->logfilePath);
+        //set exception mask for the file stream
+        this->logFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
+    }
+    if (static_cast<SimpleLogger::logLevels>(m->getSeverity()) >= this->minLevel ||
+            m->getLogType() == LogMessage::LOGTYPE::STACK)
+    {
+        try
+        {
+            if (m->getLogType() == LogMessage::LOGTYPE::STACK)
+            {
+                if (this->logToSTDOUT)
+                {
+                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                            "] Stacktrace: " << std::endl;
+                }
+                if (this->logToFile)
+                {
+                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                            "] Stacktrace: " << std::endl;
+                }
+                for (std::vector<std::string>::const_iterator it = m->getStackElementsBegin();
+                     it != m->getStackElementsEnd(); it++)
+                {
+                    if (this->logToSTDOUT)
+                        std::cout << "\t" << *it << std::endl;
+                    if(this->logToFile)
+                        this->logFile << "\t" << *it << std::endl;
+                }
+            } else {
+                switch (m->getSeverity())
+                {
+                case SimpleLogger::logLevels::DEBUG:
+                    if (this->logToSTDOUT)
+                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] DEBUG: " << m->getMessage() << std::endl;
+                    if (this->logToFile)
+                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] DEBUG: " << m->getMessage() << std::endl;
+                    break;
+                case SimpleLogger::logLevels::INFO:
+                    if (this->logToSTDOUT)
+                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] INFO: " << m->getMessage() << std::endl;
+                    if (this->logToFile)
+                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] INFO: " << m->getMessage() << std::endl;
+                    break;
+                case SimpleLogger::logLevels::WARNING:
+                    if (this->logToSTDOUT)
+                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] WARNING: " << m->getMessage() << std::endl;
+                    if (this->logToFile)
+                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] WARNING: " << m->getMessage() << std::endl;
+                    break;
+                case SimpleLogger::logLevels::ERROR:
+                    if (this->logToSTDOUT)
+                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] ERROR: " << m->getMessage() << std::endl;
+                    if (this->logToFile)
+                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] ERROR: " << m->getMessage() << std::endl;
+                    break;
+                case SimpleLogger::logLevels::FATAL:
+                    if (this->logToSTDOUT)
+                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] FATAL: " << m->getMessage() << std::endl;
+                    if (this->logToFile)
+                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                                "] FATAL: " << m->getMessage() << std::endl;
+                    break;
+                default:
+                    break;
+                }
+            }
+
+        }
+        catch (const std::ios_base::failure &fail)
+        {
+            std::cerr << "Can not write to Logfile stream" << std::endl;
+            //std::cerr << "Error: " << fail << std::endl;
+        }
+    }
 }
 bool SimpleLogger::receivedSIGUSR1;

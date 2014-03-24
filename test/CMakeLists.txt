@@ -10,6 +10,7 @@ include_directories(
 )
 
 if(BUILD_TEST)
+    message(STATUS "Will build the tester application for SimpleLogger")
     #add_executable(logtest EXCLUDE_FROM_ALL ${TESTSOURCE})
     add_executable(logtest ${TESTSOURCE} ${TESTHEADER})
     target_link_libraries(logtest simplelogger)

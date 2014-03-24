@@ -3,7 +3,7 @@ project(SimpleLogger)
 
 # Version Number
 set(${PROJECT_NAME}_VERSION_MAJOR 0)
-set(${PROJECT_NAME}_VERSION_MINOR 1)
+set(${PROJECT_NAME}_VERSION_MINOR 5)
 set(${PROJECT_NAME}_VERSION_PATCH 0)
 
 #comment this if you want to compile with gcc

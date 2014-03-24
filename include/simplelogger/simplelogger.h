@@ -19,14 +19,26 @@
 #define SIMPLELOGGER_H
 
 #include <string>
+/*
+ * Mutual exclusion for threadsafe logger
+ */
 #include <mutex>
 #include <iostream>
 #include <fstream>
 #include <csignal>
 #include <stdexcept>
-#include <queue>
+/*
+ * Background logger thread
+ */
+#include <thread>
+#include <vector>
+#ifdef __GNUC__
+#include <execinfo.h>
+#endif
 
 #include "helpers.h"
+#include "logmessage.h"
+#include "logqueue.h"
 
 /**
  * @brief The heart of Simple Logger
@@ -55,28 +67,33 @@ public:
         FATAL = 4
     };
 
-    typedef logmessage std::pair<SimpleLogger::logLevels, std::string>;
-
     /**
      * @brief SimpleLogger constructor
      * @param minLvl Minim loglevel, all messages with a lower severity will be discarded
      * @param logToSTDOUT Boolean to indicate whether or not to write to stdout. Can be changed on runtime
      * @param logToFile Boolean to indicate whether or not to write to a logfile. Can be changed on runtime
+     * @param multithreading Boolean if activated simplelogger uses a background thread to write messages to streams
      * @param dateTimeFormat The Date Time format specifiers.
      * @param logfile The logfile to use
      *
-     * Internally std::strftime is used from header ctime to create time string.
+     * Internally std::strftime is used from header ctime to create formatted time strings.
      * So for parameter dateTimeFormat you have to use format specifiers that are
      * recognised by strftime. See [en.cppreference.com](http://en.cppreference.com/w/cpp/chrono/c/strftime)
      * for details.
      *
      * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
      *
+     * You can swith logging to stdout or a logfile on and off seperatly. @see logToSTDOUT @see logToFile
+     * Use the Paramter multithreading to activa a background logger thread. This way
+     * logging will no longer slow down your application which is important for high
+     * performance or time ciritcal events. The only overhead is creating a LogMessage
+     * object and pushing it in a Queue.
+     *
      * The logfile parameter must contain the path and the filename of the logfile.
      * Make sure your application ahs write permissions at the specified location.
      *
-     * The constructor automatically registers a signal handler for SIGUSR1. This
-     * allows logrotation with logrotate
+     * The constructor automatically registers a signal handler for SIGUSR1.
+     * This allows logrotation with logrotate on supported systems
      */
     SimpleLogger(logLevels minLvl,
                  bool logToSTDOUT,
@@ -88,10 +105,19 @@ public:
 
     /**
      * @brief Issue a Logmessage
-     * @param lvl The severity of the message
+     * @param lvl The severity of the message @see logLevels
      * @param msg The message text
      */
     void writeLog(SimpleLogger::logLevels lvl, std::string msg);
+
+    /**
+     * @brief Print a Stacktrace
+     * @param size How many elements of the stack you wish to be printed.
+     *
+     * So far no demangeling is implemented yet. The method only works with gcc/llvm
+     * compiled software.
+     */
+    void printStackTrace(uint size);
 
     //getters and setters for private members we want to expose
 
@@ -117,9 +143,11 @@ public:
     bool getLogToFile();
 
 private:
+    /** Mutex used when not in multithreading mode */
     std::mutex mtx;
     static bool receivedSIGUSR1;
 
+    /** Minimum severity that is handled */
     SimpleLogger::logLevels minLevel;
 
     bool logToSTDOUT;
@@ -130,9 +158,16 @@ private:
     std::string logfilePath;
     std::ofstream logFile;
 
-    std::queue<std::pair<SimpleLogger::logLevels, std::string> messageQueue;
+    /** Threadsafe queue for multithreading mode */
+    LogQueue logDataQueue;
+    /** Background thread */
+    std::thread backgroundLogger;
+    /** Controls background logger thread */
+    bool backgroundLoggerStop;
 
     static void logrotate(int signo);
+    void logThreadFunc();
+    void internalLogRoutine(std::shared_ptr<LogMessage> m);
 };
 
 #endif // SIMPLELOGGER_H
