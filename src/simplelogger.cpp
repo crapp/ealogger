@@ -186,12 +186,12 @@ void SimpleLogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
             {
                 if (this->logToSTDOUT)
                 {
-                    std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                    std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                             "] Stacktrace: " << std::endl;
                 }
                 if (this->logToFile)
                 {
-                    this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                    this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                             "] Stacktrace: " << std::endl;
                 }
                 for (std::vector<std::string>::const_iterator it = m->getStackElementsBegin();
@@ -207,42 +207,42 @@ void SimpleLogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
                 {
                 case SimpleLogger::logLevels::DEBUG:
                     if (this->logToSTDOUT)
-                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] DEBUG: " << m->getMessage() << std::endl;
                     if (this->logToFile)
-                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] DEBUG: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::INFO:
                     if (this->logToSTDOUT)
-                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] INFO: " << m->getMessage() << std::endl;
                     if (this->logToFile)
-                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] INFO: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::WARNING:
                     if (this->logToSTDOUT)
-                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] WARNING: " << m->getMessage() << std::endl;
                     if (this->logToFile)
-                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] WARNING: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::ERROR:
                     if (this->logToSTDOUT)
-                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] ERROR: " << m->getMessage() << std::endl;
                     if (this->logToFile)
-                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] ERROR: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::FATAL:
                     if (this->logToSTDOUT)
-                        std::cout << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] FATAL: " << m->getMessage() << std::endl;
                     if (this->logToFile)
-                        this->logFile << "[" << helpers::getFormattedTimeString(this->dateTimeFormat) <<
+                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
                                 "] FATAL: " << m->getMessage() << std::endl;
                     break;
                 default:
@@ -258,4 +258,34 @@ void SimpleLogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
         }
     }
 }
+
+std::string SimpleLogger::getFormattedTimeString(const std::string &timeFormat)
+{
+    //get raw time
+    time_t rawtime;
+    //time struct
+    struct tm *timeinfo;
+    //buffer where we store the formatted time string
+    char buffer[80];
+
+    std::time (&rawtime);
+    timeinfo = std::localtime(&rawtime);
+
+    std::strftime(buffer, 80, timeFormat.c_str(), timeinfo);
+    return (std::string(buffer));
+}
+
+std::string SimpleLogger::getFormattedTimeString(std::time_t t, const std::string &timeFormat)
+{
+    //time struct
+    struct tm *timeinfo;
+    //buffer where we store the formatted time string
+    char buffer[80];
+
+    timeinfo = std::localtime(&t);
+
+    std::strftime(buffer, 80, timeFormat.c_str(), timeinfo);
+    return (std::string(buffer));
+}
+
 bool SimpleLogger::receivedSIGUSR1;

@@ -36,7 +36,6 @@
 #include <execinfo.h>
 #endif
 
-#include "helpers.h"
 #include "logmessage.h"
 #include "logqueue.h"
 
@@ -169,6 +168,8 @@ private:
     static void logrotate(int signo);
     void logThreadFunc();
     void internalLogRoutine(std::shared_ptr<LogMessage> m);
+    std::string getFormattedTimeString(const std::string &timeFormat);
+    std::string getFormattedTimeString(std::time_t t, const std::string &timeFormat);
 };
 
 #endif // SIMPLELOGGER_H
