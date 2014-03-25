@@ -102,6 +102,20 @@ multitail -cS simpleLogger mylogfile.log
 
 Is available as doxygen generated html documentation. It is located in the [doc](https://github.com/crapp/simplelogger/tree/master/doc) folder.
 
+##ToDo##
+
+* When in mutlithreading mode there are possible data races for member variables. For exmaple when you change time string format this may interfere with the background logger thread when it is reading this member at the same time. Currently I don't think this data races are really a problem, but they could lead to undefined behaviour. So I will fix them as soon as possible
+* Print stacktrace method does not demangle c++ method names. So the stacktrace is not so easy to read. I found a solution on the net and will implement it soon.
+* Printing stacktrace does only work with gcc/llvm. There is a possible solution for Windows though.
+* Support for other logrotation services like newsyslog or LogRotateWin
+
+##FAQ##
+
+**Yet another logger lib, why?**
+I wanted to have a flexible and easy to use logger lib for my c++ projects. Especially one that makes use of the new c++11 features.
+**Why does it not have feature X?**
+Feal free to fork the project and do a pull request!
+
 ##License##
 
     Copyright (C) 2013, 2014 Christian Rapp
