@@ -12,6 +12,8 @@ handler for SIGUSR1 and is compatible with logrotate (only available on linux cu
 		- [Minimum Code example](#minimum-code-example)
 		- [Colorized Logfiles with multitail](#colorized-logfiles-with-multitail)
 	- [Source Code Documentation](#source-code-documentation)
+	- [ToDo](#todo)
+	- [FAQ](#faq)
 	- [License](#license)
 
 
