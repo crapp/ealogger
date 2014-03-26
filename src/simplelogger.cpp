@@ -62,7 +62,7 @@ SimpleLogger::~SimpleLogger()
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
             i++;
         }
-        this->backgroundLoggerStop = true;
+        this->setBackgroundLoggerStop(true);
         this->writeLog(SimpleLogger::logLevels::INFO, "Logger exit");
         try {
             backgroundLogger.join();
@@ -113,31 +113,37 @@ void SimpleLogger::printStackTrace(uint size)
 
 void SimpleLogger::setDateTimeFormat(const std::string s)
 {
+    std::lock_guard<std::mutex> guard(this->mtx_dateTimeFormat);
     this->dateTimeFormat = s;
 }
 
 std::string SimpleLogger::getDateTimeFormat()
 {
+    std::lock_guard<std::mutex> guard(this->mtx_dateTimeFormat);
     return this->dateTimeFormat;
 }
 
 void SimpleLogger::setLogToSTDOUT(bool b)
 {
+    std::lock_guard<std::mutex> guard(this->mtx_logToSTDOUT);
     this->logToSTDOUT = b;
 }
 
 bool SimpleLogger::getLogToSTDOUT()
 {
+    std::lock_guard<std::mutex> guard(this->mtx_logToSTDOUT);
     return this->logToSTDOUT;
 }
 
 void SimpleLogger::setLogToFile(bool b)
 {
+    std::lock_guard<std::mutex> guard(this->mtx_logToFile);
     this->logToFile = b;
 }
 
 bool SimpleLogger::getLogToFile()
 {
+    std::lock_guard<std::mutex> guard(this->mtx_logToFile);
     return this->logToFile;
 }
 
@@ -153,8 +159,7 @@ void SimpleLogger::logrotate(int signo)
 
 void SimpleLogger::logThreadFunc()
 {
-    //while(!this->backgroundLoggerStop && !logDataQueue.empty())
-    while(!this->backgroundLoggerStop)
+    while(!this->getBackgroundLoggerStop())
     {
         std::shared_ptr<LogMessage> m = this->logDataQueue.pop();
         this->internalLogRoutine(m);
@@ -165,7 +170,7 @@ void SimpleLogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
 {
     //lock mutex because iostreams or fstreams are not threadsafe
     if(!this->multithreading)
-        std::lock_guard<std::mutex> lock(this->mtx);
+        std::lock_guard<std::mutex> lock(this->mtx_log);
     if (SimpleLogger::receivedSIGUSR1)
     {
         SimpleLogger::receivedSIGUSR1 = false;
@@ -184,65 +189,65 @@ void SimpleLogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
         {
             if (m->getLogType() == LogMessage::LOGTYPE::STACK)
             {
-                if (this->logToSTDOUT)
+                if (this->getLogToSTDOUT())
                 {
-                    std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    std::cout << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                             "] Stacktrace: " << std::endl;
                 }
-                if (this->logToFile)
+                if (this->getLogToFile())
                 {
-                    this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    this->logFile << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                             "] Stacktrace: " << std::endl;
                 }
                 for (std::vector<std::string>::const_iterator it = m->getStackElementsBegin();
                      it != m->getStackElementsEnd(); it++)
                 {
-                    if (this->logToSTDOUT)
+                    if (this->getLogToSTDOUT())
                         std::cout << "\t" << *it << std::endl;
-                    if(this->logToFile)
+                    if(this->getLogToFile())
                         this->logFile << "\t" << *it << std::endl;
                 }
             } else {
                 switch (m->getSeverity())
                 {
                 case SimpleLogger::logLevels::DEBUG:
-                    if (this->logToSTDOUT)
-                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToSTDOUT())
+                        std::cout << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] DEBUG: " << m->getMessage() << std::endl;
-                    if (this->logToFile)
-                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToFile())
+                        this->logFile << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] DEBUG: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::INFO:
-                    if (this->logToSTDOUT)
-                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToSTDOUT())
+                        std::cout << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] INFO: " << m->getMessage() << std::endl;
-                    if (this->logToFile)
-                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToFile())
+                        this->logFile << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] INFO: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::WARNING:
-                    if (this->logToSTDOUT)
-                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToSTDOUT())
+                        std::cout << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] WARNING: " << m->getMessage() << std::endl;
-                    if (this->logToFile)
-                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToFile())
+                        this->logFile << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] WARNING: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::ERROR:
-                    if (this->logToSTDOUT)
-                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToSTDOUT())
+                        std::cout << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] ERROR: " << m->getMessage() << std::endl;
-                    if (this->logToFile)
-                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToFile())
+                        this->logFile << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] ERROR: " << m->getMessage() << std::endl;
                     break;
                 case SimpleLogger::logLevels::FATAL:
-                    if (this->logToSTDOUT)
-                        std::cout << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToSTDOUT())
+                        std::cout << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] FATAL: " << m->getMessage() << std::endl;
-                    if (this->logToFile)
-                        this->logFile << "[" << this->getFormattedTimeString(this->dateTimeFormat) <<
+                    if (this->getLogToFile())
+                        this->logFile << "[" << this->getFormattedTimeString(this->getDateTimeFormat()) <<
                                 "] FATAL: " << m->getMessage() << std::endl;
                     break;
                 default:
@@ -286,6 +291,18 @@ std::string SimpleLogger::getFormattedTimeString(std::time_t t, const std::strin
 
     std::strftime(buffer, 80, timeFormat.c_str(), timeinfo);
     return (std::string(buffer));
+}
+
+bool SimpleLogger::getBackgroundLoggerStop()
+{
+    std::lock_guard<std::mutex> guard(this->mtx_backgroundLoggerStop);
+    return this->backgroundLoggerStop;
+}
+
+void SimpleLogger::setBackgroundLoggerStop(bool stop)
+{
+    std::lock_guard<std::mutex> guard(this->mtx_backgroundLoggerStop);
+    this->backgroundLoggerStop = stop;
 }
 
 bool SimpleLogger::receivedSIGUSR1;

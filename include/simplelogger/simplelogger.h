@@ -144,7 +144,12 @@ public:
 
 private:
     /** Mutex used when not in multithreading mode */
-    std::mutex mtx;
+    std::mutex mtx_log;
+    std::mutex mtx_logToSTDOUT;
+    std::mutex mtx_logToFile;
+    std::mutex mtx_dateTimeFormat;
+    std::mutex mtx_backgroundLoggerStop;
+
     static bool receivedSIGUSR1;
 
     /** Minimum severity that is handled */
@@ -170,6 +175,12 @@ private:
     void internalLogRoutine(std::shared_ptr<LogMessage> m);
     std::string getFormattedTimeString(const std::string &timeFormat);
     std::string getFormattedTimeString(std::time_t t, const std::string &timeFormat);
+    /*
+     * So far controlling the background logger thread is only possible for the logger
+     * object itself.
+     */
+    bool getBackgroundLoggerStop();
+    void setBackgroundLoggerStop(bool stop);
 };
 
 #endif // SIMPLELOGGER_H

@@ -6,7 +6,6 @@ set(${PROJECT_NAME}_VERSION_MAJOR 0)
 set(${PROJECT_NAME}_VERSION_MINOR 5)
 set(${PROJECT_NAME}_VERSION_PATCH 0)
 
-#comment this if you want to compile with gcc
 option(APPLE_USE_CLANG OFF)
 option(APPLE_USE_XCODE ON)
 option(BUILD_TEST "Build tester for simplelogger" OFF)
