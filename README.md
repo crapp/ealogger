@@ -31,7 +31,7 @@ git clone https://github.com/crapp/simplelogger.git simplelogger
 cd simplelogger
 mkdir build
 cd build
-cmake ../ -G "Unix Makefiles" -DCMAKE_RELEASE_TYPE=Release
+cmake ../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 make
 sudo make install
 ```
