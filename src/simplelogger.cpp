@@ -1,4 +1,4 @@
-/*  This is a very simple logger for c++ 
+/*  This is a simple logger library for c++
     Copyright (C) 2013, 2014 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
