@@ -1,7 +1,7 @@
 #Simplelogger#
 
-This library provides a very simple to use logging functionality for c++ applications.
-You can use it to log to stdout and to a logfile. It was designed to be fast (uses Threads) and flexible.
+This library provides a simple to use yet powerful logging functionality for c++ applications.
+You can use it to log to stdout or to a logfile. It was designed to be fast (uses Threads) and flexible.
 The library registers a signal handler for SIGUSR1 and is compatible with logrotate (only available on linux currently). It was tested on Linux, Windows and OS X. 
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
@@ -43,7 +43,7 @@ project files in order to build the library.
 
 ##Usage##
 
-Usage of this Library is quite simple. We provide a simple tester that you can also build.
+Usage of this Library is quite simple. We provide a simple tester that you can build with the library.
 Use the cmake command line argument **-DBUILD_TEST=ON**.
     
 ###Minimum Code example###
@@ -88,7 +88,7 @@ useful. If you are using a unix system you may try [multitail](http://www.vanheu
 Here is a screenshot how this might look like
 ![simplelogger multitail](http://crapp.github.io/simplelogger/screenshots/SimpleLoggerMultitail.jpeg "Simplelogger multitail")
 
-The color scheme for multitail I used to genrate the above colors in the screenshot looks like this
+The color scheme for multitail I used to generate the above colors in the screenshot looks like this
 
     colorscheme:simpleLogger
     cs_re:,magenta,bold:^.+FATAL:.+
@@ -120,7 +120,7 @@ Feal free to fork the project and do a pull request!
 
 ##License##
 
-    Copyright (C) 2013, 2014 Christian Rapp
+    Copyright (C) 2013 - 2015 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
