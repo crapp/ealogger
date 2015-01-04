@@ -96,13 +96,13 @@ public:
      * The constructor automatically registers a signal handler for SIGUSR1.
      * This allows logrotation with logrotate on supported systems
      */
-    SimpleLogger(logLevels minLvl,
-                 bool logToSTDOUT,
-                 bool logToFile,
-                 bool multithreading,
-                 bool printThreadID,
-                 std::string dateTimeFormat,
-                 std::string logfile);
+    SimpleLogger(logLevels minLvl = SimpleLogger::logLevels::DEBUG,
+                 bool logToSTDOUT = true,
+                 bool logToFile = false,
+                 bool multithreading = true,
+                 bool printThreadID = false,
+                 std::string dateTimeFormat = "%F %T",
+                 std::string logfile = "");
     ~SimpleLogger();
 
     /**
