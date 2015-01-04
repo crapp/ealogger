@@ -1,5 +1,5 @@
-/*  This is a very simple logger for c++
-    Copyright (C) 2013, 2014 Christian Rapp
+/*  This is a simple logger yet powerful logger for c++
+    Copyright (C) 2013 - 2015 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
