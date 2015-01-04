@@ -10,6 +10,7 @@ int main(int argc, const char* argv[])
                                  true,
                                  true,
                                  false,
+                                 true,
                                  "%H:%M:%S",
                                  "logToMe.log"));
     std::chrono::steady_clock::time_point t = std::chrono::steady_clock::now();
@@ -51,9 +52,13 @@ int main(int argc, const char* argv[])
                 std::chrono::steady_clock::now() - t).count();
     log->writeLog(SimpleLogger::logLevels::INFO,
                  "Logger needed " + std::to_string(msNormal) + "µs to do the logging");
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+
     //now we try the same in multithreading mode
     log = std::unique_ptr<SimpleLogger>(
                 new SimpleLogger(SimpleLogger::logLevels::INFO,
+                                 true,
                                  true,
                                  true,
                                  true,

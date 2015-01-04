@@ -25,6 +25,7 @@
 #include <mutex>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <csignal>
 #include <stdexcept>
 /*
@@ -99,6 +100,7 @@ public:
                  bool logToSTDOUT,
                  bool logToFile,
                  bool multithreading,
+                 bool printThreadID,
                  std::string dateTimeFormat,
                  std::string logfile);
     ~SimpleLogger();
@@ -142,11 +144,19 @@ public:
     void setLogToFile(bool b);
     bool getLogToFile();
 
+    /**
+     * @brief Enable/Disable the priting of the Thread ID.
+     * @param b
+     */
+    void setPrintThreadID(bool b);
+    bool getPrintThreadID();
+
 private:
     /** Mutex used when not in multithreading mode */
     std::mutex mtx_log;
     std::mutex mtx_logToSTDOUT;
     std::mutex mtx_logToFile;
+    std::mutex mtx_pThreadID;
     std::mutex mtx_dateTimeFormat;
     std::mutex mtx_backgroundLoggerStop;
 
@@ -158,6 +168,7 @@ private:
     bool logToSTDOUT;
     bool logToFile;
     bool multithreading;
+    bool printThreadID;
 
     std::string dateTimeFormat;
     std::string logfilePath;

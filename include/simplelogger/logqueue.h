@@ -36,7 +36,7 @@ public:
      */
     void push(std::shared_ptr<LogMessage> m);
     /**
-     * @brief Get the next LogMessage object in the Queue und remove it
+     * @brief Get the next LogMessage object in the Queue and remove it
      * @return Shared pointer LogMessage object
      */
     std::shared_ptr<LogMessage> pop();
