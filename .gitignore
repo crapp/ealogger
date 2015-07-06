@@ -1,3 +1,8 @@
+
+
+# ignore generated html documentation. 
+doc/html/
+
 #ignore out of source build directories
 build*/
 
