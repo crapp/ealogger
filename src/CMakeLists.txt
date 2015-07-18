@@ -5,6 +5,16 @@ set(SOURCE
 
 find_package(Threads REQUIRED)
 
+if(UNIX)
+    find_path(
+        SYSLOG
+        syslog.h
+    )
+    if(${SYSLOG})
+        message(STATUS "Syslog sink is available")
+    endif()
+endif()
+
 #add bin dir because of the configure headers we create later
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
@@ -13,10 +23,10 @@ include_directories(
 
 # configure a header file to pass some of the CMake settings
 # to the source code
-#configure_file (
-#    ${CMAKE_CURRENT_SOURCE_DIR}/simpleloggerversion.h.in
-#    ${CMAKE_CURRENT_BINARY_DIR}/simpleloggerversion.h
-#)
+configure_file (
+    ${CMAKE_SOURCE_DIR}/include/simplelogger/config.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+)
 
 #define library with headers and source files
 add_library(simplelogger SHARED ${SOURCE} ${HEADERS})
@@ -29,9 +39,8 @@ foreach(header ${HEADERS})
     install(FILES ${header} DESTINATION include/simplelogger)
 endforeach(header)
 
-#this can be done after we set our target
-#FIXME check ${CMAKE_GENERATOR} for used generator and remove APPLE_USE_XCODE
-if (APPLE AND APPLE_USE_XCODE)
+# This must be done after we set the target
+if (APPLE AND CMAKE_GENERATOR MATCHES "Xcode")
     message("Setting c++11 properties for XCode project file")
     #in case we produce an XCode project file set the most important attributes.
     SET_TARGET_PROPERTIES(simplelogger PROPERTIES XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")

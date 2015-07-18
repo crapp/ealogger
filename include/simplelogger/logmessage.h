@@ -1,4 +1,4 @@
-/*  This is a simple logger yet powerful logger for c++
+/*  This is a simple yet powerful logger library for c++
     Copyright (C) 2013 - 2015 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
@@ -23,16 +23,14 @@
 #include <vector>
 
 struct LogMessage {
-
 public:
     /**
      * @brief The LOGTYPE enum stands for the LogMessage type
      */
     enum LOGTYPE {
-        /** Normal log message */
-        DEFAULT = 0,
-        /** Log message with a vector of stack elements */
-        STACK
+        DEFAULT = 0, /**< Normal log message */
+        STACK        /**< Log message with a vector of stack elements */
+
     };
 
     /**
@@ -46,8 +44,8 @@ public:
      * @param message Message as std::string
      * @param logType LogMessage#LOGTYPE
      */
-    LogMessage(int severity, std::string message, LOGTYPE logType) :
-        severity(severity), message(message), logType(logType)
+    LogMessage(int severity, std::string message, LOGTYPE logType)
+        : severity(severity), message(message), logType(logType)
     {
         this->t = std::chrono::system_clock::now();
     }
@@ -57,8 +55,9 @@ public:
      * @param messageVec A vector<std::string> containing the stack elements
      * @param logType LogMessage#LOGTYPE
      */
-    LogMessage(int severity, std::vector<std::string> messageVec, LOGTYPE logType) :
-        severity(severity), messageVec(messageVec), logType(logType)
+    LogMessage(int severity, std::vector<std::string> messageVec,
+               LOGTYPE logType)
+        : severity(severity), messageVec(messageVec), logType(logType)
     {
         this->t = std::chrono::system_clock::now();
         this->message = "";
@@ -68,45 +67,29 @@ public:
      * @brief Returns the severity of the message
      * @return Severity returned as int, SimpleLogger#logLevels
      */
-    int getSeverity()
-    {
-        return this->severity;
-    }
+    int getSeverity() { return this->severity; }
     /**
      * @brief Get the log message
      * @return Log message as std::string
      */
-    std::string getMessage()
-    {
-        return this->message;
-    }
+    std::string getMessage() { return this->message; }
 
     /**
      * @brief Get the log message type
      * @return LogMessage#LOGTYPE
      */
-    LOGTYPE getLogType()
-    {
-        return this->logType;
-    }
+    LOGTYPE getLogType() { return this->logType; }
 
     /**
      * @brief Returns a constant iterator pointing the begin of the message vector
      * @return #stackMsgIt
      */
-    stackMsgIt getStackElementsBegin()
-    {
-        return this->messageVec.cbegin();
-    }
+    stackMsgIt getStackElementsBegin() { return this->messageVec.cbegin(); }
     /**
      * @brief Returns a constant iterator pointing the end of the message vector
      * @return #stackMsgIt
      */
-    stackMsgIt getStackElementsEnd()
-    {
-        return this->messageVec.cend();
-    }
-
+    stackMsgIt getStackElementsEnd() { return this->messageVec.cend(); }
 
 private:
     /** Time Point when this log message was created*/
@@ -121,4 +104,4 @@ private:
     LOGTYPE logType;
 };
 
-#endif // LOGMESSAGE_H
+#endif  // LOGMESSAGE_H

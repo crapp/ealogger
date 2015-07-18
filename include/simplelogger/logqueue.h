@@ -1,4 +1,4 @@
-/*  This is a simple logger yet powerful logger for c++
+/*  This is a simple yet powerful logger library for c++
     Copyright (C) 2013 - 2015 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
@@ -37,10 +37,11 @@
  *
  * A big problem of most logger implementations is performance. If you are logging
  * many messages in a short time your logger may slow down the whole application.
- * Simpleogger can write to a iostream and a fstream at the same time. These
+ * Simplelogger can write to a iostream, a fstream and a syslog sink at the same time. These
  * operations take time. To minimize the overhead created by writing to streams
  * we are using a threadsafe queue. This queue is filled by the logger and a separate
- * thread object and works with the FIFO principle.
+ * thread object and works with the FIFO principle. Please note this is _not_ a lock free
+ * solution so far.
  */
 class LogQueue
 {
@@ -66,11 +67,11 @@ public:
 private:
     /** The Mutex that makes the Queue threadsafe */
     std::mutex mtx;
-    std::queue<std::shared_ptr<LogMessage> > logQueueInternal;
+    std::queue<std::shared_ptr<LogMessage>> logQueueInternal;
     /** conditianl variable we use to signal the background thread to wake up and
      * pop a new LogMessage object and route it to the internal message method
      */
     std::condition_variable condLogQueueInternal;
 };
 
-#endif // LOGQUEUE_H
+#endif  // LOGQUEUE_H

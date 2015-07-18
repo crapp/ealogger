@@ -1,4 +1,4 @@
-/*  This is a simple logger yet powerful logger for c++
+/*  This is a simple yet powerful logger library for c++
     Copyright (C) 2013 - 2015 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,7 @@
 
 #include "logqueue.h"
 
-LogQueue::LogQueue()
-{
-}
+LogQueue::LogQueue() {}
 
 void LogQueue::push(std::shared_ptr<LogMessage> m)
 {
@@ -37,9 +35,8 @@ std::shared_ptr<LogMessage> LogQueue::pop()
     // wait unlocks the acquired lock on this->mtx and puts the thread to sleep
     // until it gets notfied by notify_one(). The wakeup will only occur if the
     // used queue is not empty. After the wakeup the lock is reacquired. Now
-    this->condLogQueueInternal.wait(lock, [this] () {
-        return !this->logQueueInternal.empty();
-    });
+    this->condLogQueueInternal.wait(
+        lock, [this]() { return !this->logQueueInternal.empty(); });
 
     std::shared_ptr<LogMessage> LogMessage = this->logQueueInternal.front();
     this->logQueueInternal.pop();

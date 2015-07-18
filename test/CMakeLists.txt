@@ -9,6 +9,13 @@ include_directories(
     "../include/simplelogger"
 )
 
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+    ${CMAKE_SOURCE_DIR}/include/simplelogger/config.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/config.h
+)
+
 if(BUILD_TEST)
     message(STATUS "Will build the tester application for SimpleLogger")
     #add_executable(logtest EXCLUDE_FROM_ALL ${TESTSOURCE})

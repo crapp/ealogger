@@ -1,4 +1,4 @@
-/*  This is a simple logger yet powerful logger for c++
+/*  This is a simple yet powerful logger library for c++
     Copyright (C) 2013 - 2015 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@
 #include <sstream>
 #include <csignal>
 #include <stdexcept>
+#include <map>
 /*
  * Background logger thread
  */
@@ -35,6 +36,14 @@
 #include <vector>
 #ifdef __GNUC__
 #include <execinfo.h>
+#endif
+
+#include "config.h"
+/*
+ * Check if syslog was detected by CMake
+ */
+#ifdef SYSLOG
+#include <syslog.h>
 #endif
 
 #include "logmessage.h"
@@ -58,13 +67,13 @@ public:
      * This enum is used to define the severity of a log message and to set the
      * minimum loglevel.
      */
-    enum logLevels
-    {
-        DEBUG = 0, /**< Debug message */
-        INFO = 1, /**< Info message */
+    enum logLevels {
+        DEBUG = 0,   /**< Debug message */
+        INFO = 1,    /**< Info message */
         WARNING = 2, /**< Warning message */
-        ERROR = 3, /**< Error message */
-        FATAL = 4 /**< Fatal Message */
+        ERROR = 3,   /**< Error message */
+        FATAL = 4,   /**< Fatal Message */
+        INTERNAL = 5 /**< Internal Message, do not use this loglevel yourself */
     };
 
     /**
@@ -72,6 +81,7 @@ public:
      * @param minLvl Minim loglevel, all messages with a lower severity will be discarded
      * @param logToSTDOUT Boolean to indicate whether or not to write to stdout. Can be changed on runtime
      * @param logToFile Boolean to indicate whether or not to write to a logfile. Can be changed on runtime
+     * @param logToSyslog Boolean to indicate whether or not to use syslog (for example systemd) on Linux/BSD
      * @param multithreading Boolean if activated simplelogger uses a background thread to write messages to streams
      * @param dateTimeFormat The Date Time format specifiers.
      * @param logfile The logfile to use
@@ -85,24 +95,22 @@ public:
      *
      * You can swith logging to stdout or a logfile on and off seperatly.
      *
-     * Use the Paramter multithreading to activa a background logger thread. This way
+     * Use the Parameter multithreading to activate a background logger thread. This way
      * logging will no longer slow down your application which is important for high
-     * performance or time ciritcal events. The only overhead is creating a LogMessage
+     * performance or time critical events. The only overhead is creating a LogMessage
      * object and pushing it in a Queue.
      *
      * The logfile parameter must contain the path and the filename of the logfile.
-     * Make sure your application ahs write permissions at the specified location.
+     * Make sure your application has write permissions at the specified location.
      *
      * The constructor automatically registers a signal handler for SIGUSR1.
      * This allows logrotation with logrotate on supported systems
      */
     SimpleLogger(logLevels minLvl = SimpleLogger::logLevels::DEBUG,
-                 bool logToSTDOUT = true,
-                 bool logToFile = false,
-                 bool multithreading = true,
+                 bool logToSTDOUT = true, bool logToFile = false,
+                 bool logToSyslog = false, bool multithreading = true,
                  bool printThreadID = false,
-                 std::string dateTimeFormat = "%F %T",
-                 std::string logfile = "");
+                 std::string dateTimeFormat = "%F %T", std::string logfile = "");
     ~SimpleLogger();
 
     /**
@@ -121,7 +129,7 @@ public:
      */
     void printStackTrace(uint size);
 
-    //getters and setters for private members we want to expose
+    // getters and setters for private members we want to expose
 
     /**
      * @brief Set the Date Time format specifier
@@ -145,6 +153,13 @@ public:
     bool getLogToFile();
 
     /**
+     * @brief Enable/Disable logging to syslog sink
+     * @param b
+     */
+    void setLogToSyslog(bool b);
+    bool getLogToSyslog();
+
+    /**
      * @brief Enable/Disable the priting of the Thread ID.
      * @param b
      */
@@ -156,6 +171,7 @@ private:
     std::mutex mtx_log;
     std::mutex mtx_logToSTDOUT;
     std::mutex mtx_logToFile;
+    std::mutex mtx_logToSyslog;
     std::mutex mtx_pThreadID;
     std::mutex mtx_dateTimeFormat;
     std::mutex mtx_backgroundLoggerStop;
@@ -167,6 +183,7 @@ private:
 
     bool logToSTDOUT;
     bool logToFile;
+    bool logToSyslog;
     bool multithreading;
     bool printThreadID;
 
@@ -181,11 +198,18 @@ private:
     /** Controls background logger thread */
     bool backgroundLoggerStop;
 
+    /** lookup table for logelevel Strings */
+    std::map<SimpleLogger::logLevels, std::string> loglevelStringMap;
+    /** map syslog message priority to our loglevels */
+    std::map<SimpleLogger::logLevels, int> loglevelSyslogMap;
+
+    /** Static Method to be registered for logrotate signal */
     static void logrotate(int signo);
     void logThreadFunc();
     void internalLogRoutine(std::shared_ptr<LogMessage> m);
     std::string getFormattedTimeString(const std::string &timeFormat);
-    std::string getFormattedTimeString(std::time_t t, const std::string &timeFormat);
+    std::string getFormattedTimeString(std::time_t t,
+                                       const std::string &timeFormat);
     /*
      * So far controlling the background logger thread is only possible for the logger
      * object itself.
@@ -194,4 +218,4 @@ private:
     void setBackgroundLoggerStop(bool stop);
 };
 
-#endif // SIMPLELOGGER_H
+#endif  // SIMPLELOGGER_H
