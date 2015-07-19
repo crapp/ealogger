@@ -1,7 +1,7 @@
 #Simplelogger#
 
 This library provides a simple to use yet powerful logging functionality for c++ applications.
-You can use it to log to stdout or to a logfile. It was designed to be fast (uses Threads) and flexible.
+You can use it to log to **stdout**, to a **logfile** or **system log (syslog)**. It was designed to be fast (uses Threads) and flexible.
 The library registers a signal handler for SIGUSR1 and is compatible with logrotate (only available on linux currently). It was tested on Linux, Windows and OS X. 
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
