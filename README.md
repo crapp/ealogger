@@ -114,8 +114,11 @@ Is available as doxygen generated html documentation. The doxygen project file i
 ##FAQ##
 
 **Yet another logger lib, why?**
+
 I wanted to have a flexible and easy to use logger lib for my c++ projects. Especially one that makes use of the new c++11 features.
+
 **Why does it not have feature X?**
+
 Feal free to fork the project and do a pull request!
 
 ##License##
