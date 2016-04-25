@@ -1,6 +1,6 @@
-set(HEADERS
+set(EALOGGER_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/logmessage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/logqueue.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/simplelogger.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ealogger.h
     PARENT_SCOPE
 )

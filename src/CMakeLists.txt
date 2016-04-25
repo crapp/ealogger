@@ -1,6 +1,6 @@
-set(SOURCE
+set(EALOGGER_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/logqueue.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/simplelogger.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ealogger.cpp
 )
 
 find_package(Threads REQUIRED)
@@ -18,31 +18,23 @@ endif()
 #add bin dir because of the configure headers we create later
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
-    "../include/simplelogger"
+    "../include/ealogger"
 )
 
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
-    ${CMAKE_SOURCE_DIR}/include/simplelogger/config.h.in
+    ${CMAKE_SOURCE_DIR}/include/ealogger/config.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/config.h
 )
 
 #define library with headers and source files
-add_library(simplelogger SHARED ${SOURCE} ${HEADERS})
+add_library(ealogger SHARED ${EALOGGER_SOURCE} ${EALOGGER_HEADER})
 #link with this libraries
-target_link_libraries(simplelogger ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(ealogger ${CMAKE_THREAD_LIBS_INIT})
 
-install(TARGETS simplelogger DESTINATION lib)
-foreach(header ${HEADERS})
-#install(FILES ${PROJECT_SOURCE_DIR}/include/simplelogger/simplelogger.h DESTINATION include/simplelogger)
-    install(FILES ${header} DESTINATION include/simplelogger)
+install(TARGETS ealogger DESTINATION lib)
+foreach(header ${EALOGGER_HEADER})
+    install(FILES ${header} DESTINATION include/ealogger)
 endforeach(header)
 
-# This must be done after we set the target
-if (APPLE AND CMAKE_GENERATOR MATCHES "Xcode")
-    message("Setting c++11 properties for XCode project file")
-    #in case we produce an XCode project file set the most important attributes.
-    SET_TARGET_PROPERTIES(simplelogger PROPERTIES XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
-    SET_TARGET_PROPERTIES(simplelogger PROPERTIES XCODE_ATTRIBUTE_CLANG_CXX_LANGUAGE_STANDARD "c++11")
-endif()

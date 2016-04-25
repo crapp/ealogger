@@ -15,7 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "simplelogger.h"
+#include "ealogger.h"
 
 SimpleLogger::SimpleLogger(SimpleLogger::logLevels minLvl, bool logToSTDOUT,
                            bool logToFile, bool logToSyslog, bool multithreading,

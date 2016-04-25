@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8)
-project(SimpleLogger)
+project(ealogger)
 
 # Version Number
 set(${PROJECT_NAME}_VERSION_MAJOR 0)
 set(${PROJECT_NAME}_VERSION_MINOR 6)
 set(${PROJECT_NAME}_VERSION_PATCH 0)
 
-option(BUILD_TEST "Build tester for simplelogger" OFF)
-option(PRINT_INTERNAL_MESSAGES "Print messages with INTERNAL priority. Only usefull for simplelogger developers." OFF)
+option(BUILD_TEST "Build tester for ealogger" OFF)
+option(PRINT_INTERNAL_MESSAGES "Print messages with INTERNAL priority. Only usefull for ealogger developers." OFF)
 
 if(UNIX)
     message("Detected unix system")
@@ -38,6 +38,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 endif()
 
 
-add_subdirectory(include/simplelogger)
+add_subdirectory(include/ealogger)
 add_subdirectory(src)
 add_subdirectory(test)

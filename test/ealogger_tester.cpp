@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 
-#include "simplelogger.h"
+#include "ealogger.h"
 #include "config.h"
 
 int main(int argc, const char* argv[])
