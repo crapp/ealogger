@@ -1,12 +1,12 @@
-#Simplelogger#
+#ealogger#
 
-This library provides a simple to use yet powerful logging functionality for c++ applications.
+The **e**asy **a**syncronous logger provides a simple to use yet powerful logging functionality for c++ applications.
 You can use it to log to **stdout**, to a **logfile** or **system log (syslog)**. It was designed to be fast (uses Threads) and flexible.
 The library registers a signal handler for SIGUSR1 and is compatible with logrotate (only available on linux currently). It was tested on Linux, Windows and OS X. 
 
 **Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
 
-- [Simplelogger](#simplelogger)
+- [ealogger](#ealogger)
 	- [Compilation](#compilation)
 	- [Usage](#usage)
 		- [Minimum Code example](#minimum-code-example)
@@ -27,8 +27,8 @@ Visual Studio 2013 (2010 and 2012 are not supported)).
 Example for building a shared library without debug symbols. We are using an
 out of source build here.
 ```shell
-git clone https://github.com/crapp/simplelogger.git simplelogger
-cd simplelogger
+git clone https://github.com/crapp/ealogger.git ealogger
+cd ealogger
 mkdir build
 cd build
 cmake ../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
@@ -36,7 +36,7 @@ make
 sudo make install
 ```
 
-This will install libsimplelogger to /usr/local/include on Unix systems.
+This will install libealogger to /usr/local/include on Unix systems.
 You may also use different generators for other platforms. This is useful
 on MacOs or Windows. CMake allows you to generate Visual Studio or XCode
 project files in order to build the library.
@@ -50,21 +50,21 @@ Use the cmake command line argument **-DBUILD_TEST=ON**.
 Here is a small example. First we instantiate a new Logger object, than we print some messages.
 
 ```c++
-std::unique_ptr<SimpleLogger> log = std::unique_ptr<SimpleLogger>(
-    new SimpleLogger(SimpleLogger::logLevels::INFO,
+std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
+    new EALogger(EALogger::logLevels::INFO,
                      true,
                      true,
                      false,
                      false,
                      "%H:%M:%S",
                      "logToMe.log"));
-log->writeLog(SimpleLogger::logLevels::DEBUG,
+log->writeLog(EALogger::logLevels::DEBUG,
              "Do you see me?");
-log->writeLog(SimpleLogger::logLevels::WARNING,
+log->writeLog(EALogger::logLevels::WARNING,
              "A warning message");
-log->writeLog(SimpleLogger::logLevels::ERROR,
+log->writeLog(EALogger::logLevels::ERROR,
              "An error message");
-log->writeLog(SimpleLogger::logLevels::FATAL,
+log->writeLog(EALogger::logLevels::FATAL,
              "A fatal message");
 log->printStackTrace(10);
 ```
@@ -74,7 +74,7 @@ This will output:
     [17:55:28] ERROR: An error message
     [17:55:28] FATAL: A fatal message
     [17:55:28] Stacktrace:
-        .../libsimplelogger.so(_ZN12SimpleLogger15printStackTraceEj+0xb1) [0x7fb21db14ce3]
+        .../libealogger.so(_ZN12EALogger15printStackTraceEj+0xb1) [0x7fb21db14ce3]
 	    .../logtest(main+0x6f6) [0x402cb3]
 	    /usr/lib/libc.so.6(__libc_start_main+0xf5) [0x7fb21cd3bb05]
 	    .../logtest() [0x4024f9]
@@ -87,11 +87,11 @@ We all know large logfiles are difficult to read. So some sort of color highligh
 useful. If you are using a unix system you may try [multitail](http://www.vanheusden.com/multitail/)
 
 Here is a screenshot how this might look like
-![simplelogger multitail](http://crapp.github.io/simplelogger/screenshots/SimpleLoggerMultitail.jpeg "Simplelogger multitail")
+![ealogger multitail](http://crapp.github.io/simplelogger/screenshots/SimpleLoggerMultitail.jpeg "EALogger multitail")
 
 The color scheme for multitail I used to generate the above colors in the screenshot looks like this
 
-    colorscheme:simpleLogger
+    colorscheme:ealogger
     cs_re:,magenta,bold:^.+FATAL:.+
     cs_re:,red,bold:^.+ERROR:.+
     cs_re:,blue:^.+WARNING:.+
@@ -103,7 +103,7 @@ multitail -cS simpleLogger mylogfile.log
 ```
 ##Source Code Documentation##
 
-Is available as doxygen generated html documentation. The doxygen project file is located in the  [doc](https://github.com/crapp/simplelogger/tree/master/doc) folder. You may use it to generate the documentation.
+Is available as doxygen generated html documentation. The doxygen project file is located in the  [doc](https://github.com/crapp/ealogger/tree/master/doc) folder. You may use it to generate the documentation.
 
 ##ToDo##
 
@@ -123,7 +123,7 @@ Feal free to fork the project and do a pull request!
 
 ##License##
 
-    Copyright (C) 2013 - 2015 Christian Rapp
+    Copyright (C) 2013 - 2016 Christian Rapp
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
