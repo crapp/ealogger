@@ -34,7 +34,7 @@ elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
     elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
     endif()
-elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "MSVC" AND ${MSVC_VERSION} LESS 1800)
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC" AND ${MSVC_VERSION} LESS 1800)
     message(
       FATAL_ERROR
       "This Project does not support compiling on Windows with "
