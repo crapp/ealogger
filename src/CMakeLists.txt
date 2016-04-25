@@ -1,3 +1,6 @@
+# Function for generation of export macros for libraries
+#include(GenerateExportHeader)
+
 set(EALOGGER_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/logqueue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ealogger.cpp
@@ -29,9 +32,11 @@ configure_file (
 )
 
 #define library with headers and source files
-add_library(ealogger SHARED ${EALOGGER_SOURCE} ${EALOGGER_HEADER})
+add_library(ealogger ${EALOGGER_SOURCE} ${EALOGGER_HEADER})
 #link with this libraries
 target_link_libraries(ealogger ${CMAKE_THREAD_LIBS_INIT})
+
+#generate_export_header(ealogger)
 
 install(TARGETS ealogger DESTINATION lib)
 foreach(header ${EALOGGER_HEADER})
