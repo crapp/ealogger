@@ -108,7 +108,7 @@ void EALogger::writeLog(EALogger::logLevels lvl, std::string msg)
     }
 }
 
-void EALogger::printStackTrace(uint size)
+void EALogger::printStackTrace(unsigned int size)
 {
     void *addrlist[size + 1];
 

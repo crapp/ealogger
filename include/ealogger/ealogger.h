@@ -123,7 +123,7 @@ public:
      * So far no demangeling is implemented yet. The method only works with gcc/llvm
      * compiled software.
      */
-    void printStackTrace(uint size);
+    void printStackTrace(unsigned int size);
 
     // getters and setters for private members we want to expose
 
