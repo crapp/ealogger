@@ -1,22 +1,20 @@
-/*  This is a simple yet powerful logger library for c++
-    Copyright (C) 2013 - 2015 Christian Rapp
+//   ealogger is a simple, asynchronous and powerful logger library for c++
+//   Copyright 2013 - 2016 Christian Rapp
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-#ifndef SIMPLELOGGER_H
-#define SIMPLELOGGER_H
+#ifndef EALOGGER_H
+#define EALOGGER_H
 
 #include <string>
 /*
@@ -50,15 +48,13 @@
 #include "logqueue.h"
 
 /**
- * @brief The heart of Simple Logger
+ * @brief ealogger main header
  * @author Christian Rapp (crapp)
  *
- * The SimpleLogger class provides all the functionality you need for your application
- * to log messages to stdout and in a logfile. The logger uses a mutex for mutual
- * exclusion. This way thread safety is guaranteed (as long as you only use one
- * instance of this class)
+ * The ealogger class provides all the functionality you need for your application
+ * to log messages.
  */
-class SimpleLogger
+class EALogger
 {
 public:
     /**
@@ -77,12 +73,12 @@ public:
     };
 
     /**
-     * @brief SimpleLogger constructor
+     * @brief EALogger constructor
      * @param minLvl Minim loglevel, all messages with a lower severity will be discarded
      * @param logToSTDOUT Boolean to indicate whether or not to write to stdout. Can be changed on runtime
      * @param logToFile Boolean to indicate whether or not to write to a logfile. Can be changed on runtime
      * @param logToSyslog Boolean to indicate whether or not to use syslog (for example systemd) on Linux/BSD
-     * @param multithreading Boolean if activated simplelogger uses a background thread to write messages to streams
+     * @param multithreading Boolean if activated ealogger uses a background thread to write messages to a stream
      * @param dateTimeFormat The Date Time format specifiers.
      * @param logfile The logfile to use
      *
@@ -106,19 +102,19 @@ public:
      * The constructor automatically registers a signal handler for SIGUSR1.
      * This allows logrotation with logrotate on supported systems
      */
-    SimpleLogger(logLevels minLvl = SimpleLogger::logLevels::DEBUG,
-                 bool logToSTDOUT = true, bool logToFile = false,
-                 bool logToSyslog = false, bool multithreading = true,
-                 bool printThreadID = false,
-                 std::string dateTimeFormat = "%F %T", std::string logfile = "");
-    ~SimpleLogger();
+    EALogger(logLevels minLvl = EALogger::logLevels::DEBUG,
+             bool logToSTDOUT = true, bool logToFile = false,
+             bool logToSyslog = false, bool multithreading = true,
+             bool printThreadID = false, std::string dateTimeFormat = "%F %T",
+             std::string logfile = "");
+    ~EALogger();
 
     /**
      * @brief Issue a Logmessage
-     * @param lvl The severity of the message, SimpleLogger#logLevels
+     * @param lvl The severity of the message, EALogger#logLevels
      * @param msg The message text
      */
-    void writeLog(SimpleLogger::logLevels lvl, std::string msg);
+    void writeLog(EALogger::logLevels lvl, std::string msg);
 
     /**
      * @brief Print a Stacktrace
@@ -179,7 +175,7 @@ private:
     static bool receivedSIGUSR1;
 
     /** Minimum severity that is handled */
-    SimpleLogger::logLevels minLevel;
+    EALogger::logLevels minLevel;
 
     bool logToSTDOUT;
     bool logToFile;
@@ -199,9 +195,9 @@ private:
     bool backgroundLoggerStop;
 
     /** lookup table for logelevel Strings */
-    std::map<SimpleLogger::logLevels, std::string> loglevelStringMap;
+    std::map<EALogger::logLevels, std::string> loglevelStringMap;
     /** map syslog message priority to our loglevels */
-    std::map<SimpleLogger::logLevels, int> loglevelSyslogMap;
+    std::map<EALogger::logLevels, int> loglevelSyslogMap;
 
     /** Static Method to be registered for logrotate signal */
     static void logrotate(int signo);
@@ -218,4 +214,4 @@ private:
     void setBackgroundLoggerStop(bool stop);
 };
 
-#endif  // SIMPLELOGGER_H
+#endif  // EALOGGER_H

@@ -1,19 +1,17 @@
-/*  This is a simple yet powerful logger library for c++
-    Copyright (C) 2013 - 2015 Christian Rapp
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+//   ealogger is a simple, asynchronous and powerful logger library for c++
+//   Copyright 2013 - 2016 Christian Rapp
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 
 #ifndef LOGMESSAGE_H
 #define LOGMESSAGE_H
@@ -40,7 +38,7 @@ public:
 
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message, SimpleLogger#logLevels
+     * @param severity Is the severity of the message, EALogger#logLevels
      * @param message Message as std::string
      * @param logType LogMessage#LOGTYPE
      */
@@ -51,7 +49,7 @@ public:
     }
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message, SimpleLogger#logLevels
+     * @param severity Is the severity of the message, EALogger#logLevels
      * @param messageVec A vector<std::string> containing the stack elements
      * @param logType LogMessage#LOGTYPE
      */
@@ -65,7 +63,7 @@ public:
 
     /**
      * @brief Returns the severity of the message
-     * @return Severity returned as int, SimpleLogger#logLevels
+     * @return Severity returned as int, EALogger#logLevels
      */
     int getSeverity() { return this->severity; }
     /**
@@ -73,13 +71,11 @@ public:
      * @return Log message as std::string
      */
     std::string getMessage() { return this->message; }
-
     /**
      * @brief Get the log message type
      * @return LogMessage#LOGTYPE
      */
     LOGTYPE getLogType() { return this->logType; }
-
     /**
      * @brief Returns a constant iterator pointing the begin of the message vector
      * @return #stackMsgIt
@@ -90,7 +86,6 @@ public:
      * @return #stackMsgIt
      */
     stackMsgIt getStackElementsEnd() { return this->messageVec.cend(); }
-
 private:
     /** Time Point when this log message was created*/
     std::chrono::system_clock::time_point t;
