@@ -5,6 +5,7 @@ project(ealogger)
 set(ealogger_VERSION_MAJOR 0)
 set(ealogger_VERSION_MINOR 7)
 set(ealogger_VERSION_PATCH 0)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 option(BUILD_TEST "Build tester for ealogger" OFF)
 option(PRINT_INTERNAL_MESSAGES "Print messages with INTERNAL priority. Only usefull for ealogger developers." OFF)
