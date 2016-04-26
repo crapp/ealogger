@@ -40,6 +40,7 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
           FATAL_ERROR
           "This Project does not support compiling on Windows with "
           "MSVC ${CMAKE_CXX_COMPILER_ID}. Please use MSVC 12 or higher.")
+    endif ()
 else ()
     message(FATAL_ERROR "Your C++ compiler does not support C++11.")
 endif ()

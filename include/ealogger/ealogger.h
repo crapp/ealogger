@@ -26,14 +26,18 @@
 #include <sstream>
 #include <csignal>
 #include <stdexcept>
+#include <regex>
 #include <map>
+#include <ctime>
 /*
  * Background logger thread
  */
 #include <thread>
 #include <vector>
+// Check for backtrace function
 #ifdef __GNUC__
 #include <execinfo.h>
+#include <cxxabi.h>
 #endif
 
 #include "config.h"

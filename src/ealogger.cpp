@@ -48,7 +48,7 @@ EALogger::EALogger(EALogger::logLevels minLvl, bool logToSTDOUT, bool logToFile,
                                {EALogger::logLevels::FATAL, LOG_CRIT},
                                {EALogger::logLevels::INTERNAL,
                                 LOG_DEBUG}};  // mapping internal to syslog debug
-#elif
+#else
     this->loglevelSyslogMap = {};
     std::cout << "Map empty" << std::endl;
 #endif
@@ -110,23 +110,61 @@ void EALogger::writeLog(EALogger::logLevels lvl, std::string msg)
 
 void EALogger::printStackTrace(unsigned int size)
 {
+#ifdef __GLIBC__
     void *addrlist[size + 1];
 
     size_t noOfStackAddresses =
         backtrace(addrlist, sizeof(addrlist) / sizeof(void *));
     char **tempSymbols = backtrace_symbols(addrlist, noOfStackAddresses);
 
+    // initialize a vector of string with the char**
     std::vector<std::string> symbollist(tempSymbols,
                                         tempSymbols + noOfStackAddresses);
+    std::vector<std::string> stackvec;
     // tempSymbols has to be freed
     free(tempSymbols);
+
+    //std::regex rgx("\\(.*\\+|\\+0[xX][0-9a-fA-F]+\\)");
+    std::regex rgx("(^.*\\()(.*\\+)(0[xX][0-9a-fA-F]+\\))");
+
+    // TODO: This always prints printStacktrace as first symbol. Should we omit
+    // this?
+    for (const auto &symbol : symbollist) {
+        std::smatch match;
+        if (!std::regex_search(symbol, match, rgx)) {
+            stackvec.push_back(symbol);
+            continue;
+        }
+        // get teh regex matches and create the 3 strings we need
+        std::string file = match[1].str();
+        file = file.substr(0, file.size() - 1);
+        std::string mangled_name = match[2].str();
+        mangled_name = mangled_name.substr(0, mangled_name.size() - 1);
+        std::string caller = match[3].str();
+        caller = caller.substr(0, caller.size() - 1);
+
+        // demangle status
+        int status = 0;
+        // must be freed
+        char *realname =
+            abi::__cxa_demangle(mangled_name.c_str(), 0, 0, &status);
+        if (status == 0) {
+            stackvec.emplace_back(file + " : " + std::string(realname) + "+" +
+                                  caller);
+        } else {
+            stackvec.emplace_back(file + " : " + mangled_name + "()" + "+" +
+                                  caller);
+        }
+        free(realname);
+    }
     std::shared_ptr<LogMessage> m = std::make_shared<LogMessage>(
-        EALogger::logLevels::DEBUG, symbollist, LogMessage::LOGTYPE::STACK);
+        EALogger::logLevels::DEBUG, stackvec, LogMessage::LOGTYPE::STACK);
     if (multithreading) {
         this->logDataQueue.push(m);
     } else {
         this->internalLogRoutine(m);
     }
+#endif
 }
 
 void EALogger::setDateTimeFormat(const std::string s)
@@ -246,12 +284,13 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
                 if (this->getLogToFile()) {
                     this->logFile << stackLogMessage.str();
                 }
-// FIXME: Using
 #ifdef SYSLOG
                 if (this->getLogToSyslog()) {
                     syslog(this->loglevelSyslogMap.at(msgLevel), "Stacktrace: ");
                 }
 #endif
+                // TODO: Old style vector iteration. c++11 range based for loop
+                // would be nice
                 for (std::vector<std::string>::const_iterator it =
                          m->getStackElementsBegin();
                      it != m->getStackElementsEnd(); it++) {
