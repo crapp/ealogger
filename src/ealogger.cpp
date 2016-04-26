@@ -302,8 +302,8 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
                     if (this->getLogToSyslog()) {
                         syslog(this->loglevelSyslogMap.at(msgLevel), "\t %s",
                                it->c_str());
-#endif
                     }
+#endif
                 }
             } else {
 #ifndef PRINT_INTERNAL_MESSAGES
