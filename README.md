@@ -1,4 +1,7 @@
-#ealogger#
+# ealogger
+
+[![Build Status](https://travis-ci.org/crapp/ealogger.svg?branch=master)](https://travis-ci.org/crapp/ealogger)
+[![ealogger License](https://img.shields.io/badge/license-Apache-2.0-blue.svg)](#license)
 
 The **e**asy **a**synchronous logger provides a simple to use yet powerful logging
 functionality for c++ applications.
@@ -19,16 +22,38 @@ linux currently). It was tested on Linux, Windows and OS X.
 	- [FAQ](#faq)
 	- [License](#license)
 
+## Setting up ealogger
 
-##Compilation##
+ealogger source code is hosted on [github.com](https://github.com/crapp/ealogger).
+You may either compile the source code or use binary packages.
 
-the Library uses the [CMake](http://cmake.org/) build system. This way you
-can easily build it on different platforms. No special dependencies are
-required apart from CMake >= 2.8 and a **c++11** compatible compiler (e.g. gcc >=4.7;
-Visual Studio 2013 (2010 and 2012 are not supported)).
+### Dependencies
+
+Make sure your development environment meets these requirements
+
+* cmake >= 3.4
+* gcc >= 4.9
+* clang >= 3.5
+* MSVC >= 14 (Visual Studio 2015)
+
+### Installation
+
+The Library uses the [CMake](http://cmake.org/) build system. This way you
+can easily build it on different platforms.
+
+#### CMake Options
+
+There are some cmake options you can customize for your requirements
+
+* BUILD_TEST (default off) : Setting this to **ON** will compile a tester
+  application
+* BUILD_SHARED_LIBS (default on): Whether or not to compile as shared library
+
+#### Linux / OS X
 
 Example for building a shared library without debug symbols. We are using an
 out of source build here.
+
 ```shell
 # clone the sources from github
 git clone https://github.com/crapp/ealogger.git ealogger
@@ -39,22 +64,28 @@ cd build
 # run cmake from within the build directory
 cmake ../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 make
-# install the shared library
-sudo make install
 ```
 
-This will install libealogger to /usr/local/include on Unix systems.
+#### Windows
 
-You may also use [different generators](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html)
-for other platforms. This is useful on OS X or Windows. CMake allows you for
-example to generate Visual Studio or XCode project files in order to build the library.
+This shows how to create a Visual Studio Solution with cmake
 
-##Usage##
+```shell
+# create build directory
+mkdir build
+cd build
+# Please change these options so they suit your build evironment.
+cmake -G"Visual Studio 14 2015 Win64" ../
+```
+Open the solution file with Visual Studio and compile the library.
 
-Usage of this Library is quite simple. We provide a simple tester that you can
-build with the library using the cmake command line argument `-DBUILD_TEST=ON`.
+You may also use [different generators](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html) for other platforms.
 
-###Minimum Code example###
+## Usage
+
+Usage of the logger is easy. For a start have a look at the tester application.
+
+### Minimum Code example
 
 Here is a small example. First we instantiate a new Logger object, than we print
 some messages.
@@ -76,34 +107,27 @@ log->write_log(EALogger::log_level::ERROR,
              "An error message");
 log->write_log(EALogger::log_level::FATAL,
              "A fatal message");
-log->stack_trace(10);
 ```
 This will output:
 ```shell
 [17:55:28] WARNING: A warning message
 [17:55:28] ERROR: An error message
 [17:55:28] FATAL: A fatal message
-[17:55:28] Stacktrace:
-    .../libealogger.so(_ZN12EALogger15stack_traceEj+0xb1) [0x7fb21db14ce3]
-  .../logtest(main+0x6f6) [0x402cb3]
-  /usr/lib/libc.so.6(__libc_start_main+0xf5) [0x7fb21cd3bb05]
-  .../logtest() [0x4024f9]
 ```
 
-As you can see the DEBUG level message is not printed. This is because of the minimum severity
-we set when we created the object. At the end we are printing a Stacktrace.
-c++ methods are not demangled currently.
+As you can see the DEBUG level message is not printed. This is because of the
+minimum severity we set when we created the object.
 
-###Colorized Logfiles with multitail###
+### Colorized Logfiles using multitail
 
-We all know large logfiles are difficult to read. So some sort of color
+Logfiles are sometimes difficult to read. So some sort of color
 highlighting might be useful. If you are using a Unix system you may try
 [multitail](http://www.vanheusden.com/multitail/)
 
 Here is a screenshot how this might look like
-![ealogger multitail](http://crapp.github.io/simplelogger/screenshots/SimpleLoggerMultitail.jpeg "EALogger multitail")
+![ealogger multitail](http://crapp.github.io/ealogger/screenshots/SimpleLoggerMultitail.jpeg "EALogger multitail")
 
-The color scheme for multitail I used to generate the above colors in the
+The color scheme for multitail I used to generate the colors in the
 screenshot looks like this
 
     colorscheme:ealogger
@@ -116,32 +140,84 @@ Put it in ~/.multitailrc and start mutlitail
 ```shell
 multitail -cS simpleLogger mylogfile.log
 ```
-##Source Code Documentation##
+## Source Code Documentation
 
-Is available as doxygen generated html documentation. The doxygen project file is
-located in the  [doc](https://github.com/crapp/ealogger/tree/master/doc) folder.
-You may use it to generate the documentation.
+Is available as [doxygen](http://www.stack.nl/~dimitri/doxygen/) generated html
+documentation. The doxygen project file is located in the
+[doc](https://github.com/crapp/ealogger/tree/master/doc) folder.
 
-##ToDo##
+## Development
 
-* Print stacktrace method does not demangle c++ method names. So the stacktrace
-  is not so easy to read. I found a solution on the net and will implement it soon.
-* Printing stacktrace does only work with gcc/llvm. There is a possible solution
-  for Windows though.
+ealogger uses [travis ci](https://travis-ci.org/crapp/ealogger) for continuous
+integration. Currently we use this service to automatically compile the source
+code with each pull request on different platforms and compilers.
+
+### Branches
+
+The github repository of ealogger has several different branches
+
+* master: Main development branch. Everything in here is guaranteed to compile
+and is tested (at least a little bit :)). This is the place for new features
+and bugfixes. Pull requests welcome.
+* dev: Test branch. Code is guaranteed to compile on the developers build
+environment. Nothing more nothing less.
+* release-x.x: Branch for a release. Only bugfixes are allowed here. 
+Pull requests welcome.
+* gh-pages: Special branch for the static API HTML documentation that will be
+hosted by github.io. Content is generated with doxygen.
+
+### Coding standards
+
+The source code is formatted with clang-format using the following configuration
+
+```
+Language                            : Cpp,
+BasedOnStyle                        : LLVM,
+AccessModifierOffset                : -4,
+AllowShortIfStatementsOnASingleLine : false,
+AlwaysBreakTemplateDeclarations     : true,
+ColumnLimit                         : 81,
+IndentCaseLabels                    : false,
+Standard                            : Cpp11,
+IndentWidth                         : 4,
+TabWidth                            : 4,
+BreakBeforeBraces                   : Linux,
+CommentPragmas                      : '(^ IWYU pragma : )|(^.*\[.*\]\(.*\).*$)|(^.*@brief|@param|@return|@throw.*$)|(/\*\*<.*\*/)'
+```
+
+### Versioning
+
+I decided to use [semantic versioning](http://semver.org/) and stick to their rules.
+
+> Given a version number MAJOR.MINOR.PATCH, increment the:
+>
+> 1. MAJOR version when you make incompatible API changes,
+>
+> 2. MINOR version when you add functionality in a backwards-compatible manner, and
+>
+> 3. PATCH version when you make backwards-compatible bug fixes.
+
+We are currently at this stage
+
+> Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable.
+
+## ToDo
+
+* Printing stacktrace does only work with gcc/llvm
 * Support for other logrotation services like newsyslog or LogRotateWin
 
-##FAQ##
+## FAQ
 
 **Yet another logger lib, why?**
 
 I wanted to have a flexible and easy to use logger lib for my c++ projects.
-Especially one that makes use of the new c++11 features.
+Especially one that makes use of the new c++11 features and uses concurrency.
 
 **Why does it not have feature X?**
 
 Feel free to fork the project and make a pull request!
 
-##License##
+## License
 
 ```
 Copyright (C) 2013 - 2016 Christian Rapp
