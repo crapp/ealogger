@@ -61,20 +61,20 @@ some messages.
 
 ```c++
 std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
-    new EALogger(EALogger::logLevels::INFO,
+    new EALogger(EALogger::log_level::INFO,
                      true,
                      true,
                      false,
                      false,
                      "%H:%M:%S",
                      "logToMe.log"));
-log->write_log(EALogger::logLevels::DEBUG,
+log->write_log(EALogger::log_level::DEBUG,
              "Do you see me?");
-log->write_log(EALogger::logLevels::WARNING,
+log->write_log(EALogger::log_level::WARNING,
              "A warning message");
-log->write_log(EALogger::logLevels::ERROR,
+log->write_log(EALogger::log_level::ERROR,
              "An error message");
-log->write_log(EALogger::logLevels::FATAL,
+log->write_log(EALogger::log_level::FATAL,
              "A fatal message");
 log->stack_trace(10);
 ```

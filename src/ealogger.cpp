@@ -15,16 +15,17 @@
 
 #include "ealogger.h"
 
-EALogger::EALogger(EALogger::logLevels minLvl, bool logToSTDOUT, bool logToFile,
-                   bool logToSyslog, bool multithreading, bool printThreadID,
-                   std::string dateTimeFormat, std::string logfile)
-    : minLevel(minLvl),
+EALogger::EALogger(EALogger::log_level min_level, bool logToSTDOUT,
+                   bool logToFile, bool logToSyslog, bool async,
+                   bool printThreadID, std::string dt_format,
+                   std::string logfile)
+    : min_level(min_level),
       logToSTDOUT(logToSTDOUT),
       logToFile(logToFile),
       logToSyslog(logToSyslog),
-      multithreading(multithreading),
+      async(async),
       printThreadID(printThreadID),
-      dateTimeFormat(dateTimeFormat),
+      dt_format(dt_format),
       logfilePath(logfile)
 {
     // TODO: Make registration of signal handler configurable
@@ -34,19 +35,19 @@ EALogger::EALogger(EALogger::logLevels minLvl, bool logToSTDOUT, bool logToFile,
         throw std::runtime_error("Could not create signal handler for SIGUSR1");
 #endif
 
-    this->loglevelStringMap = {{EALogger::logLevels::DEBUG, " DEBUG: "},
-                               {EALogger::logLevels::INFO, " INFO: "},
-                               {EALogger::logLevels::WARNING, " WARNING: "},
-                               {EALogger::logLevels::ERROR, " ERROR: "},
-                               {EALogger::logLevels::FATAL, " FATAL: "},
-                               {EALogger::logLevels::INTERNAL, " INTERNAL: "}};
+    this->loglevelStringMap = {{EALogger::log_level::DEBUG, " DEBUG: "},
+                               {EALogger::log_level::INFO, " INFO: "},
+                               {EALogger::log_level::WARNING, " WARNING: "},
+                               {EALogger::log_level::ERROR, " ERROR: "},
+                               {EALogger::log_level::FATAL, " FATAL: "},
+                               {EALogger::log_level::INTERNAL, " INTERNAL: "}};
 #ifdef SYSLOG
-    this->loglevelSyslogMap = {{EALogger::logLevels::DEBUG, LOG_DEBUG},
-                               {EALogger::logLevels::INFO, LOG_INFO},
-                               {EALogger::logLevels::WARNING, LOG_WARNING},
-                               {EALogger::logLevels::ERROR, LOG_ERR},
-                               {EALogger::logLevels::FATAL, LOG_CRIT},
-                               {EALogger::logLevels::INTERNAL,
+    this->loglevelSyslogMap = {{EALogger::log_level::DEBUG, LOG_DEBUG},
+                               {EALogger::log_level::INFO, LOG_INFO},
+                               {EALogger::log_level::WARNING, LOG_WARNING},
+                               {EALogger::log_level::ERROR, LOG_ERR},
+                               {EALogger::log_level::FATAL, LOG_CRIT},
+                               {EALogger::log_level::INTERNAL,
                                 LOG_DEBUG}};  // mapping internal to syslog debug
 #else
     this->loglevelSyslogMap = {};
@@ -61,7 +62,7 @@ EALogger::EALogger(EALogger::logLevels minLvl, bool logToSTDOUT, bool logToFile,
         this->logFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     }
 
-    if (this->multithreading) {
+    if (this->async) {
         backgroundLoggerStop = false;
         backgroundLogger = std::thread(&EALogger::logThreadFunc, this);
     }
@@ -69,7 +70,7 @@ EALogger::EALogger(EALogger::logLevels minLvl, bool logToSTDOUT, bool logToFile,
 
 EALogger::~EALogger()
 {
-    if (this->multithreading) {
+    if (this->async) {
         // wait for queue to be emptied. after 1 second we will exit the background logger thread
         int i = 0;
         // TODO: Make this wait for queue to be empty optional
@@ -82,7 +83,7 @@ EALogger::~EALogger()
         this->setBackgroundLoggerStop(true);
         // we need to write one more log message to wakeup the background logger
         // thread it will pop the last message from the queue.
-        this->write_log(EALogger::logLevels::INTERNAL, "Logger exit");
+        this->write_log(EALogger::log_level::INTERNAL, "Logger exit");
         try {
             backgroundLogger.join();
         } catch (const std::system_error &ex) {
@@ -96,10 +97,10 @@ EALogger::~EALogger()
     }
 }
 
-void EALogger::write_log(EALogger::logLevels lvl, std::string msg)
+void EALogger::write_log(EALogger::log_level lvl, std::string msg)
 {
     std::shared_ptr<LogMessage> m;
-    if (multithreading) {
+    if (this->async) {
         m = std::make_shared<LogMessage>(lvl, std::move(msg),
                                          LogMessage::LOGTYPE::DEFAULT);
         this->logDataQueue.push(m);
@@ -112,27 +113,27 @@ void EALogger::write_log(EALogger::logLevels lvl, std::string msg)
 
 void EALogger::debug(std::string msg)
 {
-    this->write_log(EALogger::logLevels::DEBUG, std::move(msg));
+    this->write_log(EALogger::log_level::DEBUG, std::move(msg));
 }
 
 void EALogger::info(std::string msg)
 {
-    this->write_log(EALogger::logLevels::INFO, std::move(msg));
+    this->write_log(EALogger::log_level::INFO, std::move(msg));
 }
 
 void EALogger::warn(std::string msg)
 {
-    this->write_log(EALogger::logLevels::WARNING, std::move(msg));
+    this->write_log(EALogger::log_level::WARNING, std::move(msg));
 }
 
 void EALogger::error(std::string msg)
 {
-    this->write_log(EALogger::logLevels::ERROR, std::move(msg));
+    this->write_log(EALogger::log_level::ERROR, std::move(msg));
 }
 
 void EALogger::fatal(std::string msg)
 {
-    this->write_log(EALogger::logLevels::FATAL, std::move(msg));
+    this->write_log(EALogger::log_level::FATAL, std::move(msg));
 }
 
 void EALogger::stack_trace(unsigned int size)
@@ -185,8 +186,8 @@ void EALogger::stack_trace(unsigned int size)
         free(realname);
     }
     std::shared_ptr<LogMessage> m = std::make_shared<LogMessage>(
-        EALogger::logLevels::DEBUG, stackvec, LogMessage::LOGTYPE::STACK);
-    if (multithreading) {
+        EALogger::log_level::DEBUG, stackvec, LogMessage::LOGTYPE::STACK);
+    if (this->async) {
         this->logDataQueue.push(m);
     } else {
         this->internalLogRoutine(m);
@@ -194,16 +195,16 @@ void EALogger::stack_trace(unsigned int size)
 #endif
 }
 
-void EALogger::setDateTimeFormat(std::string fmt)
+void EALogger::set_dt_format(std::string fmt)
 {
-    std::lock_guard<std::mutex> guard(this->mtx_dateTimeFormat);
-    this->dateTimeFormat = fmt;
+    std::lock_guard<std::mutex> guard(this->mtx_dt_format);
+    this->dt_format = fmt;
 }
 
-std::string EALogger::getDateTimeFormat()
+std::string EALogger::get_dt_format()
 {
-    std::lock_guard<std::mutex> guard(this->mtx_dateTimeFormat);
-    return this->dateTimeFormat;
+    std::lock_guard<std::mutex> guard(this->mtx_dt_format);
+    return this->dt_format;
 }
 
 void EALogger::setLogToSTDOUT(bool b)
@@ -274,7 +275,7 @@ void EALogger::logThreadFunc()
 void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
 {
     // lock mutex because iostreams or fstreams are not threadsafe
-    if (!this->multithreading)
+    if (!this->async)
         std::lock_guard<std::mutex> lock(this->mtx_log);
     if (EALogger::receivedSIGUSR1) {
         EALogger::receivedSIGUSR1 = false;
@@ -287,10 +288,10 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
         // set exception mask for the file stream
         this->logFile.exceptions(std::ifstream::badbit | std::ifstream::failbit);
     }
-    EALogger::logLevels msgLevel =
-        static_cast<EALogger::logLevels>(m->getSeverity());
-    if (msgLevel >= this->minLevel ||
-        m->getLogType() == LogMessage::LOGTYPE::STACK) {
+    EALogger::log_level msgLevel =
+        static_cast<EALogger::log_level>(m->get_severity());
+    if (msgLevel >= this->min_level ||
+        m->get_log_type() == LogMessage::LOGTYPE::STACK) {
         try {
             std::string tID = "";
             if (this->printThreadID) {
@@ -299,11 +300,10 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
                 tID = " " + ss.str();
             }
 
-            if (m->getLogType() == LogMessage::LOGTYPE::STACK) {
+            if (m->get_log_type() == LogMessage::LOGTYPE::STACK) {
                 std::stringstream stackLogMessage;
                 stackLogMessage
-                    << "["
-                    << this->getFormattedTimeString(this->getDateTimeFormat())
+                    << "[" << this->getFormattedTimeString(this->get_dt_format())
                     << "]" << tID << " Stacktrace: " << std::endl;
                 if (this->getLogToSTDOUT()) {
                     std::cout << stackLogMessage.str();
@@ -319,8 +319,8 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
                 // TODO: Old style vector iteration. c++11 range based for loop
                 // would be nice
                 for (std::vector<std::string>::const_iterator it =
-                         m->getStackElementsBegin();
-                     it != m->getStackElementsEnd(); it++) {
+                         m->get_msg_vec_begin();
+                     it != m->get_msg_vec_end(); it++) {
                     if (this->getLogToSTDOUT())
                         std::cout << "\t" << *it << std::endl;
                     if (this->getLogToFile())
@@ -335,7 +335,7 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
             } else {
 #ifndef PRINT_INTERNAL_MESSAGES
                 // Print INTERNAL messages only when defined
-                if (msgLevel == EALogger::logLevels::INTERNAL) {
+                if (msgLevel == EALogger::log_level::INTERNAL) {
                     return;
                 }
 #endif
@@ -343,9 +343,8 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
                     this->loglevelStringMap.at(msgLevel);
                 std::stringstream logStringStream;
                 logStringStream
-                    << "["
-                    << this->getFormattedTimeString(this->getDateTimeFormat())
-                    << "]" << tID << msgLevelString << m->getMessage()
+                    << "[" << this->getFormattedTimeString(this->get_dt_format())
+                    << "]" << tID << msgLevelString << m->get_message()
                     << std::endl;
                 if (this->getLogToSTDOUT())
                     std::cout << logStringStream.str();
@@ -354,7 +353,7 @@ void EALogger::internalLogRoutine(std::shared_ptr<LogMessage> m)
 #ifdef SYSLOG
                 if (this->getLogToSyslog())
                     syslog(this->loglevelSyslogMap.at(msgLevel), "%s",
-                           m->getMessage().c_str());
+                           m->get_message().c_str());
 #endif
             }
 

@@ -67,7 +67,7 @@ public:
      * This enum is used to define the severity of a log message and to set the
      * minimum loglevel.
      */
-    enum logLevels {
+    enum log_level {
         DEBUG = 0,   /**< Debug message */
         INFO = 1,    /**< Info message */
         WARNING = 2, /**< Warning message */
@@ -78,16 +78,16 @@ public:
 
     /**
      * @brief EALogger constructor
-     * @param minLvl Minim loglevel, all messages with a lower severity will be discarded
+     * @param min_level Minim loglevel, all messages with a lower severity will be discarded
      * @param logToSTDOUT Boolean to indicate whether or not to write to stdout. Can be changed on runtime
      * @param logToFile Boolean to indicate whether or not to write to a logfile. Can be changed on runtime
      * @param logToSyslog Boolean to indicate whether or not to use syslog (for example systemd) on Linux/BSD
-     * @param multithreading Boolean if activated ealogger uses a background thread to write messages to a stream
-     * @param dateTimeFormat The Date Time format specifiers.
+     * @param async Boolean if activated ealogger uses a background thread to write messages to a stream
+     * @param dt_format The Date Time format specifiers.
      * @param logfile The logfile to use
      *
      * Internally std::strftime is used from header ctime to create formatted time strings.
-     * So for parameter dateTimeFormat you have to use format specifiers that are
+     * So for parameter dt_format you have to use format specifiers that are
      * recognised by strftime. See [en.cppreference.com](http://en.cppreference.com/w/cpp/chrono/c/strftime)
      * for details.
      *
@@ -95,7 +95,7 @@ public:
      *
      * You can switch logging to all streams and sinks on and off seperatly.
      *
-     * Use the Parameter multithreading to activate a background logger thread. This way
+     * Use the Parameter async to activate a background logger thread. This way
      * logging will no longer slow down your application which is important for high
      * performance or time critical events. The only overhead is creating a LogMessage
      * object and pushing it in a Queue.
@@ -106,21 +106,21 @@ public:
      * The constructor automatically registers a signal handler for SIGUSR1.
      * This allows logrotation with logrotate on supported systems
      */
-    EALogger(logLevels minLvl = EALogger::logLevels::DEBUG,
+    EALogger(log_level min_level = EALogger::log_level::DEBUG,
              bool logToSTDOUT = true, bool logToFile = false,
-             bool logToSyslog = false, bool multithreading = true,
-             bool printThreadID = false, std::string dateTimeFormat = "%F %T",
+             bool logToSyslog = false, bool async = true,
+             bool printThreadID = false, std::string dt_format = "%F %T",
              std::string logfile = "");
     ~EALogger();
 
     /**
      * @brief Issue a Logmessage
-     * @param lvl The severity of the message, EALogger#logLevels
+     * @param lvl The severity of the message, EALogger#log_level
      * @param msg The message text
      */
-    void write_log(EALogger::logLevels lvl, std::string msg);
+    void write_log(EALogger::log_level lvl, std::string msg);
     // template <typename T>
-    // void write_log(EALogger::logLevels lvl, T msg);
+    // void write_log(EALogger::log_level lvl, T msg);
 
     /**
      * @brief Debug log message
@@ -175,10 +175,10 @@ public:
 
     /**
      * @brief Set the Date Time format specifier
-     * @param s Format specifier string
+     * @param fmt Format specifier string
      */
-    void setDateTimeFormat(std::string fmt);
-    std::string getDateTimeFormat();
+    void set_dt_format(std::string fmt);
+    std::string get_dt_format();
 
     /**
      * @brief Enable/Disable logging to stdout
@@ -209,31 +209,31 @@ public:
     bool getPrintThreadID();
 
 private:
-    /** Mutex used when not in multithreading mode */
+    /** Mutex used when not in async mode */
     std::mutex mtx_log;
     std::mutex mtx_logToSTDOUT;
     std::mutex mtx_logToFile;
     std::mutex mtx_logToSyslog;
     std::mutex mtx_pThreadID;
-    std::mutex mtx_dateTimeFormat;
+    std::mutex mtx_dt_format;
     std::mutex mtx_backgroundLoggerStop;
 
     static bool receivedSIGUSR1;
 
     /** Minimum severity that is handled */
-    EALogger::logLevels minLevel;
+    EALogger::log_level min_level;
 
     bool logToSTDOUT;
     bool logToFile;
     bool logToSyslog;
-    bool multithreading;
+    bool async;
     bool printThreadID;
 
-    std::string dateTimeFormat;
+    std::string dt_format;
     std::string logfilePath;
     std::ofstream logFile;
 
-    /** Threadsafe queue for multithreading mode */
+    /** Threadsafe queue for async mode */
     LogQueue logDataQueue;
     /** Background thread */
     std::thread backgroundLogger;
@@ -241,9 +241,9 @@ private:
     bool backgroundLoggerStop;
 
     /** lookup table for logelevel Strings */
-    std::map<EALogger::logLevels, std::string> loglevelStringMap;
+    std::map<EALogger::log_level, std::string> loglevelStringMap;
     /** map syslog message priority to our loglevels */
-    std::map<EALogger::logLevels, int> loglevelSyslogMap;
+    std::map<EALogger::log_level, int> loglevelSyslogMap;
 
     /** Static Method to be registered for logrotate signal */
     static void logrotate(int signo);

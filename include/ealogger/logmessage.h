@@ -34,28 +34,30 @@ public:
     /**
      * @brief A constant iterator typedef that is internally used
      */
-    typedef std::vector<std::string>::const_iterator stackMsgIt;
+    typedef std::vector<std::string>::const_iterator msg_vec_it;
 
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message, EALogger#logLevels
+     * @param severity Is the severity of the message, EALogger#log_level
      * @param message Message as std::string
-     * @param logType LogMessage#LOGTYPE
+     * @param log_type LogMessage#LOGTYPE
      */
-    LogMessage(int severity, std::string message, LOGTYPE logType)
-        : severity(severity), message(message), logType(logType)
+    LogMessage(int severity, std::string message, LOGTYPE log_type)
+        : severity(severity), message(std::move(message)), log_type(log_type)
     {
         this->t = std::chrono::system_clock::now();
     }
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message, EALogger#logLevels
-     * @param messageVec A vector<std::string> containing the stack elements
-     * @param logType LogMessage#LOGTYPE
+     * @param severity Is the severity of the message, EALogger#log_level
+     * @param message_vec A vector<std::string> containing the stack elements
+     * @param log_type LogMessage#LOGTYPE
      */
-    LogMessage(int severity, std::vector<std::string> messageVec,
-               LOGTYPE logType)
-        : severity(severity), messageVec(messageVec), logType(logType)
+    LogMessage(int severity, std::vector<std::string> message_vec,
+               LOGTYPE log_type)
+        : severity(severity),
+          message_vec(std::move(message_vec)),
+          log_type(log_type)
     {
         this->t = std::chrono::system_clock::now();
         this->message = "";
@@ -63,29 +65,29 @@ public:
 
     /**
      * @brief Returns the severity of the message
-     * @return Severity returned as int, EALogger#logLevels
+     * @return Severity returned as int, EALogger#log_level
      */
-    int getSeverity() { return this->severity; }
+    int get_severity() { return this->severity; }
     /**
      * @brief Get the log message
      * @return Log message as std::string
      */
-    std::string getMessage() { return this->message; }
+    std::string get_message() { return this->message; }
     /**
      * @brief Get the log message type
      * @return LogMessage#LOGTYPE
      */
-    LOGTYPE getLogType() { return this->logType; }
+    LOGTYPE get_log_type() { return this->log_type; }
     /**
      * @brief Returns a constant iterator pointing the begin of the message vector
-     * @return #stackMsgIt
+     * @return #msg_vec_it
      */
-    stackMsgIt getStackElementsBegin() { return this->messageVec.cbegin(); }
+    msg_vec_it get_msg_vec_begin() { return this->message_vec.cbegin(); }
     /**
      * @brief Returns a constant iterator pointing the end of the message vector
-     * @return #stackMsgIt
+     * @return #msg_vec_it
      */
-    stackMsgIt getStackElementsEnd() { return this->messageVec.cend(); }
+    msg_vec_it get_msg_vec_end() { return this->message_vec.cend(); }
 private:
     /** Time Point when this log message was created*/
     std::chrono::system_clock::time_point t;
@@ -93,10 +95,10 @@ private:
     int severity;
     /** The log message */
     std::string message;
-    /** A vector of stack elements */
-    std::vector<std::string> messageVec;
+    /** A vector of messages */
+    std::vector<std::string> message_vec;
     /** The log message type */
-    LOGTYPE logType;
+    LOGTYPE log_type;
 };
 
 #endif  // LOGMESSAGE_H

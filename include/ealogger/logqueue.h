@@ -44,32 +44,33 @@
 class LogQueue
 {
 public:
-	LogQueue();
+    LogQueue();
 
-	/**
+    /**
      * @brief Push LogMessage in the Queue.
      * @param m LogMessage object as shared pointer
      */
-	void push(std::shared_ptr<LogMessage> m);
-	/**
+    void push(std::shared_ptr<LogMessage> m);
+    /**
      * @brief Get the next LogMessage object in the Queue and remove it
      * @return Shared pointer LogMessage object
      */
-	std::shared_ptr<LogMessage> pop();
-	/**
+    std::shared_ptr<LogMessage> pop();
+    /**
      * @brief Check if the Queue is empty
      * @return True if it is empty, otherwise false
      */
-	bool empty();
+    bool empty();
 
 private:
-	/** The Mutex that makes the Queue threadsafe */
-	std::mutex mtx;
-	std::queue<std::shared_ptr<LogMessage>> logQueueInternal;
-	/** conditional variable we use to signal the background thread to wake up and
+    /** The Mutex that makes the Queue threadsafe */
+    std::mutex mtx;
+    std::queue<std::shared_ptr<LogMessage>> msg_queue;
+    /**
+     * conditional variable we use to signal the background thread to wake up and
      * pop a new LogMessage object and route it to the internal message method
      */
-	std::condition_variable condLogQueueInternal;
+    std::condition_variable cond_var_queue;
 };
 
 #endif  // LOGQUEUE_H

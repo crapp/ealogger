@@ -20,9 +20,9 @@ void LogQueue::push(std::shared_ptr<LogMessage> m)
 {
     // acquire the lock on the mutex and push a message object in the queue
     std::lock_guard<std::mutex> lock(this->mtx);
-    this->logQueueInternal.push(m);
+    this->msg_queue.push(m);
     // notify logger thread to wake up and pop latest message
-    this->condLogQueueInternal.notify_one();
+    this->cond_var_queue.notify_one();
 }
 
 std::shared_ptr<LogMessage> LogQueue::pop()
@@ -32,16 +32,16 @@ std::shared_ptr<LogMessage> LogQueue::pop()
     // wait unlocks the acquired lock on this->mtx and puts the thread to sleep
     // until it gets notfied by notify_one(). The wakeup will only occur if the
     // used queue is not empty. After the wakeup the lock is reacquired. Now
-    this->condLogQueueInternal.wait(
-        lock, [this]() { return !this->logQueueInternal.empty(); });
+    this->cond_var_queue.wait(lock,
+                              [this]() { return !this->msg_queue.empty(); });
 
-    std::shared_ptr<LogMessage> LogMessage = this->logQueueInternal.front();
-    this->logQueueInternal.pop();
-    return LogMessage;
+    std::shared_ptr<LogMessage> lmessage = this->msg_queue.front();
+    this->msg_queue.pop();
+    return lmessage;
 }
 
 bool LogQueue::empty()
 {
     std::lock_guard<std::mutex> lock(this->mtx);
-    return this->logQueueInternal.empty();
+    return this->msg_queue.empty();
 }

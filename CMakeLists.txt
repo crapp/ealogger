@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.4)
 project(ealogger)
 
 # Version Number
@@ -25,8 +25,8 @@ endif(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
     execute_process(
         COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
-    if (NOT (GCC_VERSION VERSION_GREATER 4.7 OR GCC_VERSION VERSION_EQUAL 4.7))
-        message(FATAL_ERROR "${PROJECT_NAME} requires g++ 4.7 or greater.")
+    if (NOT (GCC_VERSION VERSION_GREATER 4.9 OR GCC_VERSION VERSION_EQUAL 4.9))
+        message(FATAL_ERROR "${PROJECT_NAME} requires g++ 4.9 or greater.")
     endif ()
 elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
     if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
