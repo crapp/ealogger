@@ -68,15 +68,15 @@ std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
                      false,
                      "%H:%M:%S",
                      "logToMe.log"));
-log->writeLog(EALogger::logLevels::DEBUG,
+log->write_log(EALogger::logLevels::DEBUG,
              "Do you see me?");
-log->writeLog(EALogger::logLevels::WARNING,
+log->write_log(EALogger::logLevels::WARNING,
              "A warning message");
-log->writeLog(EALogger::logLevels::ERROR,
+log->write_log(EALogger::logLevels::ERROR,
              "An error message");
-log->writeLog(EALogger::logLevels::FATAL,
+log->write_log(EALogger::logLevels::FATAL,
              "A fatal message");
-log->printStackTrace(10);
+log->stack_trace(10);
 ```
 This will output:
 ```shell
@@ -84,7 +84,7 @@ This will output:
 [17:55:28] ERROR: An error message
 [17:55:28] FATAL: A fatal message
 [17:55:28] Stacktrace:
-    .../libealogger.so(_ZN12EALogger15printStackTraceEj+0xb1) [0x7fb21db14ce3]
+    .../libealogger.so(_ZN12EALogger15stack_traceEj+0xb1) [0x7fb21db14ce3]
   .../logtest(main+0x6f6) [0x402cb3]
   /usr/lib/libc.so.6(__libc_start_main+0xf5) [0x7fb21cd3bb05]
   .../logtest() [0x4024f9]

@@ -93,7 +93,7 @@ public:
      *
      * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
      *
-     * You can swith logging to stdout or a logfile on and off seperatly.
+     * You can switch logging to all streams and sinks on and off seperatly.
      *
      * Use the Parameter multithreading to activate a background logger thread. This way
      * logging will no longer slow down your application which is important for high
@@ -118,16 +118,58 @@ public:
      * @param lvl The severity of the message, EALogger#logLevels
      * @param msg The message text
      */
-    void writeLog(EALogger::logLevels lvl, std::string msg);
+    void write_log(EALogger::logLevels lvl, std::string msg);
+    // template <typename T>
+    // void write_log(EALogger::logLevels lvl, T msg);
 
     /**
-     * @brief Print a Stacktrace
+     * @brief Debug log message
+     *
+     * @param msg The message text
+     * @details
+     * This is a convenience method to directly write a debug message
+     */
+    void debug(std::string msg);
+    /**
+     * @brief Info log message
+     *
+     * @param msg The message text
+     * @details
+     * This is a convenience method to directly write an info message
+     */
+    void info(std::string msg);
+    /**
+     * @brief Warning log message
+     *
+     * @param msg The message text
+     * @details
+     * This is a convenience method to directly write a warning message
+     */
+    void warn(std::string msg);
+    /**
+     * @brief Error log message
+     *
+     * @param msg The message text
+     * @details
+     * This is a convenience method to directly write an error message
+     */
+    void error(std::string msg);
+    /**
+     * @brief Fatal log message
+     *
+     * @param msg The message text
+     * @details
+     * This is a convenience method to directly write a fatal message
+     */
+    void fatal(std::string msg);
+
+    /**
+     * @brief Print a demangled stacktrace
      * @param size How many elements of the stack you wish to be printed.
      *
-     * So far no demangeling is implemented yet. The method only works with gcc/llvm
-     * compiled software.
+     * The method only works with gcc/llvm compiled software.
      */
-    void printStackTrace(unsigned int size);
+    void stack_trace(unsigned int size);
 
     // getters and setters for private members we want to expose
 
@@ -135,7 +177,7 @@ public:
      * @brief Set the Date Time format specifier
      * @param s Format specifier string
      */
-    void setDateTimeFormat(const std::string s);
+    void setDateTimeFormat(std::string fmt);
     std::string getDateTimeFormat();
 
     /**

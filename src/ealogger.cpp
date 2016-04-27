@@ -50,7 +50,6 @@ EALogger::EALogger(EALogger::logLevels minLvl, bool logToSTDOUT, bool logToFile,
                                 LOG_DEBUG}};  // mapping internal to syslog debug
 #else
     this->loglevelSyslogMap = {};
-    std::cout << "Map empty" << std::endl;
 #endif
 
     if (this->getLogToFile()) {
@@ -73,6 +72,7 @@ EALogger::~EALogger()
     if (this->multithreading) {
         // wait for queue to be emptied. after 1 second we will exit the background logger thread
         int i = 0;
+        // TODO: Make this wait for queue to be empty optional
         while (!logDataQueue.empty()) {
             if (i == 100)
                 break;
@@ -82,7 +82,7 @@ EALogger::~EALogger()
         this->setBackgroundLoggerStop(true);
         // we need to write one more log message to wakeup the background logger
         // thread it will pop the last message from the queue.
-        this->writeLog(EALogger::logLevels::INTERNAL, "Logger exit");
+        this->write_log(EALogger::logLevels::INTERNAL, "Logger exit");
         try {
             backgroundLogger.join();
         } catch (const std::system_error &ex) {
@@ -96,19 +96,46 @@ EALogger::~EALogger()
     }
 }
 
-void EALogger::writeLog(EALogger::logLevels lvl, std::string msg)
+void EALogger::write_log(EALogger::logLevels lvl, std::string msg)
 {
     std::shared_ptr<LogMessage> m;
     if (multithreading) {
-        m = std::make_shared<LogMessage>(lvl, msg, LogMessage::LOGTYPE::DEFAULT);
+        m = std::make_shared<LogMessage>(lvl, std::move(msg),
+                                         LogMessage::LOGTYPE::DEFAULT);
         this->logDataQueue.push(m);
     } else {
-        m = std::make_shared<LogMessage>(lvl, msg, LogMessage::LOGTYPE::DEFAULT);
+        m = std::make_shared<LogMessage>(lvl, std::move(msg),
+                                         LogMessage::LOGTYPE::DEFAULT);
         this->internalLogRoutine(m);
     }
 }
 
-void EALogger::printStackTrace(unsigned int size)
+void EALogger::debug(std::string msg)
+{
+    this->write_log(EALogger::logLevels::DEBUG, std::move(msg));
+}
+
+void EALogger::info(std::string msg)
+{
+    this->write_log(EALogger::logLevels::INFO, std::move(msg));
+}
+
+void EALogger::warn(std::string msg)
+{
+    this->write_log(EALogger::logLevels::WARNING, std::move(msg));
+}
+
+void EALogger::error(std::string msg)
+{
+    this->write_log(EALogger::logLevels::ERROR, std::move(msg));
+}
+
+void EALogger::fatal(std::string msg)
+{
+    this->write_log(EALogger::logLevels::FATAL, std::move(msg));
+}
+
+void EALogger::stack_trace(unsigned int size)
 {
 #ifdef __GLIBC__
     void *addrlist[size + 1];
@@ -167,10 +194,10 @@ void EALogger::printStackTrace(unsigned int size)
 #endif
 }
 
-void EALogger::setDateTimeFormat(const std::string s)
+void EALogger::setDateTimeFormat(std::string fmt)
 {
     std::lock_guard<std::mutex> guard(this->mtx_dateTimeFormat);
-    this->dateTimeFormat = s;
+    this->dateTimeFormat = fmt;
 }
 
 std::string EALogger::getDateTimeFormat()
@@ -349,6 +376,7 @@ std::string EALogger::getFormattedTimeString(const std::string &timeFormat)
 
     std::time(&rawtime);
     timeinfo = std::localtime(&rawtime);
+    //    localtime_r
 
     std::strftime(buffer, 80, timeFormat.c_str(), timeinfo);
     return (std::string(buffer));
