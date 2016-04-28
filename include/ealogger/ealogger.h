@@ -55,8 +55,23 @@
  * @brief ealogger main header
  * @author Christian Rapp (crapp)
  *
+ * @details
  * The ealogger class provides all the functionality you need for your application
- * to log messages.
+ * to log messages. It can be as simple as in the following example.
+ *
+ * @code
+ * EALogger logger;
+ * logger.debug("My application is just awesome");
+ * @endcode
+ *
+ * First you have to decide if you want to write to the console, a file or syslog.
+ * The asynchronuous can be turned on or off and you can of course change the date
+ * time format. The EALogger::EALogger constructor has additional details on the
+ * different parameters and options.
+ *
+ * ealogger itself is threadsafe. Meaning if you use the same instance all over
+ * your application it will make sure only one message at a time is written to an
+ * iostream for example.
  */
 class EALogger
 {
@@ -78,15 +93,21 @@ public:
 
     /**
      * @brief EALogger constructor
-     * @param min_level Minim loglevel, all messages with a lower severity will be discarded
-     * @param logToSTDOUT Boolean to indicate whether or not to write to stdout. Can be changed on runtime
-     * @param logToFile Boolean to indicate whether or not to write to a logfile. Can be changed on runtime
-     * @param logToSyslog Boolean to indicate whether or not to use syslog (for example systemd) on Linux/BSD
-     * @param async Boolean if activated ealogger uses a background thread to write messages to a stream
-     * @param dt_format The Date Time format specifiers.
+     * @param min_level Minimum loglevel, all messages with a lower severity will
+     * be discarded
+     * @param log_to_console Boolean to indicate whether or not to write to console.
+     * Can be changed on runtime
+     * @param log_to_file Boolean to indicate whether or not to write to a file.
+     * Can be changed on runtime
+     * @param log_to_syslog Boolean to indicate whether or not to use syslog
+     * (for example systemd) on Linux/BSD
+     * @param async Boolean if activated ealogger uses a background thread to
+     * write messages to a stream
+     * @param dt_format The Date Time format specifiers
      * @param logfile The logfile to use
      *
-     * Internally std::strftime is used from header ctime to create formatted time strings.
+     * Internally std::strftime is used from header ctime to create formatted time
+     * strings.
      * So for parameter dt_format you have to use format specifiers that are
      * recognised by strftime. See [en.cppreference.com](http://en.cppreference.com/w/cpp/chrono/c/strftime)
      * for details.
@@ -107,9 +128,9 @@ public:
      * This allows logrotation with logrotate on supported systems
      */
     EALogger(log_level min_level = EALogger::log_level::DEBUG,
-             bool logToSTDOUT = true, bool logToFile = false,
-             bool logToSyslog = false, bool async = true,
-             bool printThreadID = false, std::string dt_format = "%F %T",
+             bool log_to_console = true, bool log_to_file = false,
+             bool log_to_syslog = false, bool async = true,
+             bool print_tid = false, std::string dt_format = "%F %T",
              std::string logfile = "");
     ~EALogger();
 
@@ -181,83 +202,97 @@ public:
     std::string get_dt_format();
 
     /**
-     * @brief Enable/Disable logging to stdout
+     * @brief Enable/Disable logging to stdo
      * @param b
      */
-    void setLogToSTDOUT(bool b);
-    bool getLogToSTDOUT();
+    void set_log_to_console(bool b);
+    bool get_log_to_console();
 
     /**
      * @brief Enable/Disable logging to logfile
      * @param b
      */
-    void setLogToFile(bool b);
-    bool getLogToFile();
+    void set_log_to_file(bool b);
+    bool get_log_to_file();
 
     /**
      * @brief Enable/Disable logging to syslog sink
      * @param b
      */
-    void setLogToSyslog(bool b);
-    bool getLogToSyslog();
+    void set_log_to_syslog(bool b);
+    bool get_log_to_syslog();
 
     /**
      * @brief Enable/Disable the priting of the Thread ID.
      * @param b
      */
-    void setPrintThreadID(bool b);
-    bool getPrintThreadID();
+    void set_print_tid(bool b);
+    bool get_print_tid();
 
 private:
     /** Mutex used when not in async mode */
     std::mutex mtx_log;
-    std::mutex mtx_logToSTDOUT;
-    std::mutex mtx_logToFile;
-    std::mutex mtx_logToSyslog;
-    std::mutex mtx_pThreadID;
+    std::mutex mtx_log_console;
+    std::mutex mtx_log_file;
+    std::mutex mtx_log_syslog;
+    std::mutex mtx_print_tid;
     std::mutex mtx_dt_format;
-    std::mutex mtx_backgroundLoggerStop;
+    std::mutex mtx_logger_stop;
 
-    static bool receivedSIGUSR1;
+    static bool signal_SIGUSR1;
 
     /** Minimum severity that is handled */
     EALogger::log_level min_level;
 
-    bool logToSTDOUT;
-    bool logToFile;
-    bool logToSyslog;
+    bool log_to_console;
+    bool log_to_file;
+    bool log_to_syslog;
     bool async;
-    bool printThreadID;
+    bool print_tid;
 
     std::string dt_format;
-    std::string logfilePath;
-    std::ofstream logFile;
+    std::string logfile_path;
+    std::ofstream logfile_stream;
 
     /** Threadsafe queue for async mode */
-    LogQueue logDataQueue;
+    LogQueue log_msg_queue;
     /** Background thread */
-    std::thread backgroundLogger;
+    std::thread logger_thread;
     /** Controls background logger thread */
-    bool backgroundLoggerStop;
+    bool logger_thread_stop;
 
-    /** lookup table for logelevel Strings */
-    std::map<EALogger::log_level, std::string> loglevelStringMap;
+    /** lookup table for loglevel Strings */
+    std::map<EALogger::log_level, std::string> loglevel_lookup;
     /** map syslog message priority to our loglevels */
-    std::map<EALogger::log_level, int> loglevelSyslogMap;
+    std::map<EALogger::log_level, int> loglevel_syslog_lookup;
 
     /** Static Method to be registered for logrotate signal */
     static void logrotate(int signo);
-    void logThreadFunc();
-    void internalLogRoutine(std::shared_ptr<LogMessage> m);
-    std::string getFormattedTimeString(const std::string &timeFormat);
-    std::string getFormattedTimeString(std::time_t t,
-                                       const std::string &timeFormat);
+
+    void thread_entry_point();
+    /**
+     * @brief This method writes the LogMessage to all activated sinks
+     *
+     * @param m LogMessage
+     */
+    void internal_log_routine(std::shared_ptr<LogMessage> m);
+
+    /**
+     * @brief Get a formatted time string based on dt_format
+     *
+     * @param time_format
+     *
+     * @return 
+     */
+    std::string format_time_to_string(const std::string &time_format);
+    std::string format_time_to_string(std::time_t t,
+                                      const std::string &time_format);
     /*
      * So far controlling the background logger thread is only possible for the logger
      * object itself.
      */
-    bool getBackgroundLoggerStop();
-    void setBackgroundLoggerStop(bool stop);
+    bool get_logger_thread_stop();
+    void set_logger_thread_stop(bool stop);
 };
 
 #endif  // EALOGGER_H

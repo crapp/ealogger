@@ -1,0 +1,7 @@
+(B) 2016-04-28 Use libunwind to print a stack trace on gcc/llvm as this also works with static libs http://eli.thegreenplace.net/2015/programmatic-access-to-the-call-stack-in-c/
+(A) 2016-04-28 Support printing of stack trace for Windows
+(A) 2016-04-28 Use localtime_r to get a threadsafe tm struct
+(A) 2016-04-28 Implement some kind of lifetime management
+(B) 2016-04-28 Config file for logger would be nice
+(A) 2016-04-28 The different sinks should implement an Interface. Objects of this interface should be added some vector and the vector should be used to write the log messages.
+(C) 2016-04-28 Support for other logrotation services like newsyslog or LogRotateWin

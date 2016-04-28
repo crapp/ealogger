@@ -26,7 +26,6 @@ int main(int argc, const char* argv[])
     std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
         new EALogger(EALogger::log_level::INFO, true, true, false, false, true,
                      "%H:%M:%S", "logToMe.log"));
-    std::chrono::steady_clock::time_point t = std::chrono::steady_clock::now();
 
     std::stringstream version;
     version << VERSION_MAJOR << "." << VERSION_MINOR;
@@ -34,6 +33,7 @@ int main(int argc, const char* argv[])
         version << "." << VERSION_PATCH;
     }
 
+    std::chrono::steady_clock::time_point t = std::chrono::steady_clock::now();
     log->write_log(EALogger::log_level::INFO,
                    "Logtester of ealogger " + version.str() + " is starting");
     log->write_log(EALogger::log_level::INFO,
@@ -44,13 +44,13 @@ int main(int argc, const char* argv[])
     log->write_log(EALogger::log_level::ERROR, "An error message");
     log->write_log(EALogger::log_level::FATAL, "A fatal message");
 
-    log->setLogToSTDOUT(false);
+    log->set_log_to_console(false);
     log->write_log(EALogger::log_level::INFO, "Logging to stdout deactivated");
-    log->setLogToFile(false);
+    log->set_log_to_file(false);
     log->write_log(EALogger::log_level::INFO, "Logging to file deactivated");
-    log->setLogToSTDOUT(true);
+    log->set_log_to_console(true);
     log->write_log(EALogger::log_level::INFO, "Logging to stdout reactivated");
-    log->setLogToFile(true);
+    log->set_log_to_file(true);
     log->write_log(EALogger::log_level::INFO, "Logging to file reactivated");
 
     log->write_log(EALogger::log_level::INFO,
@@ -62,9 +62,9 @@ int main(int argc, const char* argv[])
     int msNormal = std::chrono::duration_cast<std::chrono::microseconds>(
                        std::chrono::steady_clock::now() - t)
                        .count();
-    log->write_log(
-        EALogger::log_level::INFO,
-        "Logger needed " + std::to_string(msNormal) + "µs to do the logging");
+    log->write_log(EALogger::log_level::INFO, "Application needed " +
+                                                  std::to_string(msNormal) +
+                                                  "µs to do the logging");
 
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
@@ -74,7 +74,8 @@ int main(int argc, const char* argv[])
                                                  "%H:%M:%S", "logToMe.log"));
     t = std::chrono::steady_clock::now();
 
-    log->write_log(EALogger::log_level::INFO, "Logtester is starting");
+    log->write_log(EALogger::log_level::INFO,
+                   "Logtester of ealogger " + version.str() + " is starting");
     log->write_log(EALogger::log_level::INFO,
                    "Next message has lower severity than defined minimum");
 
@@ -83,13 +84,13 @@ int main(int argc, const char* argv[])
     log->write_log(EALogger::log_level::ERROR, "An error message");
     log->write_log(EALogger::log_level::FATAL, "A fatal message");
 
-    log->setLogToSTDOUT(false);
+    log->set_log_to_console(false);
     log->write_log(EALogger::log_level::INFO, "Logging to stdout deactivated");
-    log->setLogToFile(false);
+    log->set_log_to_file(false);
     log->write_log(EALogger::log_level::INFO, "Logging to file deactivated");
-    log->setLogToSTDOUT(true);
+    log->set_log_to_console(true);
     log->write_log(EALogger::log_level::INFO, "Logging to stdout reactivated");
-    log->setLogToFile(true);
+    log->set_log_to_file(true);
     log->write_log(EALogger::log_level::INFO, "Logging to file reactivated");
 
     log->write_log(EALogger::log_level::INFO,
@@ -102,17 +103,19 @@ int main(int argc, const char* argv[])
                       std::chrono::steady_clock::now() - t)
                       .count();
     log->write_log(EALogger::log_level::INFO,
-                   "Logger needed " + std::to_string(msMulti) +
+                   "Application needed " + std::to_string(msMulti) +
                        "µs to do the logging in async mode");
 
     log->write_log(
         EALogger::log_level::INFO,
         "The Tester will now write to the System Log. This only works "
         "on Linux/BSD.");
+
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-    log->setLogToSyslog(true);
-    log->setLogToFile(false);
-    log->setLogToSTDOUT(false);
+
+    log->set_log_to_syslog(true);
+    log->set_log_to_file(false);
+    log->set_log_to_console(false);
 
     log->write_log(EALogger::log_level::INFO, "Hello World Syslog");
     log->write_log(EALogger::log_level::DEBUG, "This is a debug message");
@@ -122,11 +125,9 @@ int main(int argc, const char* argv[])
     log->write_log(EALogger::log_level::FATAL, "This is a fatal message");
     log->stack_trace(10);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-    log->setLogToFile(true);
-    log->setLogToSTDOUT(true);
-    log->setLogToSyslog(false);
+    log->set_log_to_file(true);
+    log->set_log_to_console(true);
+    log->set_log_to_syslog(false);
 
     log->write_log(EALogger::log_level::INFO,
                    "ealogger tester finished, bye bye");

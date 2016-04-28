@@ -202,10 +202,10 @@ We are currently at this stage
 
 > Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable.
 
-## ToDo
+## Bugs, feature requests, ideas
 
-* Printing stacktrace does only work with gcc/llvm
-* Support for other logrotation services like newsyslog or LogRotateWin
+Please use the [github bugtracker](https://github.com/crapp/ealogger/issues)
+to submit bugs or feature requests
 
 ## FAQ
 

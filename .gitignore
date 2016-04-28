@@ -145,6 +145,7 @@ Session.vim
 
 .lvimrc
 .ycm_extra_conf.py
+.agignore
 
 doc/html
 
