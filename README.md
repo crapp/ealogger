@@ -1,11 +1,11 @@
 # ealogger
 
 [![Build Status](https://travis-ci.org/crapp/ealogger.svg?branch=master)](https://travis-ci.org/crapp/ealogger)
-[![ealogger License](https://img.shields.io/badge/license-Apache-2.0-blue.svg)](#license)
+[![ealogger License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](#license)
 
 The **e**asy **a**synchronous logger provides a simple to use yet powerful logging
-functionality for c++ applications.
-You can use it to log to **stdout**, to a **logfile** or **system log (syslog)**.
+functionality for C++ applications.
+You can use it to log to **console**, to a **file** or **system log (syslog)**.
 It was designed to be fast (uses Threads) and flexible. The library registers a
 signal handler for SIGUSR1 and is compatible with logrotate (only available on
 linux currently). It was tested on Linux, Windows and OS X.
@@ -99,17 +99,15 @@ std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
                      false,
                      "%H:%M:%S",
                      "logToMe.log"));
-log->write_log(EALogger::log_level::DEBUG,
-             "Do you see me?");
-log->write_log(EALogger::log_level::WARNING,
-             "A warning message");
-log->write_log(EALogger::log_level::ERROR,
-             "An error message");
-log->write_log(EALogger::log_level::FATAL,
-             "A fatal message");
+log->debug("Do you see me?");
+log->info("An info message")
+log->warn("A warning message");
+log->error("An error message");
+log->fatal("A fatal message");
 ```
 This will output:
 ```shell
+[17:55:28] INFO: An info message
 [17:55:28] WARNING: A warning message
 [17:55:28] ERROR: An error message
 [17:55:28] FATAL: A fatal message
@@ -125,7 +123,7 @@ highlighting might be useful. If you are using a Unix system you may try
 [multitail](http://www.vanheusden.com/multitail/)
 
 Here is a screenshot how this might look like
-![ealogger multitail](http://crapp.github.io/ealogger/screenshots/SimpleLoggerMultitail.jpeg "EALogger multitail")
+![ealogger multitail](http://crapp.github.io/ealogger/screenshots/ealogger_multitail.jpeg "EALogger multitail")
 
 The color scheme for multitail I used to generate the colors in the
 screenshot looks like this
@@ -138,13 +136,16 @@ screenshot looks like this
 
 Put it in ~/.multitailrc and start mutlitail
 ```shell
-multitail -cS simpleLogger mylogfile.log
+multitail -cS ealogger mylogfile.log
 ```
 ## Source Code Documentation
 
 Is available as [doxygen](http://www.stack.nl/~dimitri/doxygen/) generated html
-documentation. The doxygen project file is located in the
-[doc](https://github.com/crapp/ealogger/tree/master/doc) folder.
+documentation hosteb by [github.io](https://crapp.github.io/ealogger)
+
+The doxygen project file is located in the
+[doc](https://github.com/crapp/ealogger/tree/master/doc) folder and can be used
+to generate a version of the documentation on your system.
 
 ## Development
 
@@ -161,7 +162,7 @@ and is tested (at least a little bit :)). This is the place for new features
 and bugfixes. Pull requests welcome.
 * dev: Test branch. Code is guaranteed to compile on the developers build
 environment. Nothing more nothing less.
-* release-x.x: Branch for a release. Only bugfixes are allowed here. 
+* release-x.x: Branch for a release. Only bugfixes are allowed here.
 Pull requests welcome.
 * gh-pages: Special branch for the static API HTML documentation that will be
 hosted by github.io. Content is generated with doxygen.

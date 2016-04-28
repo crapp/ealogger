@@ -1,32 +1,30 @@
-/*! \mainpage Simplelogger
+/*! \mainpage ealogger API Documentation
  *
  * \section Introduction
  *
- * Simplelogger is c++ library for projects that need a simple to use logging
- * framework. It is easy to use and uses the CMake framework so it can be easily
- * build on different platforms.
+ *  The easy asynchronous logger is a blazing fast and easy to use C++
+ *  logger library.
  *
  * \section Installation
+ * Installation and dependencies are covered in the [README](@ref README) file
  *
- * We provide some installation hints in the [README](https://github.com/crapp/simplelogger) on github
- * 
  * \section Usage
  *
- * See the documentation of the SimpleLogger class, it provides basic usage informations.
+ * See the API documentation of the EALogger class, it provides you with all
+ * necessary information.
  *
  * \section License
->   Copyright (C) 2013, 2014 Christian Rapp
->
->   This program is free software: you can redistribute it and/or modify
->   it under the terms of the GNU General Public License as published by
->   the Free Software Foundation, either version 3 of the License, or
->   (at your option) any later version.
->
->   This program is distributed in the hope that it will be useful,
->   but WITHOUT ANY WARRANTY; without even the implied warranty of
->   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
->   GNU General Public License for more details.
->
->   You should have received a copy of the GNU General Public License
->   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+ * > Copyright (C) 2013 - 2016 Christian Rapp
+ * >
+ * > Licensed under the Apache License, Version 2.0 (the "License");
+ * > you may not use this file except in compliance with the License.
+ * > You may obtain a copy of the License at
+ * >
+ * >    http://www.apache.org/licenses/LICENSE-2.0
+ * >
+ * > Unless required by applicable law or agreed to in writing, software
+ * > distributed under the License is distributed on an "AS IS" BASIS,
+ * > WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * > See the License for the specific language governing permissions and
+ * > limitations under the License.
+*/
