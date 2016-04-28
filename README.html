@@ -82,7 +82,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><p>|</p>
 <p><a href="https://travis-ci.org/crapp/ealogger"></a> <a href="#license"></a></p>
-<p>The <b>e**asy **a**synchronous logger provides a simple to use yet powerful logging functionality for c++ applications. You can use it to log to **console</b>, to a <b>file</b> or <b>system log (syslog)</b>. It was designed to be fast (uses Threads) and flexible. The library registers a signal handler for SIGUSR1 and is compatible with logrotate (only available on linux currently). It was tested on Linux, Windows and OS X.</p>
+<p>The <b>e**asy **a**synchronous logger provides a simple to use yet powerful logging functionality for C++ applications. You can use it to log to **console</b>, to a <b>file</b> or <b>system log (syslog)</b>. It was designed to be fast (uses Threads) and flexible. The library registers a signal handler for SIGUSR1 and is compatible with logrotate (only available on linux currently). It was tested on Linux, Windows and OS X.</p>
 <p><b>Table of Contents</b> <em>generated with <a href="http://doctoc.herokuapp.com/">DocToc</a></em></p>
 <ul>
 <li><a href="#ealogger">ealogger</a><ul>
@@ -131,7 +131,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3>Colorized Logfiles using multitail</h3>
 <p>Logfiles are sometimes difficult to read. So some sort of color highlighting might be useful. If you are using a Unix system you may try <a href="http://www.vanheusden.com/multitail/">multitail</a></p>
 <p>Here is a screenshot how this might look like </p><div class="image">
-<img src="http://crapp.github.io/ealogger/screenshots/SimpleLoggerMultitail.jpeg"  alt="ealogger multitail" title="EALogger multitail"/>
+<img src="http://crapp.github.io/ealogger/screenshots/ealogger_multitail.jpeg"  alt="ealogger multitail" title="EALogger multitail"/>
 </div>
 <p>The color scheme for multitail I used to generate the colors in the screenshot looks like this </p><pre class="fragment">colorscheme:ealogger
 cs_re:,magenta,bold:^.+FATAL:.+
@@ -139,7 +139,8 @@ cs_re:,red,bold:^.+ERROR:.+
 cs_re:,blue:^.+WARNING:.+
 cs_re:,green:^.+INFO:.+
 </pre><p>Put it in ~/.multitailrc and start mutlitail </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;multitail -cS ealogger mylogfile.log</div></div><!-- fragment --> <h2>Source Code Documentation</h2>
-<p>Is available as <a href="http://www.stack.nl/~dimitri/doxygen/">doxygen</a> generated html documentation. The doxygen project file is located in the <a href="https://github.com/crapp/ealogger/tree/master/doc">doc</a> folder.</p>
+<p>Is available as <a href="http://www.stack.nl/~dimitri/doxygen/">doxygen</a> generated html documentation hosteb by <a href="https://crapp.github.io/ealogger">github.io</a></p>
+<p>The doxygen project file is located in the <a href="https://github.com/crapp/ealogger/tree/master/doc">doc</a> folder and can be used to generate a version of the documentation on your system.</p>
 <h2>Development</h2>
 <p>ealogger uses <a href="https://travis-ci.org/crapp/ealogger">travis ci</a> for continuous integration. Currently we use this service to automatically compile the source code with each pull request on different platforms and compilers.</p>
 <h3>Branches</h3>
@@ -180,7 +181,7 @@ cs_re:,green:^.+INFO:.+
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Copyright (C) 2013 - 2016 Christian Rapp</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;you may not use this file except in compliance with the License.</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;You may obtain a copy of the License at</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  http://www.apache.org/licenses/LICENSE-2.0</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Unless required by applicable law or agreed to in writing, software</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;See the License for the specific language governing permissions and</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;limitations under the License.</div></div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 28 2016 13:27:29 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 28 2016 13:44:44 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
