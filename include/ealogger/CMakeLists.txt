@@ -3,5 +3,6 @@ set(EALOGGER_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/logmessage.h
     ${CMAKE_CURRENT_SOURCE_DIR}/logqueue.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sink.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/sink_console.h
     PARENT_SCOPE
 )

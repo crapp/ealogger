@@ -130,8 +130,7 @@ public:
     EALogger(log_level min_level = EALogger::log_level::DEBUG,
              bool log_to_console = true, bool log_to_file = false,
              bool log_to_syslog = false, bool async = true,
-             bool print_tid = false, std::string dt_format = "%F %T",
-             std::string logfile = "");
+             std::string dt_format = "%F %T", std::string logfile = "");
     ~EALogger();
 
     /**
@@ -222,20 +221,12 @@ public:
     void set_log_to_syslog(bool b);
     bool get_log_to_syslog();
 
-    /**
-     * @brief Enable/Disable the priting of the Thread ID.
-     * @param b
-     */
-    void set_print_tid(bool b);
-    bool get_print_tid();
-
 private:
     /** Mutex used when not in async mode */
     std::mutex mtx_log;
     std::mutex mtx_log_console;
     std::mutex mtx_log_file;
     std::mutex mtx_log_syslog;
-    std::mutex mtx_print_tid;
     std::mutex mtx_dt_format;
     std::mutex mtx_logger_stop;
 
@@ -248,7 +239,6 @@ private:
     bool log_to_file;
     bool log_to_syslog;
     bool async;
-    bool print_tid;
 
     std::string dt_format;
     std::string logfile_path;

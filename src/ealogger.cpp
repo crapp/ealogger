@@ -17,13 +17,12 @@
 
 EALogger::EALogger(EALogger::log_level min_level, bool log_to_console,
                    bool log_to_file, bool log_to_syslog, bool async,
-                   bool print_tid, std::string dt_format, std::string logfile)
+                   std::string dt_format, std::string logfile)
     : min_level(min_level),
       log_to_console(log_to_console),
       log_to_file(log_to_file),
       log_to_syslog(log_to_syslog),
       async(async),
-      print_tid(print_tid),
       dt_format(dt_format),
       logfile_path(logfile)
 {
@@ -244,18 +243,6 @@ bool EALogger::get_log_to_syslog()
     return this->log_to_syslog;
 }
 
-void EALogger::set_print_tid(bool b)
-{
-    std::lock_guard<std::mutex> guard(this->mtx_print_tid);
-    this->print_tid = b;
-}
-
-bool EALogger::get_print_tid()
-{
-    std::lock_guard<std::mutex> guard(this->mtx_print_tid);
-    return this->print_tid;
-}
-
 void EALogger::logrotate(int signo)
 {
 #ifdef __linux__
@@ -296,18 +283,12 @@ void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
     if (msg_lvl >= this->min_level ||
         m->get_log_type() == LogMessage::LOGTYPE::STACK) {
         try {
-            std::string t_id = "";
-            if (this->print_tid) {
-                std::stringstream ss;
-                ss << std::this_thread::get_id();
-                t_id = " " + ss.str();
-            }
-
             if (m->get_log_type() == LogMessage::LOGTYPE::STACK) {
                 std::stringstream stack_message;
                 stack_message
                     << "[" << this->format_time_to_string(this->get_dt_format())
-                    << "]" << t_id << " Stacktrace: " << std::endl;
+                    << "]"
+                    << " Stacktrace: " << std::endl;
                 if (this->get_log_to_console()) {
                     std::cout << stack_message.str();
                 }
@@ -347,8 +328,7 @@ void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
                 std::stringstream log_stringstream;
                 log_stringstream
                     << "[" << this->format_time_to_string(this->get_dt_format())
-                    << "]" << t_id << log_level_string << m->get_message()
-                    << std::endl;
+                    << "]" << log_level_string << m->get_message() << std::endl;
                 if (this->get_log_to_console())
                     std::cout << log_stringstream.str();
                 if (this->get_log_to_file())

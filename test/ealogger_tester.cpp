@@ -24,7 +24,7 @@
 int main(int argc, const char* argv[])
 {
     std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
-        new EALogger(EALogger::log_level::INFO, true, true, false, false, true,
+        new EALogger(EALogger::log_level::INFO, true, true, false, false,
                      "%H:%M:%S", "logToMe.log"));
 
     std::stringstream version;
@@ -70,8 +70,8 @@ int main(int argc, const char* argv[])
 
     // now we try the same in async mode
     log = std::unique_ptr<EALogger>(new EALogger(EALogger::log_level::INFO, true,
-                                                 true, false, true, true,
-                                                 "%H:%M:%S", "logToMe.log"));
+                                                 true, false, true, "%H:%M:%S",
+                                                 "logToMe.log"));
     t = std::chrono::steady_clock::now();
 
     log->write_log(EALogger::log_level::INFO,
