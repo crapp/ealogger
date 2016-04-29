@@ -2,8 +2,9 @@
 #include(GenerateExportHeader)
 
 set(EALOGGER_SOURCE
-    ${CMAKE_CURRENT_SOURCE_DIR}/logqueue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ealogger.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/logqueue.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sink.cpp
 )
 
 find_package(Threads REQUIRED)

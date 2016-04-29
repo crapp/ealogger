@@ -101,15 +101,12 @@ EALogger::~EALogger()
 
 void EALogger::write_log(EALogger::log_level lvl, std::string msg)
 {
-    std::shared_ptr<LogMessage> m;
     if (this->async) {
-        m = std::make_shared<LogMessage>(lvl, std::move(msg),
-                                         LogMessage::LOGTYPE::DEFAULT);
-        this->log_msg_queue.push(m);
+        this->log_msg_queue.push(std::make_shared<LogMessage>(
+            lvl, std::move(msg), LogMessage::LOGTYPE::DEFAULT));
     } else {
-        m = std::make_shared<LogMessage>(lvl, std::move(msg),
-                                         LogMessage::LOGTYPE::DEFAULT);
-        this->internal_log_routine(m);
+        this->internal_log_routine(std::make_shared<LogMessage>(
+            lvl, std::move(msg), LogMessage::LOGTYPE::DEFAULT));
     }
 }
 
@@ -160,12 +157,10 @@ void EALogger::stack_trace(unsigned int size)
     // TODO: This always prints stack_trace as first symbol. Should we omit
     // this?
     for (const auto &symbol : symbollist) {
-        std::cout << "Symbol: " << symbol << std::endl;
         std::smatch match;
         // if there is no match with our regex we have to continue and use the
         // original symbol
         if (!std::regex_search(symbol, match, rgx)) {
-            std::cout << "no regex match" << std::endl;
             stackvec.push_back(symbol);
             continue;
         }
@@ -274,7 +269,7 @@ void EALogger::thread_entry_point()
 {
     while (!this->get_logger_thread_stop()) {
         std::shared_ptr<LogMessage> m = this->log_msg_queue.pop();
-        this->internal_log_routine(m);
+        this->internal_log_routine(std::move(m));
     }
 }
 

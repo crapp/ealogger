@@ -20,7 +20,7 @@ void LogQueue::push(std::shared_ptr<LogMessage> m)
 {
     // acquire the lock on the mutex and push a message object in the queue
     std::lock_guard<std::mutex> lock(this->mtx);
-    this->msg_queue.push(m);
+    this->msg_queue.push(std::move(m));
     // notify logger thread to wake up and pop latest message
     this->cond_var_queue.notify_one();
 }
@@ -35,7 +35,7 @@ std::shared_ptr<LogMessage> LogQueue::pop()
     this->cond_var_queue.wait(lock,
                               [this]() { return !this->msg_queue.empty(); });
 
-    std::shared_ptr<LogMessage> lmessage = this->msg_queue.front();
+    std::shared_ptr<LogMessage> lmessage = std::move(this->msg_queue.front());
     this->msg_queue.pop();
     return lmessage;
 }
