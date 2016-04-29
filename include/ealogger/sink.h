@@ -17,6 +17,16 @@
 #define SINK_H
 
 #include <string>
+#include <regex>
+
+struct ConversionPatternInterface {
+    ConversionPatternInterface(){};
+    virtual ~ConversionPatternInterface() {}
+};
+
+template <class T>
+struct ConversionPatternPrimitive : public ConversionPatternInterface {
+};
 
 /**
  * @brief A sink is an object that writes the log message to the target

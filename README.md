@@ -96,7 +96,6 @@ std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
                      true,
                      true,
                      false,
-                     false,
                      "%H:%M:%S",
                      "logToMe.log"));
 log->debug("Do you see me?");

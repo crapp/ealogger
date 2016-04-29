@@ -84,7 +84,7 @@ EALogger::~EALogger()
         this->set_logger_thread_stop(true);
         // we need to write one more log message to wakeup the background logger
         // thread it will pop the last message from the queue.
-        this->write_log(EALogger::log_level::INTERNAL, "Logger exit");
+        this->write_log("Logger EXIT", EALogger::log_level::INTERNAL, "", 0, "");
         try {
             logger_thread.join();
         } catch (const std::system_error &ex) {
@@ -98,41 +98,44 @@ EALogger::~EALogger()
     }
 }
 
-void EALogger::write_log(EALogger::log_level lvl, std::string msg)
+void EALogger::write_log(std::string msg, EALogger::log_level lvl,
+                         std::string file, int lnumber, std::string func)
 {
     if (this->async) {
         this->log_msg_queue.push(std::make_shared<LogMessage>(
-            lvl, std::move(msg), LogMessage::LOGTYPE::DEFAULT));
+            lvl, std::move(msg), LogMessage::LOGTYPE::DEFAULT, std::move(file),
+            lnumber, std::move(func)));
     } else {
         this->internal_log_routine(std::make_shared<LogMessage>(
-            lvl, std::move(msg), LogMessage::LOGTYPE::DEFAULT));
+            lvl, std::move(msg), LogMessage::LOGTYPE::DEFAULT, std::move(file),
+            lnumber, std::move(func)));
     }
 }
 
-void EALogger::debug(std::string msg)
-{
-    this->write_log(EALogger::log_level::DEBUG, std::move(msg));
-}
+// void EALogger::debug(std::string msg)
+//{
+// this->write_log(EALogger::log_level::DEBUG, std::move(msg));
+//}
 
-void EALogger::info(std::string msg)
-{
-    this->write_log(EALogger::log_level::INFO, std::move(msg));
-}
+// void EALogger::info(std::string msg)
+//{
+// this->write_log(EALogger::log_level::INFO, std::move(msg));
+//}
 
-void EALogger::warn(std::string msg)
-{
-    this->write_log(EALogger::log_level::WARNING, std::move(msg));
-}
+// void EALogger::warn(std::string msg)
+//{
+// this->write_log(EALogger::log_level::WARNING, std::move(msg));
+//}
 
-void EALogger::error(std::string msg)
-{
-    this->write_log(EALogger::log_level::ERROR, std::move(msg));
-}
+// void EALogger::error(std::string msg)
+//{
+// this->write_log(EALogger::log_level::ERROR, std::move(msg));
+//}
 
-void EALogger::fatal(std::string msg)
-{
-    this->write_log(EALogger::log_level::FATAL, std::move(msg));
-}
+// void EALogger::fatal(std::string msg)
+//{
+// this->write_log(EALogger::log_level::FATAL, std::move(msg));
+//}
 
 void EALogger::stack_trace(unsigned int size)
 {
@@ -185,8 +188,9 @@ void EALogger::stack_trace(unsigned int size)
         }
         free(realname);
     }
-    std::shared_ptr<LogMessage> m = std::make_shared<LogMessage>(
-        EALogger::log_level::DEBUG, stackvec, LogMessage::LOGTYPE::STACK);
+    std::shared_ptr<LogMessage> m =
+        std::make_shared<LogMessage>(EALogger::log_level::DEBUG, stackvec,
+                                     LogMessage::LOGTYPE::STACK, "", 0, "");
     if (this->async) {
         this->log_msg_queue.push(m);
     } else {

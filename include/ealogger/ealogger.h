@@ -51,6 +51,19 @@
 #include "logmessage.h"
 #include "logqueue.h"
 
+// Define macros for all log levels and call public member write_log()
+
+#define debug(msg) \
+    write_log(msg, EALogger::log_level::DEBUG, __FILE__, __LINE__, __func__)
+#define info(msg) \
+    write_log(msg, EALogger::log_level::INFO, __FILE__, __LINE__, __func__)
+#define warn(msg) \
+    write_log(msg, EALogger::log_level::WARNING, __FILE__, __LINE__, __func__)
+#define error(msg) \
+    write_log(msg, EALogger::log_level::ERROR, __FILE__, __LINE__, __func__)
+#define fatal(msg) \
+    write_log(msg, EALogger::log_level::FATAL, __FILE__, __LINE__, __func__)
+
 /**
  * @brief ealogger main header
  * @author Christian Rapp (crapp)
@@ -138,7 +151,27 @@ public:
      * @param lvl The severity of the message, EALogger#log_level
      * @param msg The message text
      */
-    void write_log(EALogger::log_level lvl, std::string msg);
+
+    /**
+     * @brief Write a log message
+     *
+     * @param msg Message text
+     * @param lvl Severity of the message, EALogger#log_level
+     * @param file File from where the mehtod was called
+     * @param lnumber Line number
+     * @param func Function name
+     *
+     * @details
+     *
+     * This mehtod is called by the macros that are defined in this header file
+     * for the different log levels. You can of course call this method yourself
+     * @code
+     * mylogger.write_log("This is a warning", EALogger::log_level::WARNING,
+     *                    __FILE__, __LINE__, __func__)
+     * @endcode
+     */
+    void write_log(std::string msg, EALogger::log_level lvl, std::string file,
+                   int lnumber, std::string func);
     // template <typename T>
     // void write_log(EALogger::log_level lvl, T msg);
 
@@ -149,7 +182,7 @@ public:
      * @details
      * This is a convenience method to directly write a debug message
      */
-    void debug(std::string msg);
+    // void debug(std::string msg);
     /**
      * @brief Info log message
      *
@@ -157,7 +190,7 @@ public:
      * @details
      * This is a convenience method to directly write an info message
      */
-    void info(std::string msg);
+    // void info(std::string msg);
     /**
      * @brief Warning log message
      *
@@ -165,7 +198,7 @@ public:
      * @details
      * This is a convenience method to directly write a warning message
      */
-    void warn(std::string msg);
+    // void warn(std::string msg);
     /**
      * @brief Error log message
      *
@@ -173,7 +206,7 @@ public:
      * @details
      * This is a convenience method to directly write an error message
      */
-    void error(std::string msg);
+    // void error(std::string msg);
     /**
      * @brief Fatal log message
      *
@@ -181,7 +214,7 @@ public:
      * @details
      * This is a convenience method to directly write a fatal message
      */
-    void fatal(std::string msg);
+    // void fatal(std::string msg);
 
     /**
      * @brief Print a demangled stacktrace
@@ -274,9 +307,9 @@ private:
      *
      * @return 
      */
-    std::string format_time_to_string(const std::string &time_format);
+    std::string format_time_to_string(const std::string& time_format);
     std::string format_time_to_string(std::time_t t,
-                                      const std::string &time_format);
+                                      const std::string& time_format);
     /*
      * So far controlling the background logger thread is only possible for the logger
      * object itself.

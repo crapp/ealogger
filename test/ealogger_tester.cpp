@@ -24,7 +24,7 @@
 int main(int argc, const char* argv[])
 {
     std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
-        new EALogger(EALogger::log_level::INFO, true, true, false, false,
+        new EALogger(EALogger::log_level::DEBUG, true, true, false, false,
                      "%H:%M:%S", "logToMe.log"));
 
     std::stringstream version;
@@ -34,37 +34,33 @@ int main(int argc, const char* argv[])
     }
 
     std::chrono::steady_clock::time_point t = std::chrono::steady_clock::now();
-    log->write_log(EALogger::log_level::INFO,
-                   "Logtester of ealogger " + version.str() + " is starting");
-    log->write_log(EALogger::log_level::INFO,
-                   "Next message has lower severity than defined minimum");
+    log->info("Logtester of ealogger " + version.str() + " is starting");
+    log->info("Next message has lower severity than defined minimum");
 
-    log->write_log(EALogger::log_level::DEBUG, "Do you see me?");
-    log->write_log(EALogger::log_level::WARNING, "A warning message");
-    log->write_log(EALogger::log_level::ERROR, "An error message");
-    log->write_log(EALogger::log_level::FATAL, "A fatal message");
+    log->debug("Do you see me?");
+    log->warn("A warning message");
+    log->error("An error message");
+    log->fatal("A fatal message");
 
     log->set_log_to_console(false);
-    log->write_log(EALogger::log_level::INFO, "Logging to stdout deactivated");
+    log->info("Logging to console deactivated");
     log->set_log_to_file(false);
-    log->write_log(EALogger::log_level::INFO, "Logging to file deactivated");
+    log->info("Logging to file deactivated");
     log->set_log_to_console(true);
-    log->write_log(EALogger::log_level::INFO, "Logging to stdout reactivated");
+    log->info("Logging to console reactivated");
     log->set_log_to_file(true);
-    log->write_log(EALogger::log_level::INFO, "Logging to file reactivated");
+    log->info("Logging to file reactivated");
 
-    log->write_log(EALogger::log_level::INFO,
-                   "Changing date time format specifiers to %A %r");
+    log->info("Changing date time format specifiers to %A %r");
     log->set_dt_format("%A %r");
-    log->write_log(EALogger::log_level::INFO, "Format specifiers changed");
+    log->info("Format specifiers changed");
     log->stack_trace(10);
 
     int msNormal = std::chrono::duration_cast<std::chrono::microseconds>(
                        std::chrono::steady_clock::now() - t)
                        .count();
-    log->write_log(EALogger::log_level::INFO, "Application needed " +
-                                                  std::to_string(msNormal) +
-                                                  "µs to do the logging");
+    log->info("Application needed " + std::to_string(msNormal) +
+              "µs to do the logging");
 
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
@@ -74,40 +70,35 @@ int main(int argc, const char* argv[])
                                                  "logToMe.log"));
     t = std::chrono::steady_clock::now();
 
-    log->write_log(EALogger::log_level::INFO,
-                   "Logtester of ealogger " + version.str() + " is starting");
-    log->write_log(EALogger::log_level::INFO,
-                   "Next message has lower severity than defined minimum");
+    log->info("Logtester of ealogger " + version.str() + " is starting");
+    log->info("Next message has lower severity than defined minimum");
 
-    log->write_log(EALogger::log_level::DEBUG, "Do you see me?");
-    log->write_log(EALogger::log_level::WARNING, "A warning message");
-    log->write_log(EALogger::log_level::ERROR, "An error message");
-    log->write_log(EALogger::log_level::FATAL, "A fatal message");
+    log->debug("Do you see me?");
+    log->warn("A warning message");
+    log->error("An error message");
+    log->fatal("A fatal message");
 
     log->set_log_to_console(false);
-    log->write_log(EALogger::log_level::INFO, "Logging to stdout deactivated");
+    log->info("Logging to console deactivated");
     log->set_log_to_file(false);
-    log->write_log(EALogger::log_level::INFO, "Logging to file deactivated");
+    log->info("Logging to file deactivated");
     log->set_log_to_console(true);
-    log->write_log(EALogger::log_level::INFO, "Logging to stdout reactivated");
+    log->info("Logging to console reactivated");
     log->set_log_to_file(true);
-    log->write_log(EALogger::log_level::INFO, "Logging to file reactivated");
+    log->info("Logging to file reactivated");
 
-    log->write_log(EALogger::log_level::INFO,
-                   "Changing date time format specifiers to %A %r");
+    log->info("Changing date time format specifiers to %A %r");
     log->set_dt_format("%A %r");
-    log->write_log(EALogger::log_level::INFO, "Format specifiers changed");
+    log->info("Format specifiers changed");
     log->stack_trace(10);
 
     int msMulti = std::chrono::duration_cast<std::chrono::microseconds>(
                       std::chrono::steady_clock::now() - t)
                       .count();
-    log->write_log(EALogger::log_level::INFO,
-                   "Application needed " + std::to_string(msMulti) +
-                       "µs to do the logging in async mode");
+    log->info("Application needed " + std::to_string(msMulti) +
+              "µs to do the logging in async mode");
 
-    log->write_log(
-        EALogger::log_level::INFO,
+    log->info(
         "The Tester will now write to the System Log. This only works "
         "on Linux/BSD.");
 
@@ -117,19 +108,19 @@ int main(int argc, const char* argv[])
     log->set_log_to_file(false);
     log->set_log_to_console(false);
 
-    log->write_log(EALogger::log_level::INFO, "Hello World Syslog");
-    log->write_log(EALogger::log_level::DEBUG, "This is a debug message");
-    log->write_log(EALogger::log_level::INFO, "This is an info message");
-    log->write_log(EALogger::log_level::WARNING, "This is a warning message");
-    log->write_log(EALogger::log_level::ERROR, "This is an error message");
-    log->write_log(EALogger::log_level::FATAL, "This is a fatal message");
+    log->info("Hello World Syslog");
+    log->debug("This is a debug message");
+    log->info("This is an info message");
+    log->warn("This is a warning message");
+    log->error("This is an error message");
+    log->fatal("This is a fatal message");
     log->stack_trace(10);
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     log->set_log_to_file(true);
     log->set_log_to_console(true);
     log->set_log_to_syslog(false);
 
-    log->write_log(EALogger::log_level::INFO,
-                   "ealogger tester finished, bye bye");
+    log->info("ealogger tester finished, bye bye");
     return 0;
 }

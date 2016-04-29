@@ -42,8 +42,14 @@ public:
      * @param message Message as std::string
      * @param log_type LogMessage#LOGTYPE
      */
-    LogMessage(int severity, std::string message, LOGTYPE log_type)
-        : severity(severity), message(std::move(message)), log_type(log_type)
+    LogMessage(int severity, std::string message, LOGTYPE log_type,
+               std::string file, int lnumber, std::string func)
+        : severity(severity),
+          message(std::move(message)),
+          log_type(log_type),
+          call_file(std::move(file)),
+          call_file_line_num(lnumber),
+          call_func(std::move(func))
     {
         this->t = std::chrono::system_clock::now();
     }
@@ -54,10 +60,13 @@ public:
      * @param log_type LogMessage#LOGTYPE
      */
     LogMessage(int severity, std::vector<std::string> message_vec,
-               LOGTYPE log_type)
+               LOGTYPE log_type, std::string file, int lnumber, std::string func)
         : severity(severity),
           message_vec(std::move(message_vec)),
-          log_type(log_type)
+          log_type(log_type),
+          call_file(std::move(file)),
+          call_file_line_num(lnumber),
+          call_func(std::move(func))
     {
         this->t = std::chrono::system_clock::now();
         this->message = "";
@@ -99,6 +108,10 @@ private:
     std::vector<std::string> message_vec;
     /** The log message type */
     LOGTYPE log_type;
+    std::string
+        call_file; /**< The source file from which the logger was called */
+    int call_file_line_num; /**< Line number in the source file */
+    std::string call_func;  /**< function from which the logger was called */
 };
 
 #endif  // LOGMESSAGE_H
