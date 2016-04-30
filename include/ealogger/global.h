@@ -13,22 +13,27 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#ifndef SINK_CONSOLE_H
-#define SINK_CONSOLE_H
-
-#include <iostream>
-
-#include "sink.h"
-
-class SinkConsole : public Sink
+namespace ealogger_constants
 {
-public:
-    SinkConsole(std::string msg_pattern, std::string dateime_pattern,
-                bool enabled);
-    virtual ~SinkConsole();
+/**
+ * @brief Sinks ealogger supports
+ */
+enum LOGGER_SINK { CONSOLE = 0, FILE, SYSLOG };
+enum CONVERSION_PATTERN {};
 
-private:
-    void write_message(const std::string &msg);
+/**
+ * @brief An enumaration representing the supported loglevels.
+ *
+ * This enum is used to define the severity of a log message and to set the
+ * minimum loglevel.
+ */
+enum LOG_LEVEL {
+    DEBUG = 0, /**< Debug message */
+    INFO,      /**< Info message */
+    WARNING,   /**< Warning message */
+    ERROR,     /**< Error message */
+    FATAL,     /**< Fatal Message */
+    STACK,     /**< Stack log message */
+    INTERNAL   /**< Internal Message, do not use this loglevel yourself */
 };
-
-#endif /* SINK_CONSOLE_H */
+}

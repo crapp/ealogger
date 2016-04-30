@@ -137,68 +137,6 @@ void EALogger::write_log(std::string msg, EALogger::log_level lvl,
 // this->write_log(EALogger::log_level::FATAL, std::move(msg));
 //}
 
-void EALogger::stack_trace(unsigned int size)
-{
-#ifdef __GLIBC__
-    void *addrlist[size + 1];
-
-    size_t no_of_stack_addresses =
-        backtrace(addrlist, sizeof(addrlist) / sizeof(void *));
-    char **temp_symbols = backtrace_symbols(addrlist, no_of_stack_addresses);
-
-    // initialize a vector of string with the char**
-    std::vector<std::string> symbollist(temp_symbols,
-                                        temp_symbols + no_of_stack_addresses);
-    std::vector<std::string> stackvec;
-    // temp_symbols has to be freed
-    free(temp_symbols);
-
-    //std::regex rgx("\\(.*\\+|\\+0[xX][0-9a-fA-F]+\\)");
-    std::regex rgx("(^.*\\()(.*\\+)(0[xX][0-9a-fA-F]+\\))");
-
-    // TODO: This always prints stack_trace as first symbol. Should we omit
-    // this?
-    for (const auto &symbol : symbollist) {
-        std::smatch match;
-        // if there is no match with our regex we have to continue and use the
-        // original symbol
-        if (!std::regex_search(symbol, match, rgx)) {
-            stackvec.push_back(symbol);
-            continue;
-        }
-        // get the regex matches and create the 3 strings we need
-        std::string file = match[1].str();
-        file = file.substr(0, file.size() - 1);
-        std::string mangled_name = match[2].str();
-        mangled_name = mangled_name.substr(0, mangled_name.size() - 1);
-        std::string caller = match[3].str();
-        caller = caller.substr(0, caller.size() - 1);
-
-        // demangle status
-        int status = 0;
-        // must be freed
-        char *realname =
-            abi::__cxa_demangle(mangled_name.c_str(), 0, 0, &status);
-        if (status == 0) {
-            stackvec.emplace_back(file + " : " + std::string(realname) + "+" +
-                                  caller);
-        } else {
-            stackvec.emplace_back(file + " : " + mangled_name + "()" + "+" +
-                                  caller);
-        }
-        free(realname);
-    }
-    std::shared_ptr<LogMessage> m =
-        std::make_shared<LogMessage>(EALogger::log_level::DEBUG, stackvec,
-                                     LogMessage::LOGTYPE::STACK, "", 0, "");
-    if (this->async) {
-        this->log_msg_queue.push(m);
-    } else {
-        this->internal_log_routine(m);
-    }
-#endif
-}
-
 void EALogger::set_dt_format(std::string fmt)
 {
     std::lock_guard<std::mutex> guard(this->mtx_dt_format);
@@ -349,30 +287,6 @@ void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
             // std::cerr << "Error: " << fail << std::endl;
         }
     }
-}
-
-std::string EALogger::format_time_to_string(const std::string &time_format)
-{
-    // get raw time
-    time_t rawtime;
-    std::time(&rawtime);
-    return this->format_time_to_string(std::move(rawtime), time_format);
-}
-
-std::string EALogger::format_time_to_string(std::time_t t,
-                                            const std::string &time_format)
-{
-    // time struct
-    struct tm *timeinfo;
-    // buffer where we store the formatted time string
-    char buffer[80];
-
-    // FIXME: This is not threadsafe. Use localtime_r instead
-    timeinfo = std::localtime(&t);
-    //    localtime_r
-
-    std::strftime(buffer, 80, time_format.c_str(), timeinfo);
-    return (std::string(buffer));
 }
 
 bool EALogger::get_logger_thread_stop()

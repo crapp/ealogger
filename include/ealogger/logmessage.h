@@ -97,6 +97,21 @@ public:
      * @return #msg_vec_it
      */
     msg_vec_it get_msg_vec_end() { return this->message_vec.cend(); }
+    /**
+     * @brief Return file from where this log message was issued
+     * @return
+     */
+    std::string get_call_file() { return this->call_file; }
+    /**
+     * @brief Return line number in file from where this log message was issued
+     * @return
+     */
+    int get_call_file_line() { return this->call_file_line_num; }
+    /**
+     * @brief Return function name from where this log message was issued
+     * @return
+     */
+    std::string get_call_func() { return this->call_func; }
 private:
     /** Time Point when this log message was created*/
     std::chrono::system_clock::time_point t;

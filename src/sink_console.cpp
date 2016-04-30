@@ -15,7 +15,11 @@
 
 #include "sink_console.h"
 
-SinkConsole::SinkConsole() {}
+SinkConsole::SinkConsole(std::string msg_pattern, std::string dateime_pattern,
+                         bool enabled)
+    : Sink(std::move(msg_pattern), std::move(dateime_pattern), enabled)
+{
+}
 SinkConsole::~SinkConsole() {}
 void SinkConsole::write_message(const std::string &msg)
 {

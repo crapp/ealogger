@@ -34,22 +34,14 @@
  */
 #include <thread>
 #include <vector>
-// Check for backtrace function
-#ifdef __GNUC__
-#include <execinfo.h>
-#include <cxxabi.h>
-#endif
 
 #include "config.h"
-/*
- * Check if syslog was detected by CMake
- */
-#ifdef SYSLOG
-#include <syslog.h>
-#endif
-
+#include "global.h"
+#include "sink_console.h"
 #include "logmessage.h"
 #include "logqueue.h"
+
+namespace con = ealogger_constants;
 
 // Define macros for all log levels and call public member write_log()
 
@@ -63,6 +55,8 @@
     write_log(msg, EALogger::log_level::ERROR, __FILE__, __LINE__, __func__)
 #define fatal(msg) \
     write_log(msg, EALogger::log_level::FATAL, __FILE__, __LINE__, __func__)
+#define stack(msg) \
+    write_log(msg, EALogger::log_level::STACK, __FILE__, __LINE__, __func__)
 
 /**
  * @brief ealogger main header
@@ -96,12 +90,13 @@ public:
      * minimum loglevel.
      */
     enum log_level {
-        DEBUG = 0,   /**< Debug message */
-        INFO = 1,    /**< Info message */
-        WARNING = 2, /**< Warning message */
-        ERROR = 3,   /**< Error message */
-        FATAL = 4,   /**< Fatal Message */
-        INTERNAL = 5 /**< Internal Message, do not use this loglevel yourself */
+        DEBUG = 0, /**< Debug message */
+        INFO,      /**< Info message */
+        WARNING,   /**< Warning message */
+        ERROR,     /**< Error message */
+        FATAL,     /**< Fatal Message */
+        STACK,     /**< Stack log message */
+        INTERNAL   /**< Internal Message, do not use this loglevel yourself */
     };
 
     /**
@@ -172,60 +167,8 @@ public:
      */
     void write_log(std::string msg, EALogger::log_level lvl, std::string file,
                    int lnumber, std::string func);
-    // template <typename T>
-    // void write_log(EALogger::log_level lvl, T msg);
-
-    /**
-     * @brief Debug log message
-     *
-     * @param msg The message text
-     * @details
-     * This is a convenience method to directly write a debug message
-     */
-    // void debug(std::string msg);
-    /**
-     * @brief Info log message
-     *
-     * @param msg The message text
-     * @details
-     * This is a convenience method to directly write an info message
-     */
-    // void info(std::string msg);
-    /**
-     * @brief Warning log message
-     *
-     * @param msg The message text
-     * @details
-     * This is a convenience method to directly write a warning message
-     */
-    // void warn(std::string msg);
-    /**
-     * @brief Error log message
-     *
-     * @param msg The message text
-     * @details
-     * This is a convenience method to directly write an error message
-     */
-    // void error(std::string msg);
-    /**
-     * @brief Fatal log message
-     *
-     * @param msg The message text
-     * @details
-     * This is a convenience method to directly write a fatal message
-     */
-    // void fatal(std::string msg);
-
-    /**
-     * @brief Print a demangled stacktrace
-     * @param size How many elements of the stack you wish to be printed.
-     *
-     * The method only works with gcc/llvm compiled software.
-     */
-    void stack_trace(unsigned int size);
 
     // getters and setters for private members we want to expose
-
     /**
      * @brief Set the Date Time format specifier
      * @param fmt Format specifier string
@@ -289,6 +232,8 @@ private:
     /** map syslog message priority to our loglevels */
     std::map<EALogger::log_level, int> loglevel_syslog_lookup;
 
+    std::map<con::LOGGER_SINK, Sink> map_logger_sink;
+
     /** Static Method to be registered for logrotate signal */
     static void logrotate(int signo);
 
@@ -300,16 +245,6 @@ private:
      */
     void internal_log_routine(std::shared_ptr<LogMessage> m);
 
-    /**
-     * @brief Get a formatted time string based on dt_format
-     *
-     * @param time_format
-     *
-     * @return 
-     */
-    std::string format_time_to_string(const std::string& time_format);
-    std::string format_time_to_string(std::time_t t,
-                                      const std::string& time_format);
     /*
      * So far controlling the background logger thread is only possible for the logger
      * object itself.
