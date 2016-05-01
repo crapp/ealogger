@@ -13,12 +13,15 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
+#ifndef GLOBAL_H
+#define GLOBAL_H
+
 namespace ealogger_constants
 {
 /**
  * @brief Sinks ealogger supports
  */
-enum LOGGER_SINK { CONSOLE = 0, FILE, SYSLOG };
+enum LOGGER_SINK { CONSOLES = 0, SYSLOGS, FILES };
 enum CONVERSION_PATTERN {};
 
 /**
@@ -37,3 +40,5 @@ enum LOG_LEVEL {
     INTERNAL   /**< Internal Message, do not use this loglevel yourself */
 };
 }
+
+#endif /* ifndef GLOBAL_H */

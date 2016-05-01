@@ -20,6 +20,7 @@
 #include <string>
 #include <algorithm>
 #include <regex>
+#include <ctime>
 // Check for backtrace function
 #ifdef __GNUC__
 #include <execinfo.h>

@@ -13,44 +13,37 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#ifndef SINK_CONSOLE_H
-#define SINK_CONSOLE_H
-
-#include <iostream>
+#ifndef SINK_SYSLOG_H
+#define SINK_SYSLOG_H
 
 #include "sink.h"
 
 /**
- * @brief The Configuration for the Console sink
- * @details
- *
- * Does not need any special configuration options
+ * @brief Derived Config Class for the Syslog sink
  */
-struct SinkConfigConsole : public SinkConfig {
-    SinkConfigConsole(std::string msg_pattern, std::string datetime_pattern,
-                      bool enabled, con::LOG_LEVEL min_lvl)
+struct SinkConfigSyslog : public SinkConfig {
+public:
+    SinkConfigSyslog(std::string msg_pattern, std::string datetime_pattern,
+                     bool enabled, con::LOG_LEVEL min_lvl)
         : SinkConfig(std::move(msg_pattern), std::move(datetime_pattern),
-                     enabled, min_lvl)
-    {
-    }
-
-private:
+                     enabled, min_lvl){};
+    virtual ~SinkConfigSyslog(){};
 };
 
-/**
- * @brief Console Sink
- */
-class SinkConsole : public Sink
+class SinkSyslog : public Sink
 {
 public:
-    SinkConsole(std::shared_ptr<SinkConfigConsole> config);
-    virtual ~SinkConsole();
+    SinkSyslog(std::shared_ptr<SinkConfigSyslog> config);
+    virtual ~SinkSyslog();
 
 private:
-    std::mutex mtx_console;
+    /** map syslog message priority to our loglevels */
+    std::map<con::LOG_LEVEL, int> loglevel_syslog_lookup;
+
+    std::mutex mtx_syslog;
 
     void write_message(const std::string &msg);
     void config_changed();
 };
 
-#endif /* SINK_CONSOLE_H */
+#endif /* SINK_SYSLOG_H */

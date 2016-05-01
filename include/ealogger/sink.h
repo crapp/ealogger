@@ -20,104 +20,104 @@
 #include <algorithm>
 #include <memory>
 #include <mutex>
+#include <iostream>
 
 #include "utility.h"
+#include "global.h"
+#include "conversion_pattern.h"
 #include "logmessage.h"
 
+namespace con = ealogger_constants;
+
 /**
- * @brief A conversion pattern for message strings
- *
- * @details
- * ealogger supports several conversion patterns that let you substitude a pattern
- * within a string with a appropriate value. This way the style of the log messages
- * can be set for each log sink. Currently we support these conversion patterns
- *
- * %d  :  Date Time as provided
- * %f  :  Name of the file from where a log message was issued
- * %F  :  Absolut path of a file as provided by __FILE__ from where a log mesage was issued
- * %l  :  Line number of the file from where a log message was issued (__LINE__)
- * %fu :  Name of the function from where a log message was issued (__func__)
- * %h  :  Hostname
- * %t  :  Thread ID
- * %m  :  Log message
- *
+ * @brief Struct with the base configuration for a logger sink
  */
-struct ConversionPattern {
+struct SinkConfig {
 public:
-    enum PATTERN_TYPE {
-        DT = 0,        /**< Datetime Pattern */
-        FILE,          /**< Caller Filename */
-        FILE_ABSOLUTE, /**< Caller absolute filename */
-        LINE,          /**< Line number */
-        FUNC,          /**< Caller Function */
-        HOST,          /**< Hostname */
-        THREADID,      /**< Thread ID */
-        MSG            /**< Log Message */
-    };
-
-    ConversionPattern(std::string conv_pattern, const PATTERN_TYPE ptype)
-        : conv_pattern(std::move(conv_pattern)), ptype(ptype){};
-
-    template <typename T>
     /**
-     * @brief Replace conversion pattern with new_value
+     * @brief Constructor for the base config
      *
-     * @param msg_pattern Message pattern
-     * @param new_value Value to replace the conversion pattern with
+     * @param msg_pattern The message pattern for this sink
+     * @param datetime_pattern The datetime pattern
+     * @param enabled Whether or not this sink is enabled
+     * @param min_lvl The minimum log severity
+     *
+     * A Log message can have conversion patterns. Every Sink uses its own message
+     * pattern. Have a look at ConversionPattern for more details.
+     *
+     * Internally std::strftime is used from header ctime to create formatted time
+     * strings.
+     * So for parameter Sink#datetime_pattern you have to use format specifiers
+     * that are recognised by strftime.
+     * See [en.cppreference.com](http://en.cppreference.com/w/cpp/chrono/c/strftime)
+     * for details.
+     * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
      */
-    void replace_conversion_pattern(std::string &msg, T new_value) const
+    SinkConfig(std::string msg_pattern, std::string datetime_pattern,
+               bool enabled, con::LOG_LEVEL min_lvl)
+        : msg_pattern(std::move(msg_pattern)),
+          datetime_pattern(std::move(datetime_pattern)),
+          enabled(enabled),
+          min_level(min_lvl){};
+    virtual ~SinkConfig(){};
+
+    void set_msg_pattern(std::string msg_pattern)
     {
-        this->replace_conversion_pattern(msg, std::to_string(new_value));
+        std::lock_guard<std::mutex> lock(this->mtx_msg_pattern);
+        this->msg_pattern = std::move(msg_pattern);
+        // TODO: How could I notify the Sink object about the new msg_pattern?
+        // this->fill_conv_patterns();
+    }
+    std::string get_msg_pattern()
+    {
+        std::lock_guard<std::mutex> lock(this->mtx_msg_pattern);
+        return this->msg_pattern;
     }
 
-    ConversionPattern::PATTERN_TYPE get_pattern_type() const
+    void set_datetime_pattern(std::string datetime_pattern)
     {
-        return this->ptype;
+        std::lock_guard<std::mutex> lock(this->mtx_datetime_pattern);
+        this->datetime_pattern = std::move(datetime_pattern);
+    }
+    std::string get_datetime_pattern()
+    {
+        std::lock_guard<std::mutex> lock(this->mtx_datetime_pattern);
+        return this->datetime_pattern;
     }
 
-private:
-    std::string conv_pattern;
-    const PATTERN_TYPE ptype;
-    /**
-     * @brief Some conversion patterns need additional data
-     *
-     * @param cp Conversion Pattern
-     *
-     * @return Value that will be used to replace the conversion pattern
-     */
-    void check_conversion_pattern(const std::string &cp, std::string &new_value)
+    void set_enabled(bool enabled)
     {
-        if (cp == "%f") {
-            new_value = utility::get_file_name(new_value);
-        }
-        if (cp == "%h") {
-            new_value = utility::get_hostname();
-        }
+        std::lock_guard<std::mutex> lock(this->mtx_enabled);
+        this->enabled = enabled;
     }
+    bool get_enabled()
+    {
+        std::lock_guard<std::mutex> lock(this->mtx_enabled);
+        return this->enabled;
+    }
+
+    void set_min_lvl(con::LOG_LEVEL min_lvl)
+    {
+        std::lock_guard<std::mutex> lock(this->mtx_min_lvl);
+        this->min_level = min_lvl;
+    }
+    con::LOG_LEVEL get_min_lvl()
+    {
+        std::lock_guard<std::mutex> lock(this->mtx_min_lvl);
+        return this->min_level;
+    }
+
+protected:
+    std::mutex mtx_msg_pattern;
+    std::mutex mtx_datetime_pattern;
+    std::mutex mtx_enabled;
+    std::mutex mtx_min_lvl;
+
+    std::string msg_pattern;
+    std::string datetime_pattern;
+    bool enabled;
+    con::LOG_LEVEL min_level;
 };
-template <>
-/**
- * @brief Replace conversion pattern with new_value
- *
- * @param msg The message pattern
- * @param new_value New value
- * @details
- *
- * This method is a specialization of ConversionPattern::replace_conversion_pattern(std::string, T)
- * Here the actual replacement of all instances of the conversion pattern take
- * place.
- */
-void ConversionPattern::replace_conversion_pattern(std::string &msg,
-                                                   std::string new_value) const
-{
-    // set pos to 0. we use this pos to narrow down our search area
-    size_t pos_in_string = 0;
-    while ((pos_in_string = msg.find(this->conv_pattern, pos_in_string)) !=
-           std::string::npos) {
-        msg.replace(pos_in_string, this->conv_pattern.length(), new_value);
-        pos_in_string += new_value.length();
-    }
-}
 
 /**
  * @brief A sink is an object that writes the log message to the target
@@ -132,32 +132,29 @@ class Sink
 public:
     /**
      * @brief Sink constructor
-     *
-     * @param msg_pattern The message pattern/style for a sink
-     * @param datetime_pattern The datetime pattern
-     * @param enabled Whether or not the sink is enabled
+     * @param config Configuration object
      */
-    Sink(std::string msg_pattern, std::string datetime_pattern, bool enabled);
+    Sink(std::shared_ptr<SinkConfig> config);
     virtual ~Sink();
 
+    // FIXME: The user can provide here a config object of the wrong derived
+    // class
+    // dynamic_pointer_cast would fail in this case. We must make this virtual and
+    // implement the method in each sink. The means we need some kind of boilerplate
+    // for this method. Because we have to lock a mutex and renew the ConversionPattern
+    // vector.
+    void set_config(std::shared_ptr<SinkConfig> config);
+    std::shared_ptr<SinkConfig> get_config();
+
     void prepare_log_message(const std::shared_ptr<LogMessage> &log_message);
-    void set_msg_pattern(std::string msg_pattern);
-    std::string get_msg_pattern();
-    void set_datetime_pattern(std::string datetime_pattern);
-    std::string get_datetime_pattern();
-    void set_enabled(bool enabled);
-    bool get_enabled();
 
 protected:
-    std::mutex mtx_msg_pattern;
-    std::mutex mtx_datetime_pattern;
-    std::mutex mtx_enabled;
-
-    std::string msg_pattern;
-    std::string datetime_pattern;
-    bool enabled;
-
+    std::shared_ptr<SinkConfig> config;
     std::vector<ConversionPattern> vec_conv_patterns;
+
+    /** lookup table for loglevel Strings */
+    std::map<con::LOG_LEVEL, std::string> loglevel_lookup;
+    std::mutex mtx_config;
 
     /**
      * @brief Fill Sink#vec_conv_patterns with ConverionPattern depending on
@@ -175,6 +172,14 @@ protected:
      * specified sink.
      */
     virtual void write_message(const std::string &msg) = 0;
+
+    /**
+     * @brief This method will be called when the SinkConfig option changes
+     * @details
+     * Derived Sink classes have to implement this and take necessary steps
+     * regarding a changed configuration file
+     */
+    virtual void config_changed() = 0;
 };
 
 #endif /* SINK_H */

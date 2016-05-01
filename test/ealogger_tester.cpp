@@ -23,9 +23,8 @@
 
 int main(int argc, const char* argv[])
 {
-    std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
-        new EALogger(EALogger::log_level::DEBUG, true, true, false, false,
-                     "%H:%M:%S", "logToMe.log"));
+    std::unique_ptr<EALogger> log =
+        std::unique_ptr<EALogger>(new EALogger(true));
 
     std::stringstream version;
     version << VERSION_MAJOR << "." << VERSION_MINOR;
@@ -33,94 +32,122 @@ int main(int argc, const char* argv[])
         version << "." << VERSION_PATCH;
     }
 
+    log->debug("A debug message");
+    log->info("Info was here");
+    log->warn("Warning");
+    log->error("Error");
+    log->fatal("Alert, system in fatal state");
+    log->stack();
+
+    std::shared_ptr<SinkConfigConsole> cfg =
+        std::dynamic_pointer_cast<SinkConfigConsole>(
+            log->get_sink_config(con::LOGGER_SINK::CONSOLES));
+    cfg->set_min_lvl(con::LOG_LEVEL::WARNING);
+    log->set_sink_config(con::LOGGER_SINK::CONSOLES, cfg);
+
+    log->info("Info was here 2");
+
     std::chrono::steady_clock::time_point t = std::chrono::steady_clock::now();
-    log->info("Logtester of ealogger " + version.str() + " is starting");
-    log->info("Next message has lower severity than defined minimum");
+    for (int i = 0; i < 100; i++) {
+        // log->info("Hello Africa, tell me how you are doing");
+    }
 
-    log->debug("Do you see me?");
-    log->warn("A warning message");
-    log->error("An error message");
-    log->fatal("A fatal message");
+    std::chrono::steady_clock::time_point tstop =
+        std::chrono::steady_clock::now();
+    std::this_thread::sleep_for(std::chrono::seconds(3));
+    std::cout << std::chrono::duration_cast<std::chrono::microseconds>(tstop - t)
+                         .count() /
+                     1000.0
+              << std::endl;
+    // std::chrono::steady_clock::time_point t =
+    // std::chrono::steady_clock::now();
+    //log->info("Logtester of ealogger " + version.str() + " is starting");
+    // log->info("Next message has lower severity than defined minimum");
 
-    log->set_log_to_console(false);
-    log->info("Logging to console deactivated");
-    log->set_log_to_file(false);
-    log->info("Logging to file deactivated");
-    log->set_log_to_console(true);
-    log->info("Logging to console reactivated");
-    log->set_log_to_file(true);
-    log->info("Logging to file reactivated");
+    // log->debug("Do you see me?");
+    // log->warn("A warning message");
+    // log->error("An error message");
+    // log->fatal("A fatal message");
 
-    log->info("Changing date time format specifiers to %A %r");
-    log->set_dt_format("%A %r");
-    log->info("Format specifiers changed");
-    log->stack_trace(10);
+    // log->set_log_to_console(false);
+    // log->info("Logging to console deactivated");
+    // log->set_log_to_file(false);
+    // log->info("Logging to file deactivated");
+    // log->set_log_to_console(true);
+    // log->info("Logging to console reactivated");
+    // log->set_log_to_file(true);
+    // log->info("Logging to file reactivated");
 
-    int msNormal = std::chrono::duration_cast<std::chrono::microseconds>(
-                       std::chrono::steady_clock::now() - t)
-                       .count();
-    log->info("Application needed " + std::to_string(msNormal) +
-              "µs to do the logging");
+    // log->info("Changing date time format specifiers to %A %r");
+    // log->set_dt_format("%A %r");
+    // log->info("Format specifiers changed");
+    // log->stack_trace(10);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    // int msNormal = std::chrono::duration_cast<std::chrono::microseconds>(
+    // std::chrono::steady_clock::now() - t)
+    //.count();
+    // log->info("Application needed " + std::to_string(msNormal) +
+    //"µs to do the logging");
 
-    // now we try the same in async mode
-    log = std::unique_ptr<EALogger>(new EALogger(EALogger::log_level::INFO, true,
-                                                 true, false, true, "%H:%M:%S",
-                                                 "logToMe.log"));
-    t = std::chrono::steady_clock::now();
+    // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
-    log->info("Logtester of ealogger " + version.str() + " is starting");
-    log->info("Next message has lower severity than defined minimum");
+    //// now we try the same in async mode
+    // log = std::unique_ptr<EALogger>(new EALogger(con::LOG_LEVEL::INFO, true,
+    // true, false, true, "%H:%M:%S",
+    //"logToMe.log"));
+    // t = std::chrono::steady_clock::now();
 
-    log->debug("Do you see me?");
-    log->warn("A warning message");
-    log->error("An error message");
-    log->fatal("A fatal message");
+    //log->info("Logtester of ealogger " + version.str() + " is starting");
+    // log->info("Next message has lower severity than defined minimum");
 
-    log->set_log_to_console(false);
-    log->info("Logging to console deactivated");
-    log->set_log_to_file(false);
-    log->info("Logging to file deactivated");
-    log->set_log_to_console(true);
-    log->info("Logging to console reactivated");
-    log->set_log_to_file(true);
-    log->info("Logging to file reactivated");
+    // log->debug("Do you see me?");
+    // log->warn("A warning message");
+    // log->error("An error message");
+    // log->fatal("A fatal message");
 
-    log->info("Changing date time format specifiers to %A %r");
-    log->set_dt_format("%A %r");
-    log->info("Format specifiers changed");
-    log->stack_trace(10);
+    // log->set_log_to_console(false);
+    // log->info("Logging to console deactivated");
+    // log->set_log_to_file(false);
+    // log->info("Logging to file deactivated");
+    // log->set_log_to_console(true);
+    // log->info("Logging to console reactivated");
+    // log->set_log_to_file(true);
+    // log->info("Logging to file reactivated");
 
-    int msMulti = std::chrono::duration_cast<std::chrono::microseconds>(
-                      std::chrono::steady_clock::now() - t)
-                      .count();
-    log->info("Application needed " + std::to_string(msMulti) +
-              "µs to do the logging in async mode");
+    // log->info("Changing date time format specifiers to %A %r");
+    // log->set_dt_format("%A %r");
+    // log->info("Format specifiers changed");
+    // log->stack_trace(10);
 
-    log->info(
-        "The Tester will now write to the System Log. This only works "
-        "on Linux/BSD.");
+    // int msMulti = std::chrono::duration_cast<std::chrono::microseconds>(
+    // std::chrono::steady_clock::now() - t)
+    //.count();
+    // log->info("Application needed " + std::to_string(msMulti) +
+    //"µs to do the logging in async mode");
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    // log->info(
+    //"The Tester will now write to the System Log. This only works "
+    //"on Linux/BSD.");
 
-    log->set_log_to_syslog(true);
-    log->set_log_to_file(false);
-    log->set_log_to_console(false);
+    // std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 
-    log->info("Hello World Syslog");
-    log->debug("This is a debug message");
-    log->info("This is an info message");
-    log->warn("This is a warning message");
-    log->error("This is an error message");
-    log->fatal("This is a fatal message");
-    log->stack_trace(10);
+    // log->set_log_to_syslog(true);
+    // log->set_log_to_file(false);
+    // log->set_log_to_console(false);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    log->set_log_to_file(true);
-    log->set_log_to_console(true);
-    log->set_log_to_syslog(false);
+    // log->info("Hello World Syslog");
+    // log->debug("This is a debug message");
+    // log->info("This is an info message");
+    // log->warn("This is a warning message");
+    // log->error("This is an error message");
+    // log->fatal("This is a fatal message");
+    // log->stack_trace(10);
 
-    log->info("ealogger tester finished, bye bye");
+    // std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    // log->set_log_to_file(true);
+    // log->set_log_to_console(true);
+    // log->set_log_to_syslog(false);
+
+    // log->info("ealogger tester finished, bye bye");
     return 0;
 }

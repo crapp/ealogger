@@ -73,6 +73,14 @@ public:
     }
 
     /**
+     * @brief Return the time_point when this message was created
+     * @return std::time_t object
+     */
+    std::time_t get_timepoint()
+    {
+        return std::chrono::system_clock::to_time_t(this->t);
+    }
+    /**
      * @brief Returns the severity of the message
      * @return Severity returned as int, EALogger#log_level
      */

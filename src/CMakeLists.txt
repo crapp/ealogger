@@ -6,6 +6,8 @@ set(EALOGGER_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/logqueue.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sink.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/sink_console.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sink_file.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sink_syslog.cpp
 )
 
 find_package(Threads REQUIRED)

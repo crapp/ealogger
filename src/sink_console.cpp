@@ -15,13 +15,15 @@
 
 #include "sink_console.h"
 
-SinkConsole::SinkConsole(std::string msg_pattern, std::string dateime_pattern,
-                         bool enabled)
-    : Sink(std::move(msg_pattern), std::move(dateime_pattern), enabled)
+SinkConsole::SinkConsole(std::shared_ptr<SinkConfigConsole> config)
+    : Sink(std::move(config))
 {
 }
 SinkConsole::~SinkConsole() {}
 void SinkConsole::write_message(const std::string &msg)
 {
+    std::lock_guard<std::mutex> lock(this->mtx_console);
     std::cout << msg << std::endl;
 }
+
+void SinkConsole::config_changed() {}
