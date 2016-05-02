@@ -27,7 +27,7 @@
  */
 #include <condition_variable>
 
-#include "logmessage.h"
+#include "ealogger/logmessage.h"
 
 /**
  * @brief The LogQueue class represents a threadsafe queue we use to store log messages

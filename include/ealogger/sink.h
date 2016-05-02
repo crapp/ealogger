@@ -22,21 +22,26 @@
 #include <mutex>
 #include <iostream>
 
-#include "utility.h"
-#include "global.h"
-#include "conversion_pattern.h"
-#include "logmessage.h"
+#include "ealogger/utility.h"
+#include "ealogger/global.h"
+#include "ealogger/conversion_pattern.h"
+#include "ealogger/logmessage.h"
 
 namespace con = ealogger_constants;
 
 /**
- * @brief Struct with the base configuration for a logger sink
+ * @brief A sink is an object that writes the log message to the target
+ * @author Christian Rapp
+ * @details
+ *
+ * The virtual class Sink has to be implemented by each possible target. To add
+ * a new Sink to ealogger you have to provide an implementaion of Sink::write_message
  */
-struct SinkConfig {
+class Sink
+{
 public:
     /**
-     * @brief Constructor for the base config
-     *
+     * @brief Sink constructor
      * @param msg_pattern The message pattern for this sink
      * @param datetime_pattern The datetime pattern
      * @param enabled Whether or not this sink is enabled
@@ -53,114 +58,40 @@ public:
      * for details.
      * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
      */
-    SinkConfig(std::string msg_pattern, std::string datetime_pattern,
-               bool enabled, con::LOG_LEVEL min_lvl)
-        : msg_pattern(std::move(msg_pattern)),
-          datetime_pattern(std::move(datetime_pattern)),
-          enabled(enabled),
-          min_level(min_lvl){};
-    virtual ~SinkConfig(){};
-
-    void set_msg_pattern(std::string msg_pattern)
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_msg_pattern);
-        this->msg_pattern = std::move(msg_pattern);
-        // TODO: How could I notify the Sink object about the new msg_pattern?
-        // this->fill_conv_patterns();
-    }
-    std::string get_msg_pattern()
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_msg_pattern);
-        return this->msg_pattern;
-    }
-
-    void set_datetime_pattern(std::string datetime_pattern)
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_datetime_pattern);
-        this->datetime_pattern = std::move(datetime_pattern);
-    }
-    std::string get_datetime_pattern()
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_datetime_pattern);
-        return this->datetime_pattern;
-    }
-
-    void set_enabled(bool enabled)
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_enabled);
-        this->enabled = enabled;
-    }
-    bool get_enabled()
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_enabled);
-        return this->enabled;
-    }
-
-    void set_min_lvl(con::LOG_LEVEL min_lvl)
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_min_lvl);
-        this->min_level = min_lvl;
-    }
-    con::LOG_LEVEL get_min_lvl()
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_min_lvl);
-        return this->min_level;
-    }
-
-protected:
-    std::mutex mtx_msg_pattern;
-    std::mutex mtx_datetime_pattern;
-    std::mutex mtx_enabled;
-    std::mutex mtx_min_lvl;
-
-    std::string msg_pattern;
-    std::string datetime_pattern;
-    bool enabled;
-    con::LOG_LEVEL min_level;
-};
-
-/**
- * @brief A sink is an object that writes the log message to the target
- * @author Christian Rapp
- * @details
- *
- * The virtual class Sink has to be implemented by each possible target. To add
- * a new Sink to ealogger you have to provide an implementaion of Sink::write_message
- */
-class Sink
-{
-public:
-    /**
-     * @brief Sink constructor
-     * @param config Configuration object
-     */
-    Sink(std::shared_ptr<SinkConfig> config);
+    Sink(std::string msg_pattern, std::string datetime_pattern, bool enabled,
+         con::LOG_LEVEL min_lvl);
     virtual ~Sink();
 
-    // FIXME: The user can provide here a config object of the wrong derived
-    // class
-    // dynamic_pointer_cast would fail in this case. We must make this virtual and
-    // implement the method in each sink. The means we need some kind of boilerplate
-    // for this method. Because we have to lock a mutex and renew the ConversionPattern
-    // vector.
-    void set_config(std::shared_ptr<SinkConfig> config);
-    std::shared_ptr<SinkConfig> get_config();
+    void set_msg_pattern(std::string msg_pattern);
+    void set_datetime_pattern(std::string datetime_pattern);
+    void set_enabled(bool enabled);
+    bool get_enabled();
+    void set_min_lvl(con::LOG_LEVEL min_lvl);
 
     void prepare_log_message(const std::shared_ptr<LogMessage> &log_message);
 
 protected:
-    std::shared_ptr<SinkConfig> config;
+    std::string msg_pattern;
+    std::string datetime_pattern;
+    bool enabled;
+    con::LOG_LEVEL min_level;
+
+    std::mutex mtx_msg_pattern;
+    std::mutex mtx_datetime_pattern;
+    std::mutex mtx_enabled;
+    std::mutex mtx_min_lvl;
+    std::mutex mtx_conv_pattern;
+
     std::vector<ConversionPattern> vec_conv_patterns;
 
     /** lookup table for loglevel Strings */
     std::map<con::LOG_LEVEL, std::string> loglevel_lookup;
-    std::mutex mtx_config;
 
     /**
      * @brief Fill Sink#vec_conv_patterns with ConverionPattern depending on
      * Sink#msg_pattern
      */
-    void fill_conv_patterns();
+    void fill_conv_patterns(bool lock);
     /**
      * @brief Writes a LogMessage object to the logger sink
      *

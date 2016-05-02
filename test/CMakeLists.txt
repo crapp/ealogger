@@ -4,7 +4,7 @@ set(EALOGGER_TESTSOURCE
 
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
-    "../include/ealogger"
+    "../include"
 )
 
 # configure a header file to pass some of the CMake settings

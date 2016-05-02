@@ -13,7 +13,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "logqueue.h"
+#include "ealogger/logqueue.h"
 
 LogQueue::LogQueue() {}
 void LogQueue::push(std::shared_ptr<LogMessage> m)

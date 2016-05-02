@@ -18,24 +18,7 @@
 
 #include <iostream>
 
-#include "sink.h"
-
-/**
- * @brief The Configuration for the Console sink
- * @details
- *
- * Does not need any special configuration options
- */
-struct SinkConfigConsole : public SinkConfig {
-    SinkConfigConsole(std::string msg_pattern, std::string datetime_pattern,
-                      bool enabled, con::LOG_LEVEL min_lvl)
-        : SinkConfig(std::move(msg_pattern), std::move(datetime_pattern),
-                     enabled, min_lvl)
-    {
-    }
-
-private:
-};
+#include "ealogger/sink.h"
 
 /**
  * @brief Console Sink
@@ -43,7 +26,8 @@ private:
 class SinkConsole : public Sink
 {
 public:
-    SinkConsole(std::shared_ptr<SinkConfigConsole> config);
+    SinkConsole(std::string msg_pattern, std::string datetime_pattern,
+                bool enabled, con::LOG_LEVEL min_lvl);
     virtual ~SinkConsole();
 
 private:

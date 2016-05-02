@@ -32,12 +32,12 @@
 #include <map>
 
 #include "config.h"
-#include "global.h"
-#include "sink_console.h"
-#include "sink_syslog.h"
-#include "sink_file.h"
-#include "logmessage.h"
-#include "logqueue.h"
+#include "ealogger/global.h"
+#include "ealogger/sink_console.h"
+#include "ealogger/sink_syslog.h"
+#include "ealogger/sink_file.h"
+#include "ealogger/logmessage.h"
+#include "ealogger/logqueue.h"
 
 namespace con = ealogger_constants;
 
@@ -158,8 +158,31 @@ public:
     void write_log(std::string msg, con::LOG_LEVEL lvl, std::string file,
                    int lnumber, std::string func);
 
-    std::shared_ptr<SinkConfig> get_sink_config(con::LOGGER_SINK sink);
-    void set_sink_config(con::LOGGER_SINK sink, std::shared_ptr<SinkConfig> cfg);
+    void init_syslog_sink(bool enabled = true,
+                          con::LOG_LEVEL min_lvl = con::LOG_LEVEL::DEBUG,
+                          std::string msg_pattern = "%s: %m",
+                          std::string datetime_pattern = "%F %T");
+    void init_console_sink(bool enabled = true,
+                           con::LOG_LEVEL min_lvl = con::LOG_LEVEL::DEBUG,
+                           std::string msg_pattern = "%d %s: %m",
+                           std::string datetime_pattern = "%F %T");
+    void init_file_sink(bool enabledi = true,
+                        con::LOG_LEVEL min_lvl = con::LOG_LEVEL::DEBUG,
+                        std::string msg_pattern = "%d %s [%f:%l] %m",
+                        std::string datetime_pattern = "%F %T",
+                        std::string logfile = "ealogger_logfile.log");
+    void init_file_sink_rotating(bool enabled, con::LOG_LEVEL min_lvl,
+                                 std::string msg_pattern,
+                                 std::string datetime_pattern,
+                                 std::string logfile);
+
+    void set_msg_pattern(con::LOGGER_SINK sink, std::string msg_pattern);
+    void set_datetime_pattern(con::LOGGER_SINK sink,
+                              std::string datetime_pattern);
+    void set_enabled(con::LOGGER_SINK sink, bool enabled);
+    void set_min_lvl(con::LOGGER_SINK sink, con::LOG_LEVEL min_level);
+
+    bool queue_empty();
 
 private:
     /** Mutex used when not in async mode */
@@ -177,6 +200,7 @@ private:
     bool logger_thread_stop;
 
     std::map<con::LOGGER_SINK, std::shared_ptr<Sink>> logger_sink_map;
+    std::map<con::LOGGER_SINK, std::unique_ptr<std::mutex>> logger_mutex_map;
 
     /** Static Method to be registered for logrotate signal */
     static void logrotate(int signo);

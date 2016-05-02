@@ -18,7 +18,8 @@
 
 #include <string>
 #include <iostream>
-#include <global.h>
+
+#include "ealogger/global.h"
 
 namespace con = ealogger_constants;
 

@@ -13,12 +13,13 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "sink_syslog.h"
+#include "ealogger/sink_syslog.h"
 
-SinkSyslog::SinkSyslog(std::shared_ptr<SinkConfigSyslog> config)
-    : Sink(std::move(config))
+SinkSyslog::SinkSyslog(std::string msg_pattern, std::string datetime_pattern,
+                       bool enabled, con::LOG_LEVEL min_lvl)
+    : Sink(std::move(msg_pattern), std::move(datetime_pattern), enabled, min_lvl)
 {
-#ifdef SYSLOG
+#ifdef EALOGGER_SYSLOG
     this->loglevel_syslog_lookup = {
         {con::LOG_LEVEL::DEBUG, LOG_DEBUG},
         {con::LOG_LEVEL::INFO, LOG_INFO},
@@ -36,7 +37,7 @@ SinkSyslog::SinkSyslog(std::shared_ptr<SinkConfigSyslog> config)
 SinkSyslog::~SinkSyslog() {}
 void SinkSyslog::write_message(const std::string &msg)
 {
-#ifdef SYSLOG
+#ifdef EALOGGER_SYSLOG
     std::lock_guard<std::mutex> lock(this->mtx_syslog);
     if (this->get_log_to_syslog())
         syslog(this->loglevel_syslog_lookup.at(msg_lvl), "%s", msg.c_str());

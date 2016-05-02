@@ -14,10 +14,10 @@ find_package(Threads REQUIRED)
 
 if(UNIX)
     find_path(
-        SYSLOG
+        EALOGGER_SYSLOG
         syslog.h
     )
-    if(${SYSLOG})
+if(${EALOGGER_SYSLOG})
         message(STATUS "Syslog sink is available")
     endif()
 endif()
@@ -25,7 +25,7 @@ endif()
 #add bin dir because of the configure headers we create later
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
-    "../include/ealogger"
+    "../include"
 )
 
 # configure a header file to pass some of the CMake settings

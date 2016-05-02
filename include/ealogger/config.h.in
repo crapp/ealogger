@@ -16,12 +16,12 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define VERSION_MAJOR "@ealogger_VERSION_MAJOR@"
-#define VERSION_MINOR "@ealogger_VERSION_MINOR@"
-#define VERSION_PATCH "@ealogger_VERSION_PATCH@"
+#define EALOGGER_VERSION_MAJOR "@ealogger_VERSION_MAJOR@"
+#define EALOGGER_VERSION_MINOR "@ealogger_VERSION_MINOR@"
+#define EALOGGER_VERSION_PATCH "@ealogger_VERSION_PATCH@"
 
-#cmakedefine SYSLOG
+#cmakedefine EALOGGER_SYSLOG
 
-#cmakedefine PRINT_INTERNAL_MESSAGES
+#cmakedefine EALOGGER_PRINT_INTERNAL "@PRINT_INTERNAL_MESSAGES@"
 
-#endif  // CONFIG_H
+#endif  //

@@ -13,11 +13,16 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "sink.h"
+#include "ealogger/sink.h"
 
-Sink::Sink(std::shared_ptr<SinkConfig> config) : config(config)
+Sink::Sink(std::string msg_pattern, std::string datetime_pattern, bool enabled,
+           con::LOG_LEVEL min_lvl)
+    : msg_pattern(std::move(msg_pattern)),
+      datetime_pattern(std::move(datetime_pattern)),
+      enabled(enabled),
+      min_level(min_lvl)
 {
-    this->fill_conv_patterns();
+    this->fill_conv_patterns(true);
     this->loglevel_lookup = {{con::LOG_LEVEL::DEBUG, "DEBUG"},
                              {con::LOG_LEVEL::INFO, "INFO"},
                              {con::LOG_LEVEL::WARNING, "WARNING"},
@@ -27,45 +32,60 @@ Sink::Sink(std::shared_ptr<SinkConfig> config) : config(config)
                              {con::LOG_LEVEL::INTERNAL, "INTERNAL"}};
 }
 Sink::~Sink() {}
-void Sink::set_config(std::shared_ptr<SinkConfig> config)
+void Sink::set_msg_pattern(std::string msg_pattern)
 {
-    std::lock_guard<std::mutex> lock(this->mtx_config);
-    this->config = std::move(config);
-    // TODO: This is not nice, there is no indication msg_pattern has changed but
-    // we need to run fill_conv_patterns here.
-    this->fill_conv_patterns();
-    // "notfiy" derived classes about the changed config
-    this->config_changed();
+    std::lock_guard<std::mutex> lock(this->mtx_msg_pattern);
+    this->msg_pattern = std::move(msg_pattern);
+    this->fill_conv_patterns(false);
 }
 
-std::shared_ptr<SinkConfig> Sink::get_config()
+void Sink::set_datetime_pattern(std::string datetime_pattern)
 {
-    std::lock_guard<std::mutex> lock(this->mtx_config);
-    return this->config;
+    std::lock_guard<std::mutex> lock(this->mtx_datetime_pattern);
+    this->datetime_pattern = std::move(datetime_pattern);
+}
+
+void Sink::set_enabled(bool enabled)
+{
+    std::lock_guard<std::mutex> lock(this->mtx_enabled);
+    this->enabled = enabled;
+    this->config_changed();
+}
+bool Sink::get_enabled()
+{
+    std::lock_guard<std::mutex> lock(this->mtx_enabled);
+    return this->enabled;
+}
+
+void Sink::set_min_lvl(con::LOG_LEVEL min_lvl)
+{
+    std::lock_guard<std::mutex> lock(this->mtx_min_lvl);
+    this->min_level = min_lvl;
 }
 
 void Sink::prepare_log_message(const std::shared_ptr<LogMessage> &log_message)
 {
-    // I am using a unique lock here that I can unlock myself but also works with
-    // RAII
-    std::unique_lock<std::mutex> lock(this->mtx_config);
     // TODO: Is it a good idea to check whether this Sink is enabled here or
     // should we check in EALogger?
-    if (!this->config->get_enabled())
+    if (!this->get_enabled())
         return;
 
     con::LOG_LEVEL msg_lvl =
         static_cast<con::LOG_LEVEL>(log_message->get_severity());
-    if (msg_lvl < this->config->get_min_lvl() &&
+
+    std::unique_lock<std::mutex> min_level_lock(this->mtx_min_lvl);
+    if (msg_lvl < this->min_level &&
         log_message->get_log_type() == LogMessage::LOGTYPE::DEFAULT)
         return;
+    min_level_lock.unlock();
 
-#ifndef PRINT_INTERNAL_MESSAGES
+#ifndef EALOGGER_PRINT_INTERNAL
     // Print INTERNAL messages only when defined
     if (msg_lvl == con::LOG_LEVEL::INTERNAL) {
         return;
     }
 #endif
+
     std::string msg = "";
     // TODO: Large if else blocks are not nice. We could move the ConversionPattern
     // for loop to a different function.
@@ -76,15 +96,21 @@ void Sink::prepare_log_message(const std::shared_ptr<LogMessage> &log_message)
             msg += *it + "\n";
         }
     } else {
-        msg = this->config->get_msg_pattern();
+        std::unique_lock<std::mutex> msg_pattern_lock(this->mtx_msg_pattern);
+        msg = this->msg_pattern;
+        msg_pattern_lock.unlock();
+        std::lock_guard<std::mutex> vec_conv_patterns_lock(
+            this->mtx_conv_pattern);
         for (const auto &cp : this->vec_conv_patterns) {
             switch (cp.get_pattern_type()) {
-            case ConversionPattern::PATTERN_TYPE::DT:
+            case ConversionPattern::PATTERN_TYPE::DT: {
+                std::unique_lock<std::mutex> datetime_pattern_lock(
+                    this->mtx_datetime_pattern);
                 cp.replace_conversion_pattern(
-                    msg, utility::format_time_to_string(
-                             log_message->get_timepoint(),
-                             this->config->get_datetime_pattern()));
-                break;
+                    msg,
+                    utility::format_time_to_string(log_message->get_timepoint(),
+                                                   this->datetime_pattern));
+            } break;
             case ConversionPattern::PATTERN_TYPE::FILE:
                 cp.replace_conversion_pattern(
                     msg, utility::get_file_name(log_message->get_call_file()));
@@ -116,51 +142,60 @@ void Sink::prepare_log_message(const std::shared_ptr<LogMessage> &log_message)
         }
     }
 
-    lock.unlock();
     // here the sinks have to write the message
     this->write_message(msg);
 }
 
-void Sink::fill_conv_patterns()
+void Sink::fill_conv_patterns(bool lock)
 {
-    std::lock_guard<std::mutex> lock(this->mtx_config);
+    std::lock_guard<std::mutex> vec_conv_patterns_lock(this->mtx_conv_pattern);
     if (!this->vec_conv_patterns.empty()) {
         this->vec_conv_patterns.clear();
         this->vec_conv_patterns.shrink_to_fit();
     }
-    if (this->config->get_msg_pattern().find("%d") != std::string::npos) {
+
+    std::string msgp = "";
+    if (lock) {
+        std::unique_lock<std::mutex> msg_pattern_lock(this->mtx_msg_pattern);
+        msgp = this->msg_pattern;
+        msg_pattern_lock.unlock();
+    } else {
+        msgp = this->msg_pattern;
+    }
+
+    if (msgp.find("%d") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%d", ConversionPattern::PATTERN_TYPE::DT));
     }
-    if (this->config->get_msg_pattern().find("%f") != std::string::npos) {
+    if (msgp.find("%f") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%f", ConversionPattern::PATTERN_TYPE::FILE));
     }
-    if (this->config->get_msg_pattern().find("%F") != std::string::npos) {
+    if (msgp.find("%F") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(ConversionPattern(
             "%F", ConversionPattern::PATTERN_TYPE::FILE_ABSOLUTE));
     }
-    if (this->config->get_msg_pattern().find("%l") != std::string::npos) {
+    if (msgp.find("%l") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%l", ConversionPattern::PATTERN_TYPE::LINE));
     }
-    if (this->config->get_msg_pattern().find("%fu") != std::string::npos) {
+    if (msgp.find("%fu") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%fu", ConversionPattern::PATTERN_TYPE::FUNC));
     }
-    if (this->config->get_msg_pattern().find("%h") != std::string::npos) {
+    if (msgp.find("%h") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%h", ConversionPattern::PATTERN_TYPE::HOST));
     }
-    if (this->config->get_msg_pattern().find("%t") != std::string::npos) {
+    if (msgp.find("%t") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%t", ConversionPattern::PATTERN_TYPE::THREADID));
     }
-    if (this->config->get_msg_pattern().find("%m") != std::string::npos) {
+    if (msgp.find("%m") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%m", ConversionPattern::PATTERN_TYPE::MSG));
     }
-    if (this->config->get_msg_pattern().find("%s") != std::string::npos) {
+    if (msgp.find("%s") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%s", ConversionPattern::PATTERN_TYPE::LVL));
     }

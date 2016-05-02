@@ -13,23 +13,19 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "ealogger.h"
+#include "ealogger/ealogger.h"
 
 EALogger::EALogger(bool async) : async(async)
 {
-    this->logger_sink_map.emplace(std::make_pair(
+    this->logger_mutex_map.emplace(
         con::LOGGER_SINK::CONSOLES,
-        std::make_shared<SinkConsole>(std::make_shared<SinkConfigConsole>(
-            "%d %s: %m", "%F %T", true, con::LOG_LEVEL::DEBUG))));
-    this->logger_sink_map.emplace(std::make_pair(
-        con::LOGGER_SINK::FILES,
-        std::make_shared<SinkFile>(std::make_shared<SinkConfigFile>(
-            "%d %s [%f:%l] %m", "%F %T", false, con::LOG_LEVEL::DEBUG,
-            "ealogger_logfile.log"))));
-    this->logger_sink_map.emplace(std::make_pair(
+        std::unique_ptr<std::mutex>(new std::mutex()));
+    this->logger_mutex_map.emplace(
         con::LOGGER_SINK::SYSLOGS,
-        std::make_shared<SinkSyslog>(std::make_shared<SinkConfigSyslog>(
-            "%s: %m", "%F %T", true, con::LOG_LEVEL::DEBUG))));
+        std::unique_ptr<std::mutex>(new std::mutex()));
+    this->logger_mutex_map.emplace(
+        con::LOGGER_SINK::FILE_SIMPLE,
+        std::unique_ptr<std::mutex>(new std::mutex()));
 // TODO: Make registration of signal handler configurable
 #ifdef __linux__
     if (signal(SIGUSR1, EALogger::logrotate) == SIG_ERR)
@@ -92,17 +88,64 @@ void EALogger::write_log(std::string msg, con::LOG_LEVEL lvl, std::string file,
     }
 }
 
-std::shared_ptr<SinkConfig> EALogger::get_sink_config(con::LOGGER_SINK sink)
+void EALogger::init_syslog_sink(bool enabled, con::LOG_LEVEL min_lvl,
+                                std::string msg_pattern,
+                                std::string datetime_pattern)
 {
-    return this->logger_sink_map.at(sink)->get_config();
+    this->logger_sink_map[con::LOGGER_SINK::SYSLOGS] =
+        std::make_shared<SinkSyslog>(std::move(msg_pattern),
+                                     std::move(datetime_pattern), enabled,
+                                     min_lvl);
+}
+void EALogger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
+                                 std::string msg_pattern,
+                                 std::string datetime_pattern)
+{
+    this->logger_sink_map[con::LOGGER_SINK::CONSOLES] =
+        std::make_shared<SinkConsole>(std::move(msg_pattern),
+                                      std::move(datetime_pattern), enabled,
+                                      min_lvl);
+}
+void EALogger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
+                              std::string msg_pattern,
+                              std::string datetime_pattern, std::string logfile)
+{
+    this->logger_sink_map[con::LOGGER_SINK::FILE_SIMPLE] =
+        std::make_shared<SinkFile>(std::move(msg_pattern),
+                                   std::move(datetime_pattern), enabled, min_lvl,
+                                   std::move(logfile));
+}
+void EALogger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL min_lvl,
+                                       std::string msg_pattern,
+                                       std::string datetime_pattern,
+                                       std::string logfile)
+{
 }
 
-void EALogger::set_sink_config(con::LOGGER_SINK sink,
-                               std::shared_ptr<SinkConfig> config)
+void EALogger::set_msg_pattern(con::LOGGER_SINK sink, std::string msg_pattern)
 {
-    this->logger_sink_map[sink]->set_config(std::move(config));
+    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+    this->logger_sink_map[sink]->set_msg_pattern(std::move(msg_pattern));
+}
+void EALogger::set_datetime_pattern(con::LOGGER_SINK sink,
+                                    std::string datetime_pattern)
+{
+    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+    this->logger_sink_map[sink]->set_datetime_pattern(
+        std::move(datetime_pattern));
+}
+void EALogger::set_enabled(con::LOGGER_SINK sink, bool enabled)
+{
+    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+    this->logger_sink_map[sink]->set_enabled(enabled);
+}
+void EALogger::set_min_lvl(con::LOGGER_SINK sink, con::LOG_LEVEL min_level)
+{
+    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+    this->logger_sink_map[sink]->set_min_lvl(min_level);
 }
 
+bool EALogger::queue_empty() { return this->log_msg_queue.empty(); }
 void EALogger::logrotate(int signo)
 {
 #ifdef __linux__
@@ -139,6 +182,8 @@ void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
     // std::ifstream::failbit);
     //}
     for (const auto &sink : logger_sink_map) {
+        std::lock_guard<std::mutex> lock(
+            *(this->logger_mutex_map[sink.first].get()));
         sink.second->prepare_log_message(m);
     }
 }

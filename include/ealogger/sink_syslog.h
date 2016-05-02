@@ -16,24 +16,13 @@
 #ifndef SINK_SYSLOG_H
 #define SINK_SYSLOG_H
 
-#include "sink.h"
-
-/**
- * @brief Derived Config Class for the Syslog sink
- */
-struct SinkConfigSyslog : public SinkConfig {
-public:
-    SinkConfigSyslog(std::string msg_pattern, std::string datetime_pattern,
-                     bool enabled, con::LOG_LEVEL min_lvl)
-        : SinkConfig(std::move(msg_pattern), std::move(datetime_pattern),
-                     enabled, min_lvl){};
-    virtual ~SinkConfigSyslog(){};
-};
+#include "ealogger/sink.h"
 
 class SinkSyslog : public Sink
 {
 public:
-    SinkSyslog(std::shared_ptr<SinkConfigSyslog> config);
+    SinkSyslog(std::string msg_pattern, std::string datetime_pattern,
+               bool enabled, con::LOG_LEVEL min_lvl);
     virtual ~SinkSyslog();
 
 private:

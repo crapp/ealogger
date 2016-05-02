@@ -18,43 +18,23 @@
 
 #include <fstream>
 
-#include "sink.h"
-
-struct SinkConfigFile : public SinkConfig {
-public:
-    SinkConfigFile(std::string msg_pattern, std::string datetime_pattern,
-                   bool enabled, con::LOG_LEVEL min_lvl, std::string log_file)
-        : SinkConfig(std::move(msg_pattern), std::move(datetime_pattern),
-                     enabled, min_lvl),
-          log_file(std::move(log_file))
-    {
-    }
-    void set_log_file(std::string log_file)
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_log_file);
-        this->log_file = std::move(log_file);
-    }
-    std::string get_log_file()
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_log_file);
-        return this->log_file;
-    };
-
-private:
-    std::mutex mtx_log_file;
-    std::string log_file;
-};
+#include "ealogger/sink.h"
 
 class SinkFile : public Sink
 {
 public:
-    SinkFile(std::shared_ptr<SinkConfigFile> config);
+    SinkFile(std::string msg_pattern, std::string datetime_pattern, bool enabled,
+             con::LOG_LEVEL min_lvl, std::string log_file);
     virtual ~SinkFile();
+
+    void set_log_file(std::string log_file);
 
 private:
     std::mutex mtx_file_stream;
+    std::mutex mtx_log_file;
+
     std::ofstream file_stream;
-    std::string current_filename;
+    std::string log_file;
 
     void write_message(const std::string &msg);
     void config_changed();

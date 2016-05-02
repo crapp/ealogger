@@ -18,49 +18,58 @@
 #include <sstream>
 #include <string>
 
-#include "ealogger.h"
+#include "ealogger/ealogger.h"
 #include "config.h"
 
 int main(int argc, const char* argv[])
 {
     std::unique_ptr<EALogger> log =
         std::unique_ptr<EALogger>(new EALogger(true));
+    log->init_console_sink();
+    log->set_enabled(con::LOGGER_SINK::CONSOLES, false);
+    log->init_file_sink();
 
     std::stringstream version;
-    version << VERSION_MAJOR << "." << VERSION_MINOR;
-    if (std::string(VERSION_PATCH) != "0") {
-        version << "." << VERSION_PATCH;
+    version << EALOGGER_VERSION_MAJOR << "." << EALOGGER_VERSION_MINOR;
+    if (std::string(EALOGGER_VERSION_PATCH) != "0") {
+        version << "." << EALOGGER_VERSION_PATCH;
     }
 
-    log->debug("A debug message");
-    log->info("Info was here");
-    log->warn("Warning");
-    log->error("Error");
-    log->fatal("Alert, system in fatal state");
-    log->stack();
+    // log->debug("A debug message");
+    // log->info("Info was here");
+    // log->warn("Warning");
+    // log->error("Error");
+    // log->fatal("Alert, system in fatal state");
+    // log->stack();
 
-    std::shared_ptr<SinkConfigConsole> cfg =
-        std::dynamic_pointer_cast<SinkConfigConsole>(
-            log->get_sink_config(con::LOGGER_SINK::CONSOLES));
-    cfg->set_min_lvl(con::LOG_LEVEL::WARNING);
-    log->set_sink_config(con::LOGGER_SINK::CONSOLES, cfg);
+    // log->set_min_lvl(con::LOGGER_SINK::CONSOLES, con::LOG_LEVEL::WARNING);
 
-    log->info("Info was here 2");
+    // log->info("Info was here 2");
 
-    std::chrono::steady_clock::time_point t = std::chrono::steady_clock::now();
-    for (int i = 0; i < 100; i++) {
-        // log->info("Hello Africa, tell me how you are doing");
+    std::chrono::system_clock::time_point t = std::chrono::system_clock::now();
+    for (int i = 0; i < 1000000; i++) {
+        log->info("Hello Africa, tell me how you are doing " +
+                  std::to_string(i));
+    }
+    std::chrono::system_clock::time_point tstop =
+        std::chrono::system_clock::now();
+
+    while (!log->queue_empty()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 
-    std::chrono::steady_clock::time_point tstop =
-        std::chrono::steady_clock::now();
-    std::this_thread::sleep_for(std::chrono::seconds(3));
-    std::cout << std::chrono::duration_cast<std::chrono::microseconds>(tstop - t)
+    std::cout << "Time messages on queue: "
+              << std::chrono::duration_cast<std::chrono::microseconds>(tstop - t)
                          .count() /
-                     1000.0
-              << std::endl;
-    // std::chrono::steady_clock::time_point t =
-    // std::chrono::steady_clock::now();
+                     1000
+              << "ms" << std::endl;
+    std::cout << "Time till end: "
+              << std::chrono::duration_cast<std::chrono::milliseconds>(
+                     std::chrono::system_clock::now() - t)
+                     .count()
+              << "ms" << std::endl;
+    // std::chrono::system_clock::time_point t =
+    // std::chrono::system_clock::now();
     //log->info("Logtester of ealogger " + version.str() + " is starting");
     // log->info("Next message has lower severity than defined minimum");
 
@@ -84,7 +93,7 @@ int main(int argc, const char* argv[])
     // log->stack_trace(10);
 
     // int msNormal = std::chrono::duration_cast<std::chrono::microseconds>(
-    // std::chrono::steady_clock::now() - t)
+    // std::chrono::system_clock::now() - t)
     //.count();
     // log->info("Application needed " + std::to_string(msNormal) +
     //"µs to do the logging");
@@ -95,7 +104,7 @@ int main(int argc, const char* argv[])
     // log = std::unique_ptr<EALogger>(new EALogger(con::LOG_LEVEL::INFO, true,
     // true, false, true, "%H:%M:%S",
     //"logToMe.log"));
-    // t = std::chrono::steady_clock::now();
+    // t = std::chrono::system_clock::now();
 
     //log->info("Logtester of ealogger " + version.str() + " is starting");
     // log->info("Next message has lower severity than defined minimum");
@@ -120,7 +129,7 @@ int main(int argc, const char* argv[])
     // log->stack_trace(10);
 
     // int msMulti = std::chrono::duration_cast<std::chrono::microseconds>(
-    // std::chrono::steady_clock::now() - t)
+    // std::chrono::system_clock::now() - t)
     //.count();
     // log->info("Application needed " + std::to_string(msMulti) +
     //"µs to do the logging in async mode");

@@ -21,7 +21,7 @@ namespace ealogger_constants
 /**
  * @brief Sinks ealogger supports
  */
-enum LOGGER_SINK { CONSOLES = 0, SYSLOGS, FILES };
+enum LOGGER_SINK { CONSOLES = 0, SYSLOGS, FILE_SIMPLE };
 enum CONVERSION_PATTERN {};
 
 /**

@@ -13,41 +13,50 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "sink_file.h"
+#include "ealogger/sink_file.h"
 
-SinkFile::SinkFile(std::shared_ptr<SinkConfigFile> config)
-    : Sink(std::move(config))
+SinkFile::SinkFile(std::string msg_pattern, std::string datetime_pattern,
+                   bool enabled, con::LOG_LEVEL min_lvl, std::string log_file)
+    : Sink(std::move(msg_pattern), std::move(datetime_pattern), enabled,
+           min_lvl),
+      log_file(log_file)
 {
-    this->current_filename =
-        std::dynamic_pointer_cast<SinkConfigFile>(this->config)->get_log_file();
-    if (this->config->get_enabled()) {
+    if (this->get_enabled()) {
         this->open_file();
     }
 }
 
 SinkFile::~SinkFile() { this->close_file(); }
+void SinkFile::set_log_file(std::string log_file)
+{
+    std::lock_guard<std::mutex> lock(this->mtx_log_file);
+    this->log_file = std::move(log_file);
+    // TODO: If this is the same filename?
+    this->close_file();
+    this->open_file();
+}
+
 void SinkFile::write_message(const std::string &msg)
 {
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
     if (this->file_stream.is_open()) {
-        this->file_stream << msg;
+        // TODO: The file stream is not flushed so when the application crashes
+        // it could be some information is lost.
+        this->file_stream << msg << "\n";
     }
 }
 
 void SinkFile::config_changed()
 {
-    if (!this->config->get_enabled() && this->file_stream.is_open()) {
+    // we can access enabled directly here because this is called from
+    // set_enabled and the coresponding mutex is already locked
+    if (this->enabled && this->file_stream.is_open()) {
         this->close_file();
         return;
     }
-    if (this->config->get_enabled() && !this->file_stream.is_open()) {
+    if (this->enabled && !this->file_stream.is_open()) {
         this->open_file();
         return;
-    }
-    if (std::dynamic_pointer_cast<SinkConfigFile>(this->config)
-            ->get_log_file() != this->current_filename) {
-        this->close_file();
-        this->open_file();
     }
 }
 
@@ -55,11 +64,11 @@ void SinkFile::open_file()
 {
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
     if (!this->file_stream.is_open()) {
-        this->file_stream.open(this->current_filename,
-                               std::ios::out | std::ios::app);
+        std::unique_lock<std::mutex> lock_log_file(this->mtx_log_file);
+        this->file_stream.open(this->log_file, std::ios::out | std::ios::app);
         if (!this->file_stream)
-            throw std::runtime_error("Can not open logfile: " +
-                                     this->current_filename);
+            throw std::runtime_error("Can not open logfile: " + this->log_file);
+        lock_log_file.unlock();
 
         // set exception mask for the file stream
         this->file_stream.exceptions(std::ifstream::badbit |

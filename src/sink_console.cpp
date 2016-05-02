@@ -13,12 +13,12 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "sink_console.h"
+#include "ealogger/sink_console.h"
 
-SinkConsole::SinkConsole(std::shared_ptr<SinkConfigConsole> config)
-    : Sink(std::move(config))
-{
-}
+SinkConsole::SinkConsole(std::string msg_pattern, std::string datetime_pattern,
+                         bool enabled, con::LOG_LEVEL min_lvl)
+    : Sink(std::move(msg_pattern), std::move(datetime_pattern), enabled,
+           min_lvl){};
 SinkConsole::~SinkConsole() {}
 void SinkConsole::write_message(const std::string &msg)
 {
