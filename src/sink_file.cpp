@@ -15,6 +15,8 @@
 
 #include "ealogger/sink_file.h"
 
+namespace con = ealogger_constants;
+
 SinkFile::SinkFile(std::string msg_pattern, std::string datetime_pattern,
                    bool enabled, con::LOG_LEVEL min_lvl, std::string log_file)
     : Sink(std::move(msg_pattern), std::move(datetime_pattern), enabled,

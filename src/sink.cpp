@@ -15,6 +15,8 @@
 
 #include "ealogger/sink.h"
 
+namespace con = ealogger_constants;
+
 Sink::Sink(std::string msg_pattern, std::string datetime_pattern, bool enabled,
            con::LOG_LEVEL min_lvl)
     : msg_pattern(std::move(msg_pattern)),

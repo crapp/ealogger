@@ -23,6 +23,8 @@
 
 int main(int argc, const char* argv[])
 {
+    namespace con = ealogger_constants;
+
     std::unique_ptr<EALogger> log =
         std::unique_ptr<EALogger>(new EALogger(true));
     log->init_console_sink();

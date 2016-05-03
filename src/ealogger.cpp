@@ -15,6 +15,8 @@
 
 #include "ealogger/ealogger.h"
 
+namespace con = ealogger_constants;
+
 EALogger::EALogger(bool async) : async(async)
 {
     this->logger_mutex_map.emplace(
