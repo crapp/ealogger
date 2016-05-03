@@ -21,8 +21,6 @@
 
 #include "ealogger/global.h"
 
-namespace con = ealogger_constants;
-
 /**
  * @brief A conversion pattern for message strings
  *

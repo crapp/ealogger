@@ -105,9 +105,9 @@
  * This will print *My application is awesome* to the console.
  *
  * ealogger uses sinks to write to different targets. Each Sink supports different
- * message conversion patterns and a datetime pattern. Each sink can be enabled or
- * disabled independently and the minimum severity can be set.
- * Yu have to us eEALogger::init_console_* to init a sink. This methods define sane
+ * message [conversion patterns](@ref ConversionPattern) and a datetime pattern.
+ * Each sink can be enabled or disabled independently and the minimum severity can be set.
+ * You have to use EALogger::init_console_* to init a sink. This methods define sane
  * defaults for their options. But if course you can change them to whatever you
  * want.
  *
@@ -192,9 +192,19 @@ public:
                                  std::string msg_pattern,
                                  std::string datetime_pattern,
                                  std::string logfile);
+    /**
+     * @brief Discard a Sink and delete the object
+     *
+     * @param sink
+     * @details
+     *
+     * You can discard a Sink this will reduce some overhead and can speed logging
+     * a little bit.
+     */
+    void discard_sink(ealogger_constants::LOGGER_SINK sink);
 
     /**
-     * @brief 
+     * @brief Set message conversion pattern for a Sink
      *
      * @param sink
      * @param msg_pattern
@@ -202,22 +212,26 @@ public:
     void set_msg_pattern(ealogger_constants::LOGGER_SINK sink,
                          std::string msg_pattern);
     /**
-     * @brief 
+     * @brief Set datetime conversion pattern for a Sink
      *
      * @param sink
      * @param datetime_pattern
+     *
+     * @details
+     * Date time conversion is based on [std::strftime](http://en.cppreference.com/w/cpp/chrono/c/strftime)
+     * You can use all the conversion specifiers mentioned there.
      */
     void set_datetime_pattern(ealogger_constants::LOGGER_SINK sink,
                               std::string datetime_pattern);
     /**
-     * @brief 
+     * @brief Activate or deactivate a Sink
      *
      * @param sink
      * @param enabled
      */
     void set_enabled(ealogger_constants::LOGGER_SINK sink, bool enabled);
     /**
-     * @brief 
+     * @brief Set the minimum log message severity for a Sink
      *
      * @param sink
      * @param min_level
@@ -226,9 +240,9 @@ public:
                      ealogger_constants::LOG_LEVEL min_level);
 
     /**
-     * @brief 
+     * @brief Check if the message queue is empty
      *
-     * @return 
+     * @return True if the message is empty, otherwise false.
      */
     bool queue_empty();
 

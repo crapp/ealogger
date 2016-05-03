@@ -16,15 +16,30 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+/**
+ * @file global.h
+ * @brief Global ealogger constants
+ */
+
+/**
+ * @namespace ealogger_constants
+ * @brief Namespace for global ealogger constants
+ */
 namespace ealogger_constants
 {
 /**
- * @brief Sinks ealogger supports
+ * @enum LOGGER_SINK
+ * @brief Supported logger Sinks
  */
-enum LOGGER_SINK { CONSOLES = 0, SYSLOGS, FILE_SIMPLE };
+enum LOGGER_SINK {
+    CONSOLES = 0, /**< Sink writing to a console SinkConsole */
+    SYSLOGS,      /**< Sink writing to linux syslog SinkSyslog */
+    FILE_SIMPLE   /**< Sink writing to a file SinkFile */
+};
 enum CONVERSION_PATTERN {};
 
 /**
+ * @enum LOG_LEVEL
  * @brief An enumaration representing the supported loglevels.
  *
  * This enum is used to define the severity of a log message and to set the

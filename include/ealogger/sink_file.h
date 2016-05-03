@@ -24,7 +24,7 @@ class SinkFile : public Sink
 {
 public:
     SinkFile(std::string msg_pattern, std::string datetime_pattern, bool enabled,
-             con::LOG_LEVEL min_lvl, std::string log_file);
+             ealogger_constants::LOG_LEVEL min_lvl, std::string log_file);
     virtual ~SinkFile();
 
     void set_log_file(std::string log_file);

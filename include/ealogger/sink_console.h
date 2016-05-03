@@ -27,7 +27,7 @@ class SinkConsole : public Sink
 {
 public:
     SinkConsole(std::string msg_pattern, std::string datetime_pattern,
-                bool enabled, con::LOG_LEVEL min_lvl);
+                bool enabled, ealogger_constants::LOG_LEVEL min_lvl);
     virtual ~SinkConsole();
 
 private:

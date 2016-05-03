@@ -16,6 +16,11 @@
 #ifndef UTILITY_H
 #define UTILITY_H
 
+/**
+ * @file utility.h
+ * @brief Header with utility functions for ealogger
+ */
+
 #include <sys/unistd.h>
 #include <string>
 #include <algorithm>
@@ -27,12 +32,16 @@
 #include <cxxabi.h>
 #endif
 
+/**
+ * @namespace utility
+ * @brief Namespace for ealogger utility functions
+ */
 namespace utility
 {
 /**
-     * @brief Get local hostname
-     * @return
-     */
+ * @brief Get local hostname
+ * @return
+ */
 inline std::string get_hostname()
 {
     std::string hname = "UNKNOWN";

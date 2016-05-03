@@ -126,25 +126,54 @@ void EALogger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL min_lvl,
 
 void EALogger::set_msg_pattern(con::LOGGER_SINK sink, std::string msg_pattern)
 {
-    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
-    this->logger_sink_map[sink]->set_msg_pattern(std::move(msg_pattern));
+    try {
+        std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+        this->logger_sink_map.at(sink)->set_msg_pattern(std::move(msg_pattern));
+    } catch (const std::out_of_range &ex) {
+        // TODO: What do we do here if the sink does not exist?
+    }
 }
 void EALogger::set_datetime_pattern(con::LOGGER_SINK sink,
                                     std::string datetime_pattern)
 {
-    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
-    this->logger_sink_map[sink]->set_datetime_pattern(
-        std::move(datetime_pattern));
+    try {
+        std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+        this->logger_sink_map.at(sink)
+            ->set_datetime_pattern(std::move(datetime_pattern));
+    } catch (const std::out_of_range &ex) {
+        // TODO: What do we do here if the sink does not exist?
+    }
 }
 void EALogger::set_enabled(con::LOGGER_SINK sink, bool enabled)
 {
-    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
-    this->logger_sink_map[sink]->set_enabled(enabled);
+    try {
+        std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+        this->logger_sink_map.at(sink)->set_enabled(enabled);
+    } catch (const std::out_of_range &ex) {
+        // TODO: What do we do here if the sink does not exist?
+    }
 }
 void EALogger::set_min_lvl(con::LOGGER_SINK sink, con::LOG_LEVEL min_level)
 {
-    std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
-    this->logger_sink_map[sink]->set_min_lvl(min_level);
+    try {
+        std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+        this->logger_sink_map.at(sink)->set_min_lvl(min_level);
+    } catch (const std::out_of_range &ex) {
+        // TODO: What do we do here if the sink does not exist?
+    }
+}
+
+void EALogger::discard_sink(con::LOGGER_SINK sink)
+{
+    try {
+        std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+        std::size_t removed = this->logger_sink_map.erase(sink);
+        if (removed > 0) {
+            // should we use this?
+        }
+    } catch (const std::exception &ex) {
+        // TODO: What do we do here if the sink does not exist?
+    }
 }
 
 bool EALogger::queue_empty() { return this->log_msg_queue.empty(); }
@@ -183,6 +212,7 @@ void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
     //this->logfile_stream.exceptions(std::ifstream::badbit |
     // std::ifstream::failbit);
     //}
+
     for (const auto &sink : logger_sink_map) {
         std::lock_guard<std::mutex> lock(
             *(this->logger_mutex_map[sink.first].get()));
