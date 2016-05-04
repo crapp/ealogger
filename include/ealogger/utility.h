@@ -21,7 +21,9 @@
  * @brief Header with utility functions for ealogger
  */
 
-#include <sys/unistd.h>
+#ifndef _WIN32
+#include <unistd.h>
+#endif
 #include <string>
 #include <algorithm>
 #include <regex>
