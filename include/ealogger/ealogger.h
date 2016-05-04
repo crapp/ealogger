@@ -16,6 +16,10 @@
 #ifndef EALOGGER_H
 #define EALOGGER_H
 
+/**
+ * @file ealogger.h
+ */
+
 #include <string>
 /*
  * Mutual exclusion for threadsafe logger
@@ -40,17 +44,22 @@
 #include "ealogger/logqueue.h"
 
 // Define macros for all log levels and call public member write_log()
+/**
+ * @defgroup EALOGGER_GROUP
+ *
+ * @{
+ */
 
 /**
  * @def debug(msg)
- * Write a debug message
+ * @brief Write a debug message
  */
 #define debug(msg)                                                           \
     write_log(msg, ealogger_constants::LOG_LEVEL::DEBUG, __FILE__, __LINE__, \
               __func__)
 /**
  * @def info(msg)
- * Write a info message
+ * @brief Write a info message
  */
 #define info(msg)                                                           \
     write_log(msg, ealogger_constants::LOG_LEVEL::INFO, __FILE__, __LINE__, \
@@ -285,5 +294,11 @@ private:
     bool get_logger_thread_stop();
     void set_logger_thread_stop(bool stop);
 };
+
+/**
+ *
+ * @}
+ *
+ */
 
 #endif  // EALOGGER_H

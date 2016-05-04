@@ -15,6 +15,10 @@
 
 #include "ealogger/ealogger.h"
 
+/**
+ * @file ealogger.cpp
+ */
+
 namespace con = ealogger_constants;
 
 EALogger::EALogger(bool async) : async(async)

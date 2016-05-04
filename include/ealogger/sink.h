@@ -20,6 +20,8 @@
 #include <algorithm>
 #include <memory>
 #include <mutex>
+#include <map>
+
 #include <iostream>
 
 #include "ealogger/utility.h"
