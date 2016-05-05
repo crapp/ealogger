@@ -16,6 +16,16 @@
 #ifndef SINK_H
 #define SINK_H
 
+/**
+ *@file sink.h
+ */
+
+/**
+ * @defgroup SINK_GROUP Sinks
+ * @brief Does this do anything?
+ * @{
+ */
+
 #include <string>
 #include <algorithm>
 #include <memory>
@@ -112,5 +122,9 @@ protected:
      */
     virtual void config_changed() = 0;
 };
+
+/**
+ * @}
+ */
 
 #endif /* SINK_H */

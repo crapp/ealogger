@@ -41,10 +41,15 @@ void SinkFile::set_log_file(std::string log_file)
 void SinkFile::write_message(const std::string &msg)
 {
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
-    if (this->file_stream.is_open()) {
-        // TODO: The file stream is not flushed so when the application crashes
-        // it could be some information is lost.
-        this->file_stream << msg << "\n";
+    try {
+        if (this->file_stream.is_open()) {
+            // TODO: The file stream is not flushed so when the application
+            // crashes
+            // it could be some information is lost.
+            this->file_stream << msg << "\n";
+        }
+    } catch (const std::exception &ex) {
+        // TODO: And now?
     }
 }
 
@@ -65,24 +70,27 @@ void SinkFile::config_changed()
 void SinkFile::open_file()
 {
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
-    if (!this->file_stream.is_open()) {
-        std::unique_lock<std::mutex> lock_log_file(this->mtx_log_file);
-        this->file_stream.open(this->log_file, std::ios::out | std::ios::app);
-        if (!this->file_stream)
-            throw std::runtime_error("Can not open logfile: " + this->log_file);
-        lock_log_file.unlock();
+    try {
+        if (!this->file_stream.is_open()) {
+            std::unique_lock<std::mutex> lock_log_file(this->mtx_log_file);
+            this->file_stream.open(this->log_file,
+                                   std::ios::out | std::ios::app);
+            if (!this->file_stream)
+                throw std::runtime_error("Can not open logfile: " +
+                                         this->log_file);
+            lock_log_file.unlock();
 
-        // set exception mask for the file stream
-        this->file_stream.exceptions(std::ifstream::badbit |
-                                     std::ifstream::failbit);
+            // set exception mask for the file stream
+            this->file_stream.exceptions(std::ifstream::badbit |
+                                         std::ifstream::failbit);
+        }
+    } catch (const std::exception &ex) {
     }
-}
-
-void SinkFile::close_file()
-{
-    std::lock_guard<std::mutex> lock(this->mtx_file_stream);
-    if (this->file_stream.is_open()) {
-        this->file_stream.flush();
-        this->file_stream.close();
+    void SinkFile::close_file()
+    {
+        std::lock_guard<std::mutex> lock(this->mtx_file_stream);
+        if (this->file_stream.is_open()) {
+            this->file_stream.flush();
+            this->file_stream.close();
+        }
     }
-}

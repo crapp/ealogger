@@ -16,17 +16,48 @@
 #ifndef SINK_FILE_H
 #define SINK_FILE_H
 
+/** @file sink_file.h */
+
+/**
+ * @addtogroup SINK_GROUP
+ * @{
+ */
+
 #include <fstream>
 
 #include "ealogger/sink.h"
 
+/**
+ * @brief Sink to write to a log file
+ */
 class SinkFile : public Sink
 {
 public:
+    /**
+     * @brief SinkFile constructor with additional parameters
+     *
+     * @param msg_pattern String with conversion specifiers
+     * @param datetime_pattern Conversion specifiers for date time
+     * @param enabled Whether or not this sink is enabled
+     * @param min_lvl Minimum severity
+     * @param log_file Log file
+     * @details
+     * Make sure you have write permissions for the log file and the corresponding
+     * directories exist.
+     */
     SinkFile(std::string msg_pattern, std::string datetime_pattern, bool enabled,
              ealogger_constants::LOG_LEVEL min_lvl, std::string log_file);
     virtual ~SinkFile();
 
+    /**
+     * @brief Set log file
+     *
+     * @param log_file
+     * @warning
+     * This is method is not exposed by the API currently. You may have the
+     * possibility to work with Sink objects directly in the future. If you need
+     * to change the logfile use EALogger::init_file_sink to reinit the SinkFile
+     */
     void set_log_file(std::string log_file);
 
 private:
@@ -37,9 +68,22 @@ private:
     std::string log_file;
 
     void write_message(const std::string &msg);
+    /**
+     * @brief Called when Sink::set_enabled was called
+     * @details
+     * Opens or closes logfile according to Sink#enabled
+     */
     void config_changed();
+    /**
+     * @brief Open logfile
+     */
     void open_file();
+    /**
+     * @brief Close logfile
+     */
     void close_file();
 };
+
+/** @} */
 
 #endif /* SINK_FILE_H */

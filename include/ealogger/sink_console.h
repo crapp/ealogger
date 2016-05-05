@@ -16,12 +16,19 @@
 #ifndef SINK_CONSOLE_H
 #define SINK_CONSOLE_H
 
+/** @file sink_console.h */
+
+/**
+ * @addtogroup SINK_GROUP
+ * @{
+ */
+
 #include <iostream>
 
 #include "ealogger/sink.h"
 
 /**
- * @brief Console Sink
+ * @brief Sink to write to a console
  */
 class SinkConsole : public Sink
 {
@@ -36,5 +43,7 @@ private:
     void write_message(const std::string &msg);
     void config_changed();
 };
+
+/** @} */
 
 #endif /* SINK_CONSOLE_H */

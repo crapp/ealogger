@@ -16,8 +16,24 @@
 #ifndef SINK_SYSLOG_H
 #define SINK_SYSLOG_H
 
+/**
+ * @file sink_syslog.h
+ */
+
+/**
+ * @addtogroup SINK_GROUP
+ * @{
+ */
+
+#ifdef EALOGGER_SYSLOG
+#include <syslog.h>
+#endif
+
 #include "ealogger/sink.h"
 
+/**
+ * @brief Sink writing to unix syslog
+ */
 class SinkSyslog : public Sink
 {
 public:
@@ -34,5 +50,9 @@ private:
     void write_message(const std::string &msg);
     void config_changed();
 };
+
+/**
+ * @}
+ */
 
 #endif /* SINK_SYSLOG_H */
