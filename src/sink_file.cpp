@@ -86,11 +86,12 @@ void SinkFile::open_file()
         }
     } catch (const std::exception &ex) {
     }
-    void SinkFile::close_file()
-    {
-        std::lock_guard<std::mutex> lock(this->mtx_file_stream);
-        if (this->file_stream.is_open()) {
-            this->file_stream.flush();
-            this->file_stream.close();
-        }
+}
+void SinkFile::close_file()
+{
+    std::lock_guard<std::mutex> lock(this->mtx_file_stream);
+    if (this->file_stream.is_open()) {
+        this->file_stream.flush();
+        this->file_stream.close();
     }
+}
