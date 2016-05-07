@@ -21,15 +21,13 @@
 #include "ealogger/ealogger.h"
 #include "config.h"
 
-int main(int argc, const char* argv[])
+int main(void)
 {
     namespace con = ealogger_constants;
 
     std::unique_ptr<EALogger> log =
         std::unique_ptr<EALogger>(new EALogger(true));
     log->init_console_sink();
-    log->set_enabled(con::LOGGER_SINK::CONSOLES, false);
-    log->init_file_sink();
 
     std::stringstream version;
     version << EALOGGER_VERSION_MAJOR << "." << EALOGGER_VERSION_MINOR;
@@ -37,39 +35,30 @@ int main(int argc, const char* argv[])
         version << "." << EALOGGER_VERSION_PATCH;
     }
 
-    // log->debug("A debug message");
-    // log->info("Info was here");
-    // log->warn("Warning");
-    // log->error("Error");
-    // log->fatal("Alert, system in fatal state");
-    // log->stack();
-
-    // log->set_min_lvl(con::LOGGER_SINK::CONSOLES, con::LOG_LEVEL::WARNING);
-
-    // log->info("Info was here 2");
-
-    std::chrono::system_clock::time_point t = std::chrono::system_clock::now();
-    for (int i = 0; i < 1000000; i++) {
-        log->info("Hello Africa, tell me how you are doing " +
-                  std::to_string(i));
-    }
-    std::chrono::system_clock::time_point tstop =
-        std::chrono::system_clock::now();
+    log->debug("A debug message");
+    log->info("Info was here");
+    log->warn("Warning");
+    log->error("Error");
+    log->fatal("Alert, system in fatal state");
 
     while (!log->queue_empty()) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 
-    std::cout << "Time messages on queue: "
-              << std::chrono::duration_cast<std::chrono::microseconds>(tstop - t)
-                         .count() /
-                     1000
-              << "ms" << std::endl;
-    std::cout << "Time till end: "
-              << std::chrono::duration_cast<std::chrono::milliseconds>(
-                     std::chrono::system_clock::now() - t)
-                     .count()
-              << "ms" << std::endl;
+    log->set_min_lvl(con::LOGGER_SINK::CONSOLES, con::LOG_LEVEL::WARNING);
+
+    log->info("Info is not visible because minimum severity is WARNING");
+
+    while (!log->queue_empty()) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+
+    log->set_min_lvl(con::LOGGER_SINK::CONSOLES, con::LOG_LEVEL::INFO);
+    log->info("This message should be visible in the console");
+    // we change the datetime conversion pattern
+    log->set_datetime_pattern(con::LOGGER_SINK::CONSOLES, "%A %r");
+    log->info("You should now see the new datetime conversion pattern");
+
     // std::chrono::system_clock::time_point t =
     // std::chrono::system_clock::now();
     //log->info("Logtester of ealogger " + version.str() + " is starting");

@@ -69,9 +69,9 @@ script:
     cd ${TRAVIS_BUILD_DIR}
     mkdir build
     cd build
-    cmake -DCMAKE_CXX_COMPILER=$COMPILER -DBUILD_TEST=ON ../
+    cmake -DCMAKE_CXX_COMPILER=$COMPILER -DBUILD_EXAMPLES=ON ../
     make -j2
-    test/ealogger_test
+    examples/ealogger_basic
     # valgrind --leak-check=full --error-exitcode=1 test/ealogger_test
 
 # blacklist
