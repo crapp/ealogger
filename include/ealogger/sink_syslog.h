@@ -37,13 +37,13 @@
 class SinkSyslog : public Sink
 {
 public:
-    SinkSyslog(std::string msg_pattern, std::string datetime_pattern,
+    SinkSyslog(std::string msg_template, std::string datetime_pattern,
                bool enabled, ealogger_constants::LOG_LEVEL min_lvl);
     virtual ~SinkSyslog();
 
 private:
-    /** map syslog message priority to our loglevels */
-    std::map<ealogger_constants::LOG_LEVEL, int> loglevel_syslog_lookup;
+    std::map<ealogger_constants::LOG_LEVEL, int>
+        loglevel_syslog_lookup; /**< map syslog message severity to our loglevels */
 
     std::mutex mtx_syslog;
 

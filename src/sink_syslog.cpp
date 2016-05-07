@@ -17,9 +17,10 @@
 
 namespace con = ealogger_constants;
 
-SinkSyslog::SinkSyslog(std::string msg_pattern, std::string datetime_pattern,
+SinkSyslog::SinkSyslog(std::string msg_template, std::string datetime_pattern,
                        bool enabled, con::LOG_LEVEL min_lvl)
-    : Sink(std::move(msg_pattern), std::move(datetime_pattern), enabled, min_lvl)
+    : Sink(std::move(msg_template), std::move(datetime_pattern), enabled,
+           min_lvl)
 {
 #ifdef EALOGGER_SYSLOG
     this->loglevel_syslog_lookup = {

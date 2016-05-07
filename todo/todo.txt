@@ -1,9 +1,10 @@
 (B) 2016-04-28 Use libunwind to print a stack trace on gcc/llvm as this also works with static libs http://eli.thegreenplace.net/2015/programmatic-access-to-the-call-stack-in-c/
-(A) 2016-04-28 Support printing a stack trace for Windows
+(A) 2016-04-28 Support printing of a stack trace for Windows
 (A) 2016-04-28 Use localtime_r to get a threadsafe tm struct
 (A) 2016-04-28 Implement some kind of lifetime management using a Singleton pattern with shared_ptr
 (B) 2016-04-28 Config file for logger would be nice
 x 2016-05-02 2016-04-28 The different sinks should implement an Interface. Objects of this interface should be added some vector and the vector should be used to write the log messages.
 (C) 2016-04-28 Support for other logrotation services like newsyslog or LogRotateWin
 (A) 2016-04-29 Performance decreases a lot when using std::regex for various tasks
-(B) 2016-05-02 signal() handler for sinks. We need a Signalreceiver where Sinks can register themselves for a specific Set of signals. Problem is signal() can only talk to static functions. 
+(B) 2016-05-02 signal() handler for sinks. We need a Signalreceiver where Sinks can register themselves for a specific Set of signals. Problem is signal() can only talk to static functions.
+(B) 2016-05-06 Propagate exceptions from Sinks to EALogger with std::exception_ptr

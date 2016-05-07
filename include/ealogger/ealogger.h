@@ -120,7 +120,7 @@
  * defaults for their options. But if course you can change them to whatever you
  * want.
  *
- * The Methods set_msg_pattern, set_datetime_pattern, set_enabled and set_min_lvl
+ * The Methods set_msg_template, set_datetime_pattern, set_enabled and set_min_lvl
  * allow you to change the configuration of a sink. If the sink supports more
  * options you have to use the dedicated init method to reinitialize the sink.
  *
@@ -182,23 +182,23 @@ public:
     void init_syslog_sink(bool enabled = true,
                           ealogger_constants::LOG_LEVEL min_lvl =
                               ealogger_constants::LOG_LEVEL::DEBUG,
-                          std::string msg_pattern = "%s: %m",
+                          std::string msg_template = "%s: %m",
                           std::string datetime_pattern = "%F %T");
     void init_console_sink(bool enabled = true,
                            ealogger_constants::LOG_LEVEL min_lvl =
                                ealogger_constants::LOG_LEVEL::DEBUG,
-                           std::string msg_pattern = "%d %s: %m",
+                           std::string msg_template = "%d %s: %m",
                            std::string datetime_pattern = "%F %T");
 
     void init_file_sink(bool enabled = true,
                         ealogger_constants::LOG_LEVEL min_lvl =
                             ealogger_constants::LOG_LEVEL::DEBUG,
-                        std::string msg_pattern = "%d %s [%f:%l] %m",
+                        std::string msg_template = "%d %s [%f:%l] %m",
                         std::string datetime_pattern = "%F %T",
                         std::string logfile = "ealogger_logfile.log");
     void init_file_sink_rotating(bool enabled,
                                  ealogger_constants::LOG_LEVEL min_lvl,
-                                 std::string msg_pattern,
+                                 std::string msg_template,
                                  std::string datetime_pattern,
                                  std::string logfile);
     /**
@@ -216,10 +216,10 @@ public:
      * @brief Set message conversion pattern for a Sink
      *
      * @param sink
-     * @param msg_pattern
+     * @param msg_template
      */
-    void set_msg_pattern(ealogger_constants::LOGGER_SINK sink,
-                         std::string msg_pattern);
+    void set_msg_template(ealogger_constants::LOGGER_SINK sink,
+                          std::string msg_template);
     /**
      * @brief Set datetime conversion pattern for a Sink
      *

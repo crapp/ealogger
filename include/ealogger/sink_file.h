@@ -36,7 +36,7 @@ public:
     /**
      * @brief SinkFile constructor with additional parameters
      *
-     * @param msg_pattern String with conversion specifiers
+     * @param msg_template String with conversion specifiers
      * @param datetime_pattern Conversion specifiers for date time
      * @param enabled Whether or not this sink is enabled
      * @param min_lvl Minimum severity
@@ -45,8 +45,9 @@ public:
      * Make sure you have write permissions for the log file and the corresponding
      * directories exist.
      */
-    SinkFile(std::string msg_pattern, std::string datetime_pattern, bool enabled,
-             ealogger_constants::LOG_LEVEL min_lvl, std::string log_file);
+    SinkFile(std::string msg_template, std::string datetime_pattern,
+             bool enabled, ealogger_constants::LOG_LEVEL min_lvl,
+             std::string log_file);
     virtual ~SinkFile();
 
     /**

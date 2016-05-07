@@ -22,7 +22,7 @@
 
 /**
  * @defgroup SINK_GROUP Sinks
- * @brief Does this do anything?
+ * @brief A group about all Sinks ealogger is able to use
  * @{
  */
 
@@ -45,15 +45,15 @@
  * @details
  *
  * The virtual class Sink has to be implemented by each possible target. To add
- * a new Sink to ealogger you have to provide an implementaion of Sink::write_message
+ * a new Sink to ealogger you have to provide an implementation of Sink::write_message
  */
 class Sink
 {
 public:
     /**
      * @brief Sink constructor
-     * @param msg_pattern The message pattern for this sink
-     * @param datetime_pattern The datetime pattern
+     * @param msg_template Message template for this sink
+     * @param datetime_pattern datetime conversion pattern
      * @param enabled Whether or not this sink is enabled
      * @param min_lvl The minimum log severity
      *
@@ -68,11 +68,20 @@ public:
      * for details.
      * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
      */
-    Sink(std::string msg_pattern, std::string datetime_pattern, bool enabled,
+    Sink(std::string msg_template, std::string datetime_pattern, bool enabled,
          ealogger_constants::LOG_LEVEL min_lvl);
     virtual ~Sink();
 
-    void set_msg_pattern(std::string msg_pattern);
+    /**
+     * @brief Set the message template with conversion patterns
+     *
+     * @param msg_template
+     *
+     * @details
+     * You can define a message template for every Sink. Every conversion specifier
+     * will be substituted with the corresponding information.
+     */
+    void set_msg_template(std::string msg_template);
     void set_datetime_pattern(std::string datetime_pattern);
     void set_enabled(bool enabled);
     bool get_enabled();
@@ -81,12 +90,12 @@ public:
     void prepare_log_message(const std::shared_ptr<LogMessage> &log_message);
 
 protected:
-    std::string msg_pattern;
+    std::string msg_template;
     std::string datetime_pattern;
     bool enabled;
     ealogger_constants::LOG_LEVEL min_level;
 
-    std::mutex mtx_msg_pattern;
+    std::mutex mtx_msg_template;
     std::mutex mtx_datetime_pattern;
     std::mutex mtx_enabled;
     std::mutex mtx_min_lvl;
@@ -99,7 +108,7 @@ protected:
 
     /**
      * @brief Fill Sink#vec_conv_patterns with ConverionPattern depending on
-     * Sink#msg_pattern
+     * Sink#msg_template
      */
     void fill_conv_patterns(bool lock);
     /**
@@ -108,7 +117,7 @@ protected:
      * @param msg LogMessage object
      * @details
      * This interface method has to be implemented by every logger sink. The sink
-     * is required to format the log message according to Sink::msg_pattern and
+     * is required to format the log message according to Sink::msg_template and
      * Sink::datetime_pattern. After the message is ready it will be written to the
      * specified sink.
      */

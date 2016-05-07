@@ -61,7 +61,7 @@ public:
     /**
      * @brief Replace conversion pattern with new_value
      *
-     * @param msg_pattern Message pattern
+     * @param msg_template Message pattern
      * @param new_value Value to replace the conversion pattern with
      */
     void replace_conversion_pattern(std::string &msg, T new_value) const

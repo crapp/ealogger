@@ -95,44 +95,45 @@ void EALogger::write_log(std::string msg, con::LOG_LEVEL lvl, std::string file,
 }
 
 void EALogger::init_syslog_sink(bool enabled, con::LOG_LEVEL min_lvl,
-                                std::string msg_pattern,
+                                std::string msg_template,
                                 std::string datetime_pattern)
 {
     this->logger_sink_map[con::LOGGER_SINK::SYSLOGS] =
-        std::make_shared<SinkSyslog>(std::move(msg_pattern),
+        std::make_shared<SinkSyslog>(std::move(msg_template),
                                      std::move(datetime_pattern), enabled,
                                      min_lvl);
 }
 void EALogger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
-                                 std::string msg_pattern,
+                                 std::string msg_template,
                                  std::string datetime_pattern)
 {
     this->logger_sink_map[con::LOGGER_SINK::CONSOLES] =
-        std::make_shared<SinkConsole>(std::move(msg_pattern),
+        std::make_shared<SinkConsole>(std::move(msg_template),
                                       std::move(datetime_pattern), enabled,
                                       min_lvl);
 }
 void EALogger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
-                              std::string msg_pattern,
+                              std::string msg_template,
                               std::string datetime_pattern, std::string logfile)
 {
     this->logger_sink_map[con::LOGGER_SINK::FILE_SIMPLE] =
-        std::make_shared<SinkFile>(std::move(msg_pattern),
+        std::make_shared<SinkFile>(std::move(msg_template),
                                    std::move(datetime_pattern), enabled, min_lvl,
                                    std::move(logfile));
 }
 void EALogger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL min_lvl,
-                                       std::string msg_pattern,
+                                       std::string msg_template,
                                        std::string datetime_pattern,
                                        std::string logfile)
 {
 }
 
-void EALogger::set_msg_pattern(con::LOGGER_SINK sink, std::string msg_pattern)
+void EALogger::set_msg_template(con::LOGGER_SINK sink, std::string msg_template)
 {
     try {
         std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
-        this->logger_sink_map.at(sink)->set_msg_pattern(std::move(msg_pattern));
+        this->logger_sink_map.at(sink)
+            ->set_msg_template(std::move(msg_template));
     } catch (const std::out_of_range &ex) {
         // TODO: What do we do here if the sink does not exist?
     }

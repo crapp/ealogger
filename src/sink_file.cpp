@@ -17,9 +17,9 @@
 
 namespace con = ealogger_constants;
 
-SinkFile::SinkFile(std::string msg_pattern, std::string datetime_pattern,
+SinkFile::SinkFile(std::string msg_template, std::string datetime_pattern,
                    bool enabled, con::LOG_LEVEL min_lvl, std::string log_file)
-    : Sink(std::move(msg_pattern), std::move(datetime_pattern), enabled,
+    : Sink(std::move(msg_template), std::move(datetime_pattern), enabled,
            min_lvl),
       log_file(log_file)
 {

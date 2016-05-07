@@ -7,7 +7,7 @@ set(ealogger_VERSION_MINOR 7)
 set(ealogger_VERSION_PATCH 0)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-option(BUILD_TEST "Build tester for ealogger" OFF)
+option(BUILD_EXAMPLES "Build example example applications for ealogger" OFF)
 option(PRINT_INTERNAL_MESSAGES "Print messages with INTERNAL priority. Only usefull for ealogger developers." OFF)
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 
@@ -49,4 +49,4 @@ endif ()
 
 add_subdirectory(include/ealogger)
 add_subdirectory(src)
-add_subdirectory(test)
+add_subdirectory(examples)

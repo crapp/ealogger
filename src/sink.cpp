@@ -17,9 +17,9 @@
 
 namespace con = ealogger_constants;
 
-Sink::Sink(std::string msg_pattern, std::string datetime_pattern, bool enabled,
+Sink::Sink(std::string msg_template, std::string datetime_pattern, bool enabled,
            con::LOG_LEVEL min_lvl)
-    : msg_pattern(std::move(msg_pattern)),
+    : msg_template(std::move(msg_template)),
       datetime_pattern(std::move(datetime_pattern)),
       enabled(enabled),
       min_level(min_lvl)
@@ -34,10 +34,10 @@ Sink::Sink(std::string msg_pattern, std::string datetime_pattern, bool enabled,
                              {con::LOG_LEVEL::INTERNAL, "INTERNAL"}};
 }
 Sink::~Sink() {}
-void Sink::set_msg_pattern(std::string msg_pattern)
+void Sink::set_msg_template(std::string msg_template)
 {
-    std::lock_guard<std::mutex> lock(this->mtx_msg_pattern);
-    this->msg_pattern = std::move(msg_pattern);
+    std::lock_guard<std::mutex> lock(this->mtx_msg_template);
+    this->msg_template = std::move(msg_template);
     this->fill_conv_patterns(false);
 }
 
@@ -98,9 +98,9 @@ void Sink::prepare_log_message(const std::shared_ptr<LogMessage> &log_message)
             msg += *it + "\n";
         }
     } else {
-        std::unique_lock<std::mutex> msg_pattern_lock(this->mtx_msg_pattern);
-        msg = this->msg_pattern;
-        msg_pattern_lock.unlock();
+        std::unique_lock<std::mutex> msg_template_lock(this->mtx_msg_template);
+        msg = this->msg_template;
+        msg_template_lock.unlock();
         std::lock_guard<std::mutex> vec_conv_patterns_lock(
             this->mtx_conv_pattern);
         for (const auto &cp : this->vec_conv_patterns) {
@@ -158,11 +158,11 @@ void Sink::fill_conv_patterns(bool lock)
 
     std::string msgp = "";
     if (lock) {
-        std::unique_lock<std::mutex> msg_pattern_lock(this->mtx_msg_pattern);
-        msgp = this->msg_pattern;
-        msg_pattern_lock.unlock();
+        std::unique_lock<std::mutex> msg_template_lock(this->mtx_msg_template);
+        msgp = this->msg_template;
+        msg_template_lock.unlock();
     } else {
-        msgp = this->msg_pattern;
+        msgp = this->msg_template;
     }
 
     if (msgp.find("%d") != std::string::npos) {
