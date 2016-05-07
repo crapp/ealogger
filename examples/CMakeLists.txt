@@ -5,8 +5,6 @@ set(EALOGGER_BENCH_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/ealogger_bench.cpp
 )
 
-set()
-
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}
     "../include"
