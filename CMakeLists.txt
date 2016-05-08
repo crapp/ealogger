@@ -11,6 +11,8 @@ option(BUILD_EXAMPLES "Build example example applications for ealogger" OFF)
 option(PRINT_INTERNAL_MESSAGES "Print messages with INTERNAL priority. Only usefull for ealogger developers." OFF)
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 
+include(CheckCXXCompilerFlag)
+
 # Initialize CXXFLAGS for Linux, OS X and MinGW on Windows
 if (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS                "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
@@ -19,8 +21,10 @@ if (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
     set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -DNDEBUG")
     set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
-
-    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -rdynamic")
+    CHECK_CXX_COMPILER_FLAG("-rdynamic" COMPILER_SUPPORTS_RDYNAMIC)
+    if (COMPILER_SUPPORTS_RDYNAMIC)
+        set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -rdynamic")
+    endif(COMPILER_SUPPORTS_RDYNAMIC)
 endif(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
 # Compiler-specific C++11 activation.
