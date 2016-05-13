@@ -21,6 +21,14 @@
  * @brief Global ealogger constants
  */
 
+// macro to mark ununsed function arguments so they don't produce a compiler
+// warning
+#ifdef __GNUC__
+#define ATTR_UNUSED __attribute__((unused))
+#else
+#define ATTR_UNUSED
+#endif
+
 /**
  * @namespace ealogger_constants
  * @brief Namespace for global ealogger constants

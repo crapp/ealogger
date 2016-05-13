@@ -38,7 +38,7 @@ SinkSyslog::SinkSyslog(std::string msg_template, std::string datetime_pattern,
 }
 
 SinkSyslog::~SinkSyslog() {}
-void SinkSyslog::write_message(const std::string &msg)
+void SinkSyslog::write_message(ATTR_UNUSED const std::string &msg)
 {
 #ifdef EALOGGER_SYSLOG
     std::lock_guard<std::mutex> lock(this->mtx_syslog);

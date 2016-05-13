@@ -47,7 +47,7 @@ private:
 
     std::mutex mtx_syslog;
 
-    void write_message(const std::string &msg);
+    void write_message(ATTR_UNUSED const std::string &msg);
     void config_changed();
 };
 

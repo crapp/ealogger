@@ -196,11 +196,11 @@ public:
                         std::string msg_template = "%d %s [%f:%l] %m",
                         std::string datetime_pattern = "%F %T",
                         std::string logfile = "ealogger_logfile.log");
-    void init_file_sink_rotating(bool enabled,
-                                 ealogger_constants::LOG_LEVEL min_lvl,
-                                 std::string msg_template,
-                                 std::string datetime_pattern,
-                                 std::string logfile);
+    // void init_file_sink_rotating(bool enabled,
+    // ealogger_constants::LOG_LEVEL min_lvl,
+    // std::string msg_template,
+    // std::string datetime_pattern,
+    // std::string logfile);
     /**
      * @brief Discard a Sink and delete the object
      *

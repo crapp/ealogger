@@ -121,12 +121,12 @@ void EALogger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
                                    std::move(datetime_pattern), enabled, min_lvl,
                                    std::move(logfile));
 }
-void EALogger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL min_lvl,
-                                       std::string msg_template,
-                                       std::string datetime_pattern,
-                                       std::string logfile)
-{
-}
+// void EALogger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL min_lvl,
+// std::string msg_template,
+// std::string datetime_pattern,
+// std::string logfile)
+//{
+//}
 
 void EALogger::set_msg_template(con::LOGGER_SINK sink, std::string msg_template)
 {
@@ -201,23 +201,6 @@ void EALogger::thread_entry_point()
 
 void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
 {
-    // lock mutex because iostreams or fstreams are not threadsafe
-    // if (!this->async)
-    // std::lock_guard<std::mutex> lock(this->mtx_log);
-    // if (EALogger::signal_SIGUSR1) {
-    // EALogger::signal_SIGUSR1 = false;
-    //this->logfile_stream.flush();
-    //this->logfile_stream.close();
-    //this->logfile_stream.open(this->logfile_path,
-    // std::ios::out | std::ios::app);
-    // if (!this->logfile_stream)
-    // throw std::runtime_error("Can not open logfile: " +
-    // this->logfile_path);
-    //// set exception mask for the file stream
-    //this->logfile_stream.exceptions(std::ifstream::badbit |
-    // std::ifstream::failbit);
-    //}
-
     for (const auto &sink : logger_sink_map) {
         std::lock_guard<std::mutex> lock(
             *(this->logger_mutex_map[sink.first].get()));
