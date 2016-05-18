@@ -7,11 +7,13 @@ set(ealogger_VERSION_MINOR 7)
 set(ealogger_VERSION_PATCH 0)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-option(BUILD_EXAMPLES "Build example example applications for ealogger" OFF)
+option(BUILD_EXAMPLES "Build example and benchmark applications for ealogger" OFF)
+option(BUILD_UNIT_TEST "Build a unit test application based on Catch" OFF)
 option(PRINT_INTERNAL_MESSAGES "Print messages with INTERNAL priority. Only usefull for ealogger developers." OFF)
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 
 include(CheckCXXCompilerFlag)
+include(CheckCXXSymbolExists)
 
 # Initialize CXXFLAGS for Linux, OS X and MinGW on Windows
 if (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -27,14 +29,25 @@ if (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     endif(COMPILER_SUPPORTS_RDYNAMIC)
 endif(NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
+# TODO: I should use cmake makros and try_compile to make sure compiler supports
+# what we need
+
+set(EALOGGER_HAVE_DECL_GETTIME 1)
+
 # Compiler-specific C++11 activation.
 if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU")
-    execute_process(
-        COMMAND ${CMAKE_CXX_COMPILER} -dumpversion OUTPUT_VARIABLE GCC_VERSION)
-    if (NOT (GCC_VERSION VERSION_GREATER 4.9 OR GCC_VERSION VERSION_EQUAL 4.9))
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
         message(FATAL_ERROR "${PROJECT_NAME} requires g++ 4.9 or greater.")
     endif ()
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5)
+        message(STATUS "Your version of gcc does not implement std::get_time. Will search for std::strptime")
+        CHECK_CXX_SYMBOL_EXISTS(strptime "ctime" EALOGGER_HAVE_DECL_STRPTIME)
+        set(EALOGGER_HAVE_DECL_GETTIME 0)
+    endif ()
 elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.3)
+        message(FATAL_ERROR "${PROJECT_NAME} requires clang 3.3 or greater.")
+    endif()
     if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++")
     elseif (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -50,6 +63,12 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 else ()
     message(FATAL_ERROR "Your C++ compiler does not support C++11.")
 endif ()
+
+# check if compiler can parse time
+set(EALOGGER_CAN_PARSE_TIME 0)
+if (EALOGGER_HAVE_DECL_STRPTIME OR EALOGGER_HAVE_DECL_GETTIME)
+    set(EALOGGER_CAN_PARSE_TIME 1)
+endif()
 
 add_subdirectory(include/ealogger)
 add_subdirectory(src)

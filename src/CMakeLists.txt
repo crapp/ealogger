@@ -17,7 +17,7 @@ if(UNIX)
         EALOGGER_SYSLOG
         syslog.h
     )
-if(${EALOGGER_SYSLOG})
+    if(${EALOGGER_SYSLOG})
         message(STATUS "Syslog sink is available")
     endif()
 endif()
@@ -46,4 +46,10 @@ install(TARGETS ealogger DESTINATION lib)
 foreach(header ${EALOGGER_HEADER})
     install(FILES ${header} DESTINATION include/ealogger)
 endforeach(header)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/src/config.h DESTINATION include/ealogger)
 
+
+if(${BUILD_UNIT_TEST})
+    message(STATUS "Will build unit tester for ealogger")
+    add_subdirectory(test)
+endif()

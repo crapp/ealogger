@@ -1,4 +1,3 @@
-//   ealogger is a simple, asynchronous and powerful logger library for c++
 //   Copyright 2013 - 2016 Christian Rapp
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,17 +12,6 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#ifndef CONFIG_H
-#define CONFIG_H
+#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main()
 
-#define EALOGGER_VERSION_MAJOR "@ealogger_VERSION_MAJOR@"
-#define EALOGGER_VERSION_MINOR "@ealogger_VERSION_MINOR@"
-#define EALOGGER_VERSION_PATCH "@ealogger_VERSION_PATCH@"
-
-#cmakedefine EALOGGER_SYSLOG
-#cmakedefine EALOGGER_PRINT_INTERNAL "@PRINT_INTERNAL_MESSAGES@"
-#cmakedefine EALOGGER_CAN_PARSE_TIME
-#cmakedefine EALOGGER_HAVE_DECL_GETTIME
-#cmakedefine EALOGGER_HAVE_DECL_STRPTIME
-
-#endif  //
+#include "catch.hpp"

@@ -122,7 +122,7 @@ highlighting might be useful. If you are using a Unix system you may try
 [multitail](http://www.vanheusden.com/multitail/)
 
 Here is a screenshot how this might look like
-![ealogger multitail](http://crapp.github.io/ealogger/screenshots/ealogger_multitail.jpeg "EALogger multitail")
+![ealogger multitail](http://crapp.github.io/ealogger/screenshots/ealogger_multitail.jpeg "ealogger multitail")
 
 The color scheme for multitail I used to generate the colors in the
 screenshot looks like this
@@ -137,10 +137,10 @@ Put it in ~/.multitailrc and start mutlitail
 ```shell
 multitail -cS ealogger mylogfile.log
 ```
-## Source Code Documentation
+## API Documentation
 
-Is available as [doxygen](http://www.stack.nl/~dimitri/doxygen/) generated html
-documentation hosteb by [github.io](https://crapp.github.io/ealogger)
+API documentation is available as [doxygen](http://www.stack.nl/~dimitri/doxygen/)
+generated html documentation hosted by [github.io](https://crapp.github.io/ealogger)
 
 The doxygen project file is located in the
 [doc](https://github.com/crapp/ealogger/tree/master/doc) folder and can be used
@@ -201,6 +201,14 @@ We are currently at this stage
 
 > Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable.
 
+## Status
+
+This library has not reached a stable version yet. Meaning the public API and
+other things may be subjected to changes at any time. There have been no code
+reviews so far and unit tests only cover small parts of the source code. In spite
+of all that the library is absolutely usable and works great for what is was
+developed for.
+
 ## Bugs, feature requests, ideas
 
 Please use the [github bugtracker](https://github.com/crapp/ealogger/issues)
@@ -210,8 +218,11 @@ to submit bugs or feature requests
 
 **Yet another logger lib, why?**
 
-I wanted to have a flexible and easy to use logger lib for my c++ projects.
-Especially one that makes use of the new c++11 features and uses concurrency.
+I wanted to have a flexible and easy to use logger lib for my c++ projects. This
+project started 2013 and there wasn't any c++ library that suited my needs. I am
+doing lots of things with embedded hardware and other time / performance critical
+things so it was important for me to have a really fast logger and not one with a
+lot of features.
 
 **Why does it not have feature X?**
 
