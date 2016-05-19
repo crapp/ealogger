@@ -18,7 +18,6 @@
 #include <sstream>
 #include <string>
 
-#include "config.h"
 #include "ealogger/ealogger.h"
 
 int main(void)

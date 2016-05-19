@@ -21,27 +21,29 @@
 #include "config.h"
 #include "ealogger/utility.h"
 
+namespace ut = ealogger::utility;
+
 TEST_CASE("Get filename from path", "[utility]")
 {
     SECTION("File name without path")
     {
         std::string path = "this_is_the_file.notype";
-        REQUIRE(utility::get_file_name(path) == path);
+        REQUIRE(ut::get_file_name(path) == path);
     }
 
     SECTION("File name with path")
     {
         std::string path = "/somewhere/on/the//disk/should/be.log";
-        REQUIRE(utility::get_file_name(path) == "be.log");
+        REQUIRE(ut::get_file_name(path) == "be.log");
         std::string path_win = "C:\\oh\\look\\a\\windows\\path\\log.log";
-        REQUIRE(utility::get_file_name(path_win) == "log.log");
+        REQUIRE(ut::get_file_name(path_win) == "log.log");
     }
 
     SECTION("A complicated path with lots of culprits")
     {
         std::string path =
             "umlautsüäö/white space/other_(things)_!?_/log file name.log";
-        REQUIRE(utility::get_file_name(path) == "log file name.log");
+        REQUIRE(ut::get_file_name(path) == "log file name.log");
     }
 }
 
@@ -61,7 +63,7 @@ TEST_CASE("Formatted time string", "[utility]")
         strptime(ss.str().c_str(), "%Y-%m-%d", &t);
 #endif
         std::string formatted_time =
-            utility::format_time_to_string(std::mktime(&t), "%Y-%m-%d");
+            ut::format_time_to_string(std::mktime(&t), "%Y-%m-%d");
         REQUIRE(formatted_time == "2011-01-01");
     }
 }

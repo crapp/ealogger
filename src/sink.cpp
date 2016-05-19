@@ -92,7 +92,7 @@ void eal::Sink::prepare_log_message(
 
     std::string msg = "";
     // TODO: Large if else blocks are not nice. We could move the ConversionPattern
-    // for loop to a different function.
+    // for loop to a different location
     if (log_message->get_log_type() == LogMessage::LOGTYPE::STACK) {
         msg += "Stacktrace \n";
         for (LogMessage::msg_vec_it it = log_message->get_msg_vec_begin();
@@ -112,12 +112,13 @@ void eal::Sink::prepare_log_message(
                     this->mtx_datetime_pattern);
                 cp.replace_conversion_pattern(
                     msg,
-                    utility::format_time_to_string(log_message->get_timepoint(),
-                                                   this->datetime_pattern));
+                    eal::utility::format_time_to_string(
+                        log_message->get_timepoint(), this->datetime_pattern));
             } break;
             case ConversionPattern::PATTERN_TYPE::FILE:
                 cp.replace_conversion_pattern(
-                    msg, utility::get_file_name(log_message->get_call_file()));
+                    msg,
+                    eal::utility::get_file_name(log_message->get_call_file()));
                 break;
             case ConversionPattern::PATTERN_TYPE::FILE_ABSOLUTE:
                 cp.replace_conversion_pattern(msg, log_message->get_call_file());
@@ -130,7 +131,7 @@ void eal::Sink::prepare_log_message(
                 cp.replace_conversion_pattern(msg, log_message->get_call_func());
                 break;
             case ConversionPattern::PATTERN_TYPE::HOST:
-                cp.replace_conversion_pattern(msg, utility::get_hostname());
+                cp.replace_conversion_pattern(msg, eal::utility::get_hostname());
                 break;
             case ConversionPattern::PATTERN_TYPE::MSG:
                 cp.replace_conversion_pattern(msg, log_message->get_message());

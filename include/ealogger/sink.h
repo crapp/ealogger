@@ -22,7 +22,7 @@
 
 /**
  * @defgroup SINK_GROUP Sinks
- * @brief A group about all Sinks ealogger is able to use
+ * @brief Documentation for all sinks ealogger is able to use
  * @{
  */
 
@@ -42,12 +42,12 @@
 namespace ealogger
 {
 /**
- * @brief A sink is an object that writes the log message to the target
+ * @brief A sink is an object that writes the log message to a specific target
  * @author Christian Rapp
  * @details
  *
  * The virtual class Sink has to be implemented by each possible target. To add
- * a new Sink to ealogger you have to provide an implementation of Sink::write_message
+ * a new Sink to ealogger you have to provide an implementation for Sink::write_message
  */
 class Sink
 {
@@ -59,16 +59,22 @@ public:
      * @param enabled Whether or not this sink is enabled
      * @param min_lvl The minimum log severity
      *
-     * A Log message can have conversion patterns. Every Sink uses its own message
-     * pattern. Have a look at ConversionPattern for more details.
+     * A Log message can use conversion patterns in the message template \p msg_template.
+     * Every Sink uses its own message template.
      *
      * Internally std::strftime is used from header ctime to create formatted time
      * strings.
-     * So for parameter Sink#datetime_pattern you have to use format specifiers
-     * that are recognised by strftime.
-     * See [en.cppreference.com](http://en.cppreference.com/w/cpp/chrono/c/strftime)
-     * for details.
-     * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
+     * So for parameter Sink#datetime_pattern you have to use conversion patterns
+     * that are recognised by [strftime](http://en.cppreference.com/w/cpp/chrono/c/strftime)
+     * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:02
+     *
+     * @note
+     * Sink objects are not exposed to the user directly. You have to use the
+     * Logger class to change a sinks settings. Some options for a Sink
+     * are only exposed via Logger::init_sink_* methods.
+     *
+     * @sa
+     * ConversionPattern
      */
     Sink(std::string msg_template, std::string datetime_pattern, bool enabled,
          ealogger::constants::LOG_LEVEL min_lvl);
@@ -82,13 +88,50 @@ public:
      * @details
      * You can define a message template for every Sink. Every conversion specifier
      * will be substituted with the corresponding information.
+     *
+     * @sa
+     * ConversionPattern
      */
     void set_msg_template(std::string msg_template);
+    /**
+     * @brief Set the date time conversion pattern
+     *
+     * @param datetime_pattern
+     * @details
+     * You can use all conversion patterns that are used by [strftime](http://en.cppreference.com/w/cpp/chrono/c/strftime)
+     * The position of the date time information can be specified with ealogger
+     * ConversionPattern.
+     *
+     */
     void set_datetime_pattern(std::string datetime_pattern);
+    /**
+     * @brief Enable or disable the sink
+     *
+     * @param enabled
+     */
     void set_enabled(bool enabled);
+    /**
+     * @brief Check if this sink is enabled
+     *
+     * @return
+     */
     bool get_enabled();
+    /**
+     * @brief Set minimum severity for this sink
+     *
+     * @param min_lvl
+     */
     void set_min_lvl(ealogger::constants::LOG_LEVEL min_lvl);
 
+    /**
+     * @brief Prepare a log message before it is written to the targets
+     *
+     * @param log_message
+     *
+     * @details
+     * Preparing means conversion patterns will be substituted with the
+     * corresponding information
+     */
     void prepare_log_message(const std::shared_ptr<LogMessage> &log_message);
 
 protected:
@@ -97,6 +140,7 @@ protected:
     bool enabled;
     ealogger::constants::LOG_LEVEL min_level;
 
+    // Mutexes for all important members
     std::mutex mtx_msg_template;
     std::mutex mtx_datetime_pattern;
     std::mutex mtx_enabled;

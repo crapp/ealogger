@@ -46,7 +46,7 @@ install(TARGETS ealogger DESTINATION lib)
 foreach(header ${EALOGGER_HEADER})
     install(FILES ${header} DESTINATION include/ealogger)
 endforeach(header)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/src/config.h DESTINATION include/ealogger)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/config.h DESTINATION include/ealogger)
 
 
 if(${BUILD_UNIT_TEST})

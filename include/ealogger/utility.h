@@ -24,16 +24,18 @@
 #ifndef _WIN32
 #include <unistd.h>
 #endif
-#include <string>
 #include <algorithm>
-#include <regex>
 #include <ctime>
+#include <regex>
+#include <string>
 // Check for backtrace function
 #ifdef __GNUC__
-#include <execinfo.h>
 #include <cxxabi.h>
+#include <execinfo.h>
 #endif
 
+namespace ealogger
+{
 /**
  * @namespace utility
  * @brief Namespace for ealogger utility functions
@@ -156,6 +158,7 @@ inline std::string format_time_to_string(const std::string &time_format)
     time_t rawtime;
     std::time(&rawtime);
     return utility::format_time_to_string(std::move(rawtime), time_format);
+}
 }
 }
 

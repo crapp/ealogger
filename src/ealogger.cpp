@@ -78,7 +78,7 @@ void eal::Logger::write_log(std::string msg, con::LOG_LEVEL lvl,
         type = LogMessage::LOGTYPE::STACK;
         std::vector<std::string> stack_vec;
         // TODO: Stack size is hard coded
-        utility::stack_trace(10, stack_vec);
+        eal::utility::stack_trace(10, stack_vec);
         m = std::make_shared<LogMessage>(lvl, std::move(stack_vec), type,
                                          std::move(file), lnumber,
                                          std::move(func));
@@ -98,30 +98,46 @@ void eal::Logger::init_syslog_sink(bool enabled, con::LOG_LEVEL min_lvl,
                                    std::string msg_template,
                                    std::string datetime_pattern)
 {
-    this->logger_sink_map[con::LOGGER_SINK::SYSLOG] =
-        std::make_shared<SinkSyslog>(std::move(msg_template),
-                                     std::move(datetime_pattern), enabled,
-                                     min_lvl);
+    try {
+        std::lock_guard<std::mutex> lock(
+            *(this->logger_mutex_map[con::LOGGER_SINK::SYSLOG].get()));
+        this->logger_sink_map[con::LOGGER_SINK::SYSLOG] =
+            std::make_shared<SinkSyslog>(std::move(msg_template),
+                                         std::move(datetime_pattern), enabled,
+                                         min_lvl);
+    } catch (const std::exception &ex) {
+    }
 }
 void eal::Logger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
                                     std::string msg_template,
                                     std::string datetime_pattern)
 {
-    this->logger_sink_map[con::LOGGER_SINK::CONSOLES] =
-        std::make_shared<SinkConsole>(std::move(msg_template),
-                                      std::move(datetime_pattern), enabled,
-                                      min_lvl);
+    try {
+        std::lock_guard<std::mutex> lock(
+            *(this->logger_mutex_map[con::LOGGER_SINK::CONSOLES].get()));
+        this->logger_sink_map[con::LOGGER_SINK::CONSOLES] =
+            std::make_shared<SinkConsole>(std::move(msg_template),
+                                          std::move(datetime_pattern), enabled,
+                                          min_lvl);
+    } catch (const std::exception &ex) {
+    }
 }
 void eal::Logger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
                                  std::string msg_template,
                                  std::string datetime_pattern,
                                  std::string logfile)
 {
-    this->logger_sink_map[con::LOGGER_SINK::FILE_SIMPLE] =
-        std::make_shared<SinkFile>(std::move(msg_template),
-                                   std::move(datetime_pattern), enabled, min_lvl,
-                                   std::move(logfile));
+    try {
+        std::lock_guard<std::mutex> lock(
+            *(this->logger_mutex_map[con::LOGGER_SINK::FILE_SIMPLE].get()));
+        this->logger_sink_map[con::LOGGER_SINK::FILE_SIMPLE] =
+            std::make_shared<SinkFile>(std::move(msg_template),
+                                       std::move(datetime_pattern), enabled,
+                                       min_lvl, std::move(logfile));
+    } catch (const std::exception &ex) {
+    }
 }
+
 // void eal::Logger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL
 // min_lvl,
 // std::string msg_template,
