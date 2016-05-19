@@ -116,7 +116,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h4>CMake Options</h4>
 <p>There are some cmake options you can customize for your requirements</p>
 <ul>
-<li>BUILD_TEST (default off) : Setting this to <b>ON</b> will compile a tester application</li>
+<li>BUILD_EXAMPLES (default off) : Setting this to <b>ON</b> will compile all the example applications in the <code>examples</code> sub folder.</li>
+<li>BUILD_UNIT_TESTS (default off): Build the Catch based unit test apllication</li>
 <li>BUILD_SHARED_LIBS (default on): Whether or not to compile as shared library</li>
 </ul>
 <h4>Linux / OS X</h4>
@@ -146,7 +147,14 @@ cs_re:,green:^.+INFO:.+
 <h2>Performance</h2>
 <p>ealogger is pretty fast in asynchronous mode. Here are some benchmarks for logging 100000 messages to a file.</p>
 <p>Linux machine with GCC 6.1 and an Intel i5-3470 </p><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;$ examples/ealogger_bench</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;Time in milliseconds to put messages on a queue: 296ms</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Time untill all messages were written to the logfile: 3042ms</div></div><!-- fragment --><h2>Development</h2>
-<p>ealogger uses <a href="https://travis-ci.org/crapp/ealogger">travis ci</a> for continuous integration. Currently we use this service to automatically compile the source code with each pull request on different platforms and compilers.</p>
+<p>The most important facts of the ealogger development process are explained here</p>
+<h3>Unit Tests</h3>
+<p>I am using the great <a href="https://github.com/philsquared/Catch">Catch</a> automated test framework. Currently only small parts of the code are covered by unit tests.</p>
+<p>The unit tester can be run with <code>ealogger_test</code>. This will execute all test cases and output the results. have a look at the Catch framework documentation for command line options you can use to run only specific test cases, or change the application output.</p>
+<h3>Continuous Integration</h3>
+<p><a href="https://travis-ci.org/crapp/ealogger"></a></p>
+<p><a href="https://travis-ci.org/">Travis CI</a> is used as continuous integration service. The <a href="https://github.com/crapp/ealogger">ealogger github</a> repository is linked to Travis CI. You can see the build history for the master branch and all release branches on the <a href="https://travis-ci.org/crapp/ealogger">travis project page</a>.</p>
+<p>Besides testing compilation on different systems and compilers I also run the unit tests after the application was compiled successfully.</p>
 <h3>Branches</h3>
 <p>The github repository of ealogger has several different branches</p>
 <ul>
@@ -172,7 +180,7 @@ cs_re:,green:^.+INFO:.+
 <p>Major version zero (0.y.z) is for initial development. Anything may change at any time. The public API should not be considered stable. </p>
 </blockquote>
 <h2>Status</h2>
-<p>This library has not reached a stable version yet. Meaning the public API and other things may be subjected to changes at any time. There have been no code reviews so far and unit tests only cover small parts of the source code. In spite of all that the library is absolutely usable and works great for what is was developed for.</p>
+<p>This library has not reached a stable version yet. Meaning the public API and other things may be subjected to changes at any time. There have been no code reviews so far and unit tests only cover small parts of the source code. In spite of all that the library is absolutely usable and works great for what it was developed for.</p>
 <h2>Bugs, feature requests, ideas</h2>
 <p>Please use the <a href="https://github.com/crapp/ealogger/issues">github bugtracker</a> to submit bugs or feature requests</p>
 <h2>FAQ</h2>
@@ -184,7 +192,7 @@ cs_re:,green:^.+INFO:.+
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Copyright (C) 2013 - 2016 Christian Rapp</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;you may not use this file except in compliance with the License.</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;You may obtain a copy of the License at</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  http://www.apache.org/licenses/LICENSE-2.0</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Unless required by applicable law or agreed to in writing, software</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;See the License for the specific language governing permissions and</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;limitations under the License.</div></div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 19 2016 23:08:31 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 19 2016 23:41:43 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
