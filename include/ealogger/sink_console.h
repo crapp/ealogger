@@ -27,6 +27,8 @@
 
 #include "ealogger/sink.h"
 
+namespace ealogger
+{
 /**
  * @brief Sink to write to a console
  */
@@ -34,7 +36,7 @@ class SinkConsole : public Sink
 {
 public:
     SinkConsole(std::string msg_template, std::string datetime_pattern,
-                bool enabled, ealogger_constants::LOG_LEVEL min_lvl);
+                bool enabled, ealogger::constants::LOG_LEVEL min_lvl);
     virtual ~SinkConsole();
 
 private:
@@ -43,7 +45,7 @@ private:
     void write_message(const std::string &msg);
     void config_changed();
 };
-
+}
 /** @} */
 
 #endif /* SINK_CONSOLE_H */

@@ -33,7 +33,7 @@ Make sure your development environment meets these requirements
 
 * cmake >= 3.4
 * gcc >= 4.9
-* clang >= 3.5
+* clang >= 3.3
 * MSVC >= 14 (Visual Studio 2015)
 
 ### Installation
@@ -83,7 +83,8 @@ You may also use [different generators](https://cmake.org/cmake/help/latest/manu
 
 ## Usage
 
-Usage of the logger is easy. For a start have a look at the tester application.
+Usage of the logger is easy. For a start have a look at the example applications
+and the API Documentation.
 
 ### Minimum Code example
 
@@ -91,13 +92,11 @@ Here is a small example. First we instantiate a new Logger object, than we print
 some messages.
 
 ```c++
-std::unique_ptr<EALogger> log = std::unique_ptr<EALogger>(
-    new EALogger(EALogger::log_level::INFO,
-                     true,
-                     true,
-                     false,
-                     "%H:%M:%S",
-                     "logToMe.log"));
+namespace eal = ealogger;
+namespace con = ealogger::constants;
+std::unique_ptr<eal::EALogger> log = std::unique_ptr<eal::EALogger>(
+    new eal::EALogger());
+log->set_min_lvl(con::LOGGER_SINK::CONSOLEm, con::LOG_LEVEL::INFO);
 log->debug("Do you see me?");
 log->info("An info message")
 log->warn("A warning message");
@@ -106,10 +105,10 @@ log->fatal("A fatal message");
 ```
 This will output:
 ```shell
-[17:55:28] INFO: An info message
-[17:55:28] WARNING: A warning message
-[17:55:28] ERROR: An error message
-[17:55:28] FATAL: A fatal message
+2016-03-19 15:12:49 INFO: An info message
+2016-03-19 15:12:49 WARNING: A warning message
+2016-03-19 15:12:49 ERROR: An error message
+2016-03-19 15:12:49 FATAL: A fatal message
 ```
 
 As you can see the DEBUG level message is not printed. This is because of the
@@ -145,6 +144,18 @@ generated html documentation hosted by [github.io](https://crapp.github.io/ealog
 The doxygen project file is located in the
 [doc](https://github.com/crapp/ealogger/tree/master/doc) folder and can be used
 to generate a version of the documentation on your system.
+
+## Performance
+
+ealogger is pretty fast in asynchronous mode. Here are some benchmarks for logging
+100000 messages to a file.
+
+Linux machine with GCC 6.1 and an Intel i5-3470
+```shell
+$ examples/ealogger_bench
+Time in milliseconds to put messages on a queue: 296ms
+Time untill all messages were written to the logfile: 3042ms
+```
 
 ## Development
 

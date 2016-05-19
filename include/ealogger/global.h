@@ -29,11 +29,13 @@
 #define ATTR_UNUSED
 #endif
 
+namespace ealogger
+{
 /**
- * @namespace ealogger_constants
+ * @namespace ealogger::constants
  * @brief Namespace for global ealogger constants
  */
-namespace ealogger_constants
+namespace constants
 {
 /**
  * @enum LOGGER_SINK
@@ -41,7 +43,7 @@ namespace ealogger_constants
  */
 enum LOGGER_SINK {
     CONSOLES = 0, /**< Sink writing to a console SinkConsole */
-    SYSLOGS,      /**< Sink writing to linux syslog SinkSyslog */
+    SYSLOG,      /**< Sink writing to linux syslog SinkSyslog */
     FILE_SIMPLE   /**< Sink writing to a file SinkFile */
 };
 enum CONVERSION_PATTERN {};
@@ -62,6 +64,7 @@ enum LOG_LEVEL {
     STACK,     /**< Stack log message */
     INTERNAL   /**< Internal Message, do not use this loglevel yourself */
 };
+}
 }
 
 #endif /* ifndef GLOBAL_H */

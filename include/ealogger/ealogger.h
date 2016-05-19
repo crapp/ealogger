@@ -24,25 +24,27 @@
 /*
  * Mutual exclusion for threadsafe logger
  */
-#include <mutex>
-#include <iostream>
 #include <csignal>
+#include <iostream>
+#include <mutex>
 #include <stdexcept>
 /*
  * Background logger thread
  */
+#include <map>
 #include <thread>
 #include <vector>
-#include <map>
 
 #include "config.h"
 #include "ealogger/global.h"
-#include "ealogger/sink_console.h"
-#include "ealogger/sink_syslog.h"
-#include "ealogger/sink_file.h"
 #include "ealogger/logmessage.h"
 #include "ealogger/logqueue.h"
+#include "ealogger/sink_console.h"
+#include "ealogger/sink_file.h"
+#include "ealogger/sink_syslog.h"
 
+namespace ealogger
+{
 // Define macros for all log levels and call public member write_log()
 /**
  * @defgroup EALOGGER_GROUP
@@ -55,42 +57,42 @@
  * @brief Write a debug message
  */
 #define debug(msg)                                                           \
-    write_log(msg, ealogger_constants::LOG_LEVEL::DEBUG, __FILE__, __LINE__, \
+    write_log(msg, ealogger::constants::LOG_LEVEL::DEBUG, __FILE__, __LINE__, \
               __func__)
 /**
  * @def info(msg)
  * @brief Write a info message
  */
 #define info(msg)                                                           \
-    write_log(msg, ealogger_constants::LOG_LEVEL::INFO, __FILE__, __LINE__, \
+    write_log(msg, ealogger::constants::LOG_LEVEL::INFO, __FILE__, __LINE__, \
               __func__)
 /**
  * @def warn(msg)
  * Write a warning message
  */
 #define warn(msg)                                                              \
-    write_log(msg, ealogger_constants::LOG_LEVEL::WARNING, __FILE__, __LINE__, \
+    write_log(msg, ealogger::constants::LOG_LEVEL::WARNING, __FILE__, __LINE__, \
               __func__)
 /**
  * @def error(msg)
  * Write an error message
  */
 #define error(msg)                                                           \
-    write_log(msg, ealogger_constants::LOG_LEVEL::ERROR, __FILE__, __LINE__, \
+    write_log(msg, ealogger::constants::LOG_LEVEL::ERROR, __FILE__, __LINE__, \
               __func__)
 /**
  * @def fatal(msg)
  * Write a fatal message
  */
 #define fatal(msg)                                                           \
-    write_log(msg, ealogger_constants::LOG_LEVEL::FATAL, __FILE__, __LINE__, \
+    write_log(msg, ealogger::constants::LOG_LEVEL::FATAL, __FILE__, __LINE__, \
               __func__)
 /**
  * @def stack()
  * Write a stack message
  */
 #define stack()                                                             \
-    write_log("", ealogger_constants::LOG_LEVEL::STACK, __FILE__, __LINE__, \
+    write_log("", ealogger::constants::LOG_LEVEL::STACK, __FILE__, __LINE__, \
               __func__)
 
 /**
@@ -172,32 +174,32 @@ public:
      * This method is called by the macros that are defined in this header file
      * for the different log levels. You can of course call this method yourself
      * @code
-     * mylogger.write_log("This is a warning", ealogger_constants::LOG_LEVEL::WARNING,
+     * mylogger.write_log("This is a warning", ealogger::constants::LOG_LEVEL::WARNING,
      *                    __FILE__, __LINE__, __func__)
      * @endcode
      */
-    void write_log(std::string msg, ealogger_constants::LOG_LEVEL lvl,
+    void write_log(std::string msg, ealogger::constants::LOG_LEVEL lvl,
                    std::string file, int lnumber, std::string func);
 
     void init_syslog_sink(bool enabled = true,
-                          ealogger_constants::LOG_LEVEL min_lvl =
-                              ealogger_constants::LOG_LEVEL::DEBUG,
+                          ealogger::constants::LOG_LEVEL min_lvl =
+                              ealogger::constants::LOG_LEVEL::DEBUG,
                           std::string msg_template = "%s: %m",
                           std::string datetime_pattern = "%F %T");
     void init_console_sink(bool enabled = true,
-                           ealogger_constants::LOG_LEVEL min_lvl =
-                               ealogger_constants::LOG_LEVEL::DEBUG,
+                           ealogger::constants::LOG_LEVEL min_lvl =
+                               ealogger::constants::LOG_LEVEL::DEBUG,
                            std::string msg_template = "%d %s: %m",
                            std::string datetime_pattern = "%F %T");
 
     void init_file_sink(bool enabled = true,
-                        ealogger_constants::LOG_LEVEL min_lvl =
-                            ealogger_constants::LOG_LEVEL::DEBUG,
+                        ealogger::constants::LOG_LEVEL min_lvl =
+                            ealogger::constants::LOG_LEVEL::DEBUG,
                         std::string msg_template = "%d %s [%f:%l] %m",
                         std::string datetime_pattern = "%F %T",
                         std::string logfile = "ealogger_logfile.log");
     // void init_file_sink_rotating(bool enabled,
-    // ealogger_constants::LOG_LEVEL min_lvl,
+    // ealogger::constants::LOG_LEVEL min_lvl,
     // std::string msg_template,
     // std::string datetime_pattern,
     // std::string logfile);
@@ -210,7 +212,7 @@ public:
      * You can discard a Sink this will reduce some overhead and can speed logging
      * a little bit.
      */
-    void discard_sink(ealogger_constants::LOGGER_SINK sink);
+    void discard_sink(ealogger::constants::LOGGER_SINK sink);
 
     /**
      * @brief Set message conversion pattern for a Sink
@@ -218,7 +220,7 @@ public:
      * @param sink
      * @param msg_template
      */
-    void set_msg_template(ealogger_constants::LOGGER_SINK sink,
+    void set_msg_template(ealogger::constants::LOGGER_SINK sink,
                           std::string msg_template);
     /**
      * @brief Set datetime conversion pattern for a Sink
@@ -230,7 +232,7 @@ public:
      * Date time conversion is based on [std::strftime](http://en.cppreference.com/w/cpp/chrono/c/strftime)
      * You can use all the conversion specifiers mentioned there.
      */
-    void set_datetime_pattern(ealogger_constants::LOGGER_SINK sink,
+    void set_datetime_pattern(ealogger::constants::LOGGER_SINK sink,
                               std::string datetime_pattern);
     /**
      * @brief Activate or deactivate a Sink
@@ -238,15 +240,15 @@ public:
      * @param sink
      * @param enabled
      */
-    void set_enabled(ealogger_constants::LOGGER_SINK sink, bool enabled);
+    void set_enabled(ealogger::constants::LOGGER_SINK sink, bool enabled);
     /**
      * @brief Set the minimum log message severity for a Sink
      *
      * @param sink
      * @param min_level
      */
-    void set_min_lvl(ealogger_constants::LOGGER_SINK sink,
-                     ealogger_constants::LOG_LEVEL min_level);
+    void set_min_lvl(ealogger::constants::LOGGER_SINK sink,
+                     ealogger::constants::LOG_LEVEL min_level);
 
     /**
      * @brief Check if the message queue is empty
@@ -270,9 +272,9 @@ private:
     /** Controls background logger thread */
     bool logger_thread_stop;
 
-    std::map<ealogger_constants::LOGGER_SINK, std::shared_ptr<Sink>>
+    std::map<ealogger::constants::LOGGER_SINK, std::shared_ptr<Sink>>
         logger_sink_map;
-    std::map<ealogger_constants::LOGGER_SINK, std::unique_ptr<std::mutex>>
+    std::map<ealogger::constants::LOGGER_SINK, std::unique_ptr<std::mutex>>
         logger_mutex_map;
 
     /** Static Method to be registered for logrotate signal */
@@ -294,7 +296,7 @@ private:
     bool get_logger_thread_stop();
     void set_logger_thread_stop(bool stop);
 };
-
+}
 /**
  *
  * @}

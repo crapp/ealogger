@@ -31,6 +31,8 @@
 
 #include "ealogger/sink.h"
 
+namespace ealogger
+{
 /**
  * @brief Sink writing to unix syslog
  */
@@ -38,11 +40,11 @@ class SinkSyslog : public Sink
 {
 public:
     SinkSyslog(std::string msg_template, std::string datetime_pattern,
-               bool enabled, ealogger_constants::LOG_LEVEL min_lvl);
+               bool enabled, ealogger::constants::LOG_LEVEL min_lvl);
     virtual ~SinkSyslog();
 
 private:
-    std::map<ealogger_constants::LOG_LEVEL, int>
+    std::map<ealogger::constants::LOG_LEVEL, int>
         loglevel_syslog_lookup; /**< map syslog message severity to our loglevels */
 
     std::mutex mtx_syslog;
@@ -50,7 +52,7 @@ private:
     void write_message(ATTR_UNUSED const std::string &msg);
     void config_changed();
 };
-
+}
 /**
  * @}
  */

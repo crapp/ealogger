@@ -27,6 +27,8 @@
 
 #include "ealogger/sink.h"
 
+namespace ealogger
+{
 /**
  * @brief Sink to write to a log file
  */
@@ -46,7 +48,7 @@ public:
      * directories exist.
      */
     SinkFile(std::string msg_template, std::string datetime_pattern,
-             bool enabled, ealogger_constants::LOG_LEVEL min_lvl,
+             bool enabled, ealogger::constants::LOG_LEVEL min_lvl,
              std::string log_file);
     virtual ~SinkFile();
 
@@ -84,6 +86,7 @@ private:
      */
     void close_file();
 };
+}
 
 /** @} */
 

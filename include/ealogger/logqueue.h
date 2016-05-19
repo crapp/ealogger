@@ -29,6 +29,8 @@
 
 #include "ealogger/logmessage.h"
 
+namespace ealogger
+{
 /**
  * @brief The LogQueue class represents a threadsafe queue we use to store log messages
  * @author Christian Rapp (crapp)
@@ -72,5 +74,6 @@ private:
      */
     std::condition_variable cond_var_queue;
 };
+}
 
 #endif  // LOGQUEUE_H

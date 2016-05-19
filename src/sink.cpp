@@ -15,10 +15,11 @@
 
 #include "ealogger/sink.h"
 
-namespace con = ealogger_constants;
+namespace eal = ealogger;
+namespace con = ealogger::constants;
 
-Sink::Sink(std::string msg_template, std::string datetime_pattern, bool enabled,
-           con::LOG_LEVEL min_lvl)
+eal::Sink::Sink(std::string msg_template, std::string datetime_pattern,
+                bool enabled, con::LOG_LEVEL min_lvl)
     : msg_template(std::move(msg_template)),
       datetime_pattern(std::move(datetime_pattern)),
       enabled(enabled),
@@ -33,39 +34,40 @@ Sink::Sink(std::string msg_template, std::string datetime_pattern, bool enabled,
                              {con::LOG_LEVEL::STACK, "Stacktrace"},
                              {con::LOG_LEVEL::INTERNAL, "INTERNAL"}};
 }
-Sink::~Sink() {}
-void Sink::set_msg_template(std::string msg_template)
+eal::Sink::~Sink() {}
+void eal::Sink::set_msg_template(std::string msg_template)
 {
     std::lock_guard<std::mutex> lock(this->mtx_msg_template);
     this->msg_template = std::move(msg_template);
     this->fill_conv_patterns(false);
 }
 
-void Sink::set_datetime_pattern(std::string datetime_pattern)
+void eal::Sink::set_datetime_pattern(std::string datetime_pattern)
 {
     std::lock_guard<std::mutex> lock(this->mtx_datetime_pattern);
     this->datetime_pattern = std::move(datetime_pattern);
 }
 
-void Sink::set_enabled(bool enabled)
+void eal::Sink::set_enabled(bool enabled)
 {
     std::lock_guard<std::mutex> lock(this->mtx_enabled);
     this->enabled = enabled;
     this->config_changed();
 }
-bool Sink::get_enabled()
+bool eal::Sink::get_enabled()
 {
     std::lock_guard<std::mutex> lock(this->mtx_enabled);
     return this->enabled;
 }
 
-void Sink::set_min_lvl(con::LOG_LEVEL min_lvl)
+void eal::Sink::set_min_lvl(con::LOG_LEVEL min_lvl)
 {
     std::lock_guard<std::mutex> lock(this->mtx_min_lvl);
     this->min_level = min_lvl;
 }
 
-void Sink::prepare_log_message(const std::shared_ptr<LogMessage> &log_message)
+void eal::Sink::prepare_log_message(
+    const std::shared_ptr<LogMessage> &log_message)
 {
     // TODO: Is it a good idea to check whether this Sink is enabled here or
     // should we check in EALogger?
@@ -148,7 +150,7 @@ void Sink::prepare_log_message(const std::shared_ptr<LogMessage> &log_message)
     this->write_message(msg);
 }
 
-void Sink::fill_conv_patterns(bool lock)
+void eal::Sink::fill_conv_patterns(bool lock)
 {
     std::lock_guard<std::mutex> vec_conv_patterns_lock(this->mtx_conv_pattern);
     if (!this->vec_conv_patterns.empty()) {
@@ -181,9 +183,9 @@ void Sink::fill_conv_patterns(bool lock)
         this->vec_conv_patterns.emplace_back(
             ConversionPattern("%l", ConversionPattern::PATTERN_TYPE::LINE));
     }
-    if (msgp.find("%fu") != std::string::npos) {
+    if (msgp.find("%u") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(
-            ConversionPattern("%fu", ConversionPattern::PATTERN_TYPE::FUNC));
+            ConversionPattern("%u", ConversionPattern::PATTERN_TYPE::FUNC));
     }
     if (msgp.find("%h") != std::string::npos) {
         this->vec_conv_patterns.emplace_back(

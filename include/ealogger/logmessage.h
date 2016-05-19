@@ -16,10 +16,12 @@
 #ifndef LOGMESSAGE_H
 #define LOGMESSAGE_H
 
-#include <string>
 #include <chrono>
+#include <string>
 #include <vector>
 
+namespace ealogger
+{
 struct LogMessage {
 public:
     /**
@@ -136,5 +138,6 @@ private:
     int call_file_line_num; /**< Line number in the source file */
     std::string call_func;  /**< function from which the logger was called */
 };
+}
 
 #endif  // LOGMESSAGE_H

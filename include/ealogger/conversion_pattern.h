@@ -16,11 +16,13 @@
 #ifndef CONVERSION_PATTERN_H
 #define CONVERSION_PATTERN_H
 
-#include <string>
 #include <iostream>
+#include <string>
 
 #include "ealogger/global.h"
 
+namespace ealogger
+{
 /**
  * @brief A conversion pattern for message strings
  *
@@ -31,9 +33,9 @@
  *
  * %d  :  Date Time as provided
  * %f  :  Name of the file from where a log message was issued
- * %F  :  Absolut path of a file as provided by __FILE__ from where a log mesage was issued
+ * %F  :  Absolut path of a file as provided by __FILE__ from where a log message was issued
  * %l  :  Line number of the file from where a log message was issued (__LINE__)
- * %fu :  Name of the function from where a log message was issued (__func__)
+ * %u  :  Name of the function from where a log message was issued (__func__)
  * %h  :  Hostname
  * %t  :  Thread ID
  * %m  :  Log message
@@ -103,5 +105,6 @@ inline void ConversionPattern::replace_conversion_pattern(
         msg.replace(pos_in_string, this->conv_pattern.length(), new_value);
         pos_in_string += new_value.length();
     }
+}
 }
 #endif /* ifndef CONVERSION_PATTERN_H */

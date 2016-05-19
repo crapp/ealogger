@@ -19,32 +19,33 @@
  * @file ealogger.cpp
  */
 
-namespace con = ealogger_constants;
+namespace eal = ealogger;
+namespace con = ealogger::constants;
 
-EALogger::EALogger(bool async) : async(async)
+eal::EALogger::EALogger(bool async) : async(async)
 {
     this->logger_mutex_map.emplace(
         con::LOGGER_SINK::CONSOLES,
         std::unique_ptr<std::mutex>(new std::mutex()));
     this->logger_mutex_map.emplace(
-        con::LOGGER_SINK::SYSLOGS,
+        con::LOGGER_SINK::SYSLOG,
         std::unique_ptr<std::mutex>(new std::mutex()));
     this->logger_mutex_map.emplace(
         con::LOGGER_SINK::FILE_SIMPLE,
         std::unique_ptr<std::mutex>(new std::mutex()));
 // TODO: Make registration of signal handler configurable
 #ifdef __linux__
-    if (signal(SIGUSR1, EALogger::logrotate) == SIG_ERR)
+    if (signal(SIGUSR1, eal::EALogger::logrotate) == SIG_ERR)
         throw std::runtime_error("Could not create signal handler for SIGUSR1");
 #endif
 
     if (this->async) {
         logger_thread_stop = false;
-        logger_thread = std::thread(&EALogger::thread_entry_point, this);
+        logger_thread = std::thread(&eal::EALogger::thread_entry_point, this);
     }
 }
 
-EALogger::~EALogger()
+eal::EALogger::~EALogger()
 {
     if (this->async) {
         // wait for queue to be emptied. after 1 second we will exit the background logger thread
@@ -69,8 +70,8 @@ EALogger::~EALogger()
     }
 }
 
-void EALogger::write_log(std::string msg, con::LOG_LEVEL lvl, std::string file,
-                         int lnumber, std::string func)
+void eal::EALogger::write_log(std::string msg, con::LOG_LEVEL lvl,
+                              std::string file, int lnumber, std::string func)
 {
     std::shared_ptr<LogMessage> m;
     LogMessage::LOGTYPE type = LogMessage::LOGTYPE::DEFAULT;
@@ -94,62 +95,65 @@ void EALogger::write_log(std::string msg, con::LOG_LEVEL lvl, std::string file,
     }
 }
 
-void EALogger::init_syslog_sink(bool enabled, con::LOG_LEVEL min_lvl,
-                                std::string msg_template,
-                                std::string datetime_pattern)
+void eal::EALogger::init_syslog_sink(bool enabled, con::LOG_LEVEL min_lvl,
+                                     std::string msg_template,
+                                     std::string datetime_pattern)
 {
-    this->logger_sink_map[con::LOGGER_SINK::SYSLOGS] =
+    this->logger_sink_map[con::LOGGER_SINK::SYSLOG] =
         std::make_shared<SinkSyslog>(std::move(msg_template),
                                      std::move(datetime_pattern), enabled,
                                      min_lvl);
 }
-void EALogger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
-                                 std::string msg_template,
-                                 std::string datetime_pattern)
+void eal::EALogger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
+                                      std::string msg_template,
+                                      std::string datetime_pattern)
 {
     this->logger_sink_map[con::LOGGER_SINK::CONSOLES] =
         std::make_shared<SinkConsole>(std::move(msg_template),
                                       std::move(datetime_pattern), enabled,
                                       min_lvl);
 }
-void EALogger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
-                              std::string msg_template,
-                              std::string datetime_pattern, std::string logfile)
+void eal::EALogger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
+                                   std::string msg_template,
+                                   std::string datetime_pattern,
+                                   std::string logfile)
 {
     this->logger_sink_map[con::LOGGER_SINK::FILE_SIMPLE] =
         std::make_shared<SinkFile>(std::move(msg_template),
                                    std::move(datetime_pattern), enabled, min_lvl,
                                    std::move(logfile));
 }
-// void EALogger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL min_lvl,
+// void eal::EALogger::init_file_sink_rotating(bool enabled, con::LOG_LEVEL
+// min_lvl,
 // std::string msg_template,
 // std::string datetime_pattern,
 // std::string logfile)
 //{
 //}
 
-void EALogger::set_msg_template(con::LOGGER_SINK sink, std::string msg_template)
+void eal::EALogger::set_msg_template(con::LOGGER_SINK sink,
+                                     std::string msg_template)
 {
     try {
         std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
-        this->logger_sink_map.at(sink)
-            ->set_msg_template(std::move(msg_template));
+        this->logger_sink_map.at(sink)->set_msg_template(
+            std::move(msg_template));
     } catch (const std::out_of_range &ex) {
         // TODO: What do we do here if the sink does not exist?
     }
 }
-void EALogger::set_datetime_pattern(con::LOGGER_SINK sink,
-                                    std::string datetime_pattern)
+void eal::EALogger::set_datetime_pattern(con::LOGGER_SINK sink,
+                                         std::string datetime_pattern)
 {
     try {
         std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
-        this->logger_sink_map.at(sink)
-            ->set_datetime_pattern(std::move(datetime_pattern));
+        this->logger_sink_map.at(sink)->set_datetime_pattern(
+            std::move(datetime_pattern));
     } catch (const std::out_of_range &ex) {
         // TODO: What do we do here if the sink does not exist?
     }
 }
-void EALogger::set_enabled(con::LOGGER_SINK sink, bool enabled)
+void eal::EALogger::set_enabled(con::LOGGER_SINK sink, bool enabled)
 {
     try {
         std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
@@ -158,7 +162,7 @@ void EALogger::set_enabled(con::LOGGER_SINK sink, bool enabled)
         // TODO: What do we do here if the sink does not exist?
     }
 }
-void EALogger::set_min_lvl(con::LOGGER_SINK sink, con::LOG_LEVEL min_level)
+void eal::EALogger::set_min_lvl(con::LOGGER_SINK sink, con::LOG_LEVEL min_level)
 {
     try {
         std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
@@ -168,7 +172,7 @@ void EALogger::set_min_lvl(con::LOGGER_SINK sink, con::LOG_LEVEL min_level)
     }
 }
 
-void EALogger::discard_sink(con::LOGGER_SINK sink)
+void eal::EALogger::discard_sink(con::LOGGER_SINK sink)
 {
     try {
         std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
@@ -181,17 +185,17 @@ void EALogger::discard_sink(con::LOGGER_SINK sink)
     }
 }
 
-bool EALogger::queue_empty() { return this->log_msg_queue.empty(); }
-void EALogger::logrotate(int signo)
+bool eal::EALogger::queue_empty() { return this->log_msg_queue.empty(); }
+void eal::EALogger::logrotate(int signo)
 {
 #ifdef __linux__
     if (signo == SIGUSR1) {
-        EALogger::signal_SIGUSR1 = true;
+        eal::EALogger::signal_SIGUSR1 = true;
     }
 #endif
 }
 
-void EALogger::thread_entry_point()
+void eal::EALogger::thread_entry_point()
 {
     while (!this->get_logger_thread_stop()) {
         std::shared_ptr<LogMessage> m = this->log_msg_queue.pop();
@@ -199,7 +203,7 @@ void EALogger::thread_entry_point()
     }
 }
 
-void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
+void eal::EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
 {
     for (const auto &sink : logger_sink_map) {
         std::lock_guard<std::mutex> lock(
@@ -208,16 +212,16 @@ void EALogger::internal_log_routine(std::shared_ptr<LogMessage> m)
     }
 }
 
-bool EALogger::get_logger_thread_stop()
+bool eal::EALogger::get_logger_thread_stop()
 {
     std::lock_guard<std::mutex> guard(this->mtx_logger_stop);
     return this->logger_thread_stop;
 }
 
-void EALogger::set_logger_thread_stop(bool stop)
+void eal::EALogger::set_logger_thread_stop(bool stop)
 {
     std::lock_guard<std::mutex> guard(this->mtx_logger_stop);
     this->logger_thread_stop = stop;
 }
 
-bool EALogger::signal_SIGUSR1 = false;
+bool eal::EALogger::signal_SIGUSR1 = false;

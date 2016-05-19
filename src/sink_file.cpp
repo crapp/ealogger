@@ -15,12 +15,14 @@
 
 #include "ealogger/sink_file.h"
 
-namespace con = ealogger_constants;
+namespace eal = ealogger;
+namespace con = ealogger::constants;
 
-SinkFile::SinkFile(std::string msg_template, std::string datetime_pattern,
-                   bool enabled, con::LOG_LEVEL min_lvl, std::string log_file)
-    : Sink(std::move(msg_template), std::move(datetime_pattern), enabled,
-           min_lvl),
+eal::SinkFile::SinkFile(std::string msg_template, std::string datetime_pattern,
+                        bool enabled, con::LOG_LEVEL min_lvl,
+                        std::string log_file)
+    : eal::Sink(std::move(msg_template), std::move(datetime_pattern), enabled,
+                min_lvl),
       log_file(log_file)
 {
     if (this->get_enabled()) {
@@ -28,8 +30,8 @@ SinkFile::SinkFile(std::string msg_template, std::string datetime_pattern,
     }
 }
 
-SinkFile::~SinkFile() { this->close_file(); }
-void SinkFile::set_log_file(std::string log_file)
+eal::SinkFile::~SinkFile() { this->close_file(); }
+void eal::SinkFile::set_log_file(std::string log_file)
 {
     std::lock_guard<std::mutex> lock(this->mtx_log_file);
     this->log_file = std::move(log_file);
@@ -38,7 +40,7 @@ void SinkFile::set_log_file(std::string log_file)
     this->open_file();
 }
 
-void SinkFile::write_message(const std::string &msg)
+void eal::SinkFile::write_message(const std::string &msg)
 {
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
     try {
@@ -53,7 +55,7 @@ void SinkFile::write_message(const std::string &msg)
     }
 }
 
-void SinkFile::config_changed()
+void eal::SinkFile::config_changed()
 {
     // we can access enabled directly here because this is called from
     // set_enabled and the coresponding mutex is already locked
@@ -67,7 +69,7 @@ void SinkFile::config_changed()
     }
 }
 
-void SinkFile::open_file()
+void eal::SinkFile::open_file()
 {
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
     try {
@@ -87,7 +89,7 @@ void SinkFile::open_file()
     } catch (const std::exception &ex) {
     }
 }
-void SinkFile::close_file()
+void eal::SinkFile::close_file()
 {
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
     if (this->file_stream.is_open()) {

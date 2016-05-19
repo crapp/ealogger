@@ -15,12 +15,14 @@
 
 #include "ealogger/sink_syslog.h"
 
-namespace con = ealogger_constants;
+namespace eal = ealogger;
+namespace con = ealogger::constants;
 
-SinkSyslog::SinkSyslog(std::string msg_template, std::string datetime_pattern,
-                       bool enabled, con::LOG_LEVEL min_lvl)
-    : Sink(std::move(msg_template), std::move(datetime_pattern), enabled,
-           min_lvl)
+eal::SinkSyslog::SinkSyslog(std::string msg_template,
+                            std::string datetime_pattern, bool enabled,
+                            con::LOG_LEVEL min_lvl)
+    : eal::Sink(std::move(msg_template), std::move(datetime_pattern), enabled,
+                min_lvl)
 {
 #ifdef EALOGGER_SYSLOG
     this->loglevel_syslog_lookup = {
@@ -37,8 +39,8 @@ SinkSyslog::SinkSyslog(std::string msg_template, std::string datetime_pattern,
 #endif
 }
 
-SinkSyslog::~SinkSyslog() {}
-void SinkSyslog::write_message(ATTR_UNUSED const std::string &msg)
+eal::SinkSyslog::~SinkSyslog() {}
+void eal::SinkSyslog::write_message(ATTR_UNUSED const std::string &msg)
 {
 #ifdef EALOGGER_SYSLOG
     std::lock_guard<std::mutex> lock(this->mtx_syslog);
@@ -47,4 +49,4 @@ void SinkSyslog::write_message(ATTR_UNUSED const std::string &msg)
 #endif
 }
 
-void SinkSyslog::config_changed(){};
+void eal::SinkSyslog::config_changed(){};

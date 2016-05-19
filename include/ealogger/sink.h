@@ -26,19 +26,21 @@
  * @{
  */
 
-#include <string>
 #include <algorithm>
+#include <map>
 #include <memory>
 #include <mutex>
-#include <map>
+#include <string>
 
 #include <iostream>
 
-#include "ealogger/utility.h"
-#include "ealogger/global.h"
 #include "ealogger/conversion_pattern.h"
+#include "ealogger/global.h"
 #include "ealogger/logmessage.h"
+#include "ealogger/utility.h"
 
+namespace ealogger
+{
 /**
  * @brief A sink is an object that writes the log message to the target
  * @author Christian Rapp
@@ -69,7 +71,7 @@ public:
      * For example "%H:%M:%S" returns a 24-hour based time string like 20:12:01
      */
     Sink(std::string msg_template, std::string datetime_pattern, bool enabled,
-         ealogger_constants::LOG_LEVEL min_lvl);
+         ealogger::constants::LOG_LEVEL min_lvl);
     virtual ~Sink();
 
     /**
@@ -85,7 +87,7 @@ public:
     void set_datetime_pattern(std::string datetime_pattern);
     void set_enabled(bool enabled);
     bool get_enabled();
-    void set_min_lvl(ealogger_constants::LOG_LEVEL min_lvl);
+    void set_min_lvl(ealogger::constants::LOG_LEVEL min_lvl);
 
     void prepare_log_message(const std::shared_ptr<LogMessage> &log_message);
 
@@ -93,7 +95,7 @@ protected:
     std::string msg_template;
     std::string datetime_pattern;
     bool enabled;
-    ealogger_constants::LOG_LEVEL min_level;
+    ealogger::constants::LOG_LEVEL min_level;
 
     std::mutex mtx_msg_template;
     std::mutex mtx_datetime_pattern;
@@ -104,7 +106,7 @@ protected:
     std::vector<ConversionPattern> vec_conv_patterns;
 
     /** lookup table for loglevel Strings */
-    std::map<ealogger_constants::LOG_LEVEL, std::string> loglevel_lookup;
+    std::map<ealogger::constants::LOG_LEVEL, std::string> loglevel_lookup;
 
     /**
      * @brief Fill Sink#vec_conv_patterns with ConverionPattern depending on
@@ -131,6 +133,7 @@ protected:
      */
     virtual void config_changed() = 0;
 };
+}
 
 /**
  * @}
