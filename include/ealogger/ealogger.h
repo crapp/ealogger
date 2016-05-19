@@ -43,11 +43,18 @@
 #include "ealogger/sink_file.h"
 #include "ealogger/sink_syslog.h"
 
+/**
+ *@brief Main namespace for ealogger
+ */
 namespace ealogger
 {
 // Define macros for all log levels and call public member write_log()
 /**
- * @defgroup EALOGGER_GROUP
+ * @defgroup EALOGGER_GROUP Base
+ * @brief The base group of ealogger describes the core functionality of the
+ * logger lib
+ * @sa
+ * Logger
  *
  * @{
  */
@@ -56,42 +63,42 @@ namespace ealogger
  * @def debug(msg)
  * @brief Write a debug message
  */
-#define debug(msg)                                                           \
+#define debug(msg)                                                            \
     write_log(msg, ealogger::constants::LOG_LEVEL::DEBUG, __FILE__, __LINE__, \
               __func__)
 /**
  * @def info(msg)
  * @brief Write a info message
  */
-#define info(msg)                                                           \
+#define info(msg)                                                            \
     write_log(msg, ealogger::constants::LOG_LEVEL::INFO, __FILE__, __LINE__, \
               __func__)
 /**
  * @def warn(msg)
- * Write a warning message
+ * @brief Write a warning message
  */
-#define warn(msg)                                                              \
+#define warn(msg)                                                               \
     write_log(msg, ealogger::constants::LOG_LEVEL::WARNING, __FILE__, __LINE__, \
               __func__)
 /**
  * @def error(msg)
- * Write an error message
+ * @brief Write an error message
  */
-#define error(msg)                                                           \
+#define error(msg)                                                            \
     write_log(msg, ealogger::constants::LOG_LEVEL::ERROR, __FILE__, __LINE__, \
               __func__)
 /**
  * @def fatal(msg)
- * Write a fatal message
+ * @brief Write a fatal message
  */
-#define fatal(msg)                                                           \
+#define fatal(msg)                                                            \
     write_log(msg, ealogger::constants::LOG_LEVEL::FATAL, __FILE__, __LINE__, \
               __func__)
 /**
  * @def stack()
- * Write a stack message
+ * @brief Write a message with a stacktrace
  */
-#define stack()                                                             \
+#define stack()                                                              \
     write_log("", ealogger::constants::LOG_LEVEL::STACK, __FILE__, __LINE__, \
               __func__)
 
@@ -100,13 +107,13 @@ namespace ealogger
  * @author Christian Rapp (crapp)
  *
  * @details
- * The EALogger class provides all the functionality you need for your application
+ * The Logger class provides all the functionality you need for your application
  * to log messages. It can be as simple as in the following example.
  *
  * @code
  * #include "ealogger/ealogger.h"
  * int main() {
- *     EALogger logger;
+ *     ealogger::Logger logger;
  *     logger.init_console_sink();
  *     logger.debug("My application is just awesome");
  *     return 0;
@@ -118,8 +125,8 @@ namespace ealogger
  * ealogger uses sinks to write to different targets. Each Sink supports different
  * message [conversion patterns](@ref ConversionPattern) and a datetime pattern.
  * Each sink can be enabled or disabled independently and the minimum severity can be set.
- * You have to use EALogger::init_console_* to init a sink. This methods define sane
- * defaults for their options. But if course you can change them to whatever you
+ * You have to use Logger::init_console_* to init a sink. This methods define sane
+ * defaults for their options. But of course you can change them to whatever you
  * want.
  *
  * The Methods set_msg_template, set_datetime_pattern, set_enabled and set_min_lvl
@@ -130,17 +137,17 @@ namespace ealogger
  * functions for each log level and one for stacktrace.
  * #debug(msg)
  * #info(msg)
- * EALogger::write_log allows you to write log messages without using these macros.
+ * Logger::write_log allows you to write log messages without using these macros.
  *
  * ealogger and its sinks are threadsafe. Meaning if you use the same instance all
  * over your application it will make sure only one message at a time is written
  * to an iostream and the internal message queue is synchronized.
  */
-class EALogger
+class Logger
 {
 public:
     /**
-     * @brief EALogger constructor
+     * @brief Logger constructor
      * @param async Boolean if activated ealogger uses a background thread to
      * write messages to a Sink
      *
@@ -151,12 +158,12 @@ public:
      *
      *
      */
-    EALogger(bool async = true);
-    ~EALogger();
+    Logger(bool async = true);
+    ~Logger();
 
     /**
      * @brief Issue a Logmessage
-     * @param lvl The severity of the message, EALogger#log_level
+     * @param lvl The severity of the message, Logger#log_level
      * @param msg The message text
      */
 
@@ -164,8 +171,8 @@ public:
      * @brief Write a log message
      *
      * @param msg Message text
-     * @param lvl Severity of the message, EALogger#log_level
-     * @param file File from where the mehtod was called
+     * @param lvl Severity of the message, Logger#log_level
+     * @param file File from where the method was called
      * @param lnumber Line number
      * @param func Function name
      *
@@ -181,17 +188,69 @@ public:
     void write_log(std::string msg, ealogger::constants::LOG_LEVEL lvl,
                    std::string file, int lnumber, std::string func);
 
+    /**
+     * @brief Init a syslog Sink
+     *
+     * @param enabled Choose whether this sink is enabled or not
+     * @param min_lvl Minimum severity for this sink
+     * @param msg_template Message template based on conversion patterns
+     * @details
+     *
+     * This initializes a sink that allows you to write a message to the system
+     * syslog.
+     *
+     * @note
+     * This does only work on supported systems
+     *
+     * @sa
+     * ConversionPattern and SinkSyslog
+     */
     void init_syslog_sink(bool enabled = true,
                           ealogger::constants::LOG_LEVEL min_lvl =
                               ealogger::constants::LOG_LEVEL::DEBUG,
                           std::string msg_template = "%s: %m",
                           std::string datetime_pattern = "%F %T");
+    /**
+     * @brief Initialize the console Sink
+     *
+     * @param enabled Choose whether this sink is enabled or not
+     * @param min_lvl Minimum severity for this sink
+     * @param msg_template Message template based on conversion patterns
+     * @details
+     *
+     * Initializes a sink to write a message to the console. The layout of the
+     * message is based on \p msg_template.
+     *
+     * @sa
+     * ConversionPattern and SinkConsole
+     */
     void init_console_sink(bool enabled = true,
                            ealogger::constants::LOG_LEVEL min_lvl =
                                ealogger::constants::LOG_LEVEL::DEBUG,
                            std::string msg_template = "%d %s: %m",
                            std::string datetime_pattern = "%F %T");
 
+    /**
+     * @brief Initialize the simple file Sink
+     *
+     * @param enabled Choose whether this sink is enabled or not
+     * @param min_lvl Minimum severity for this sink
+     * @param msg_template Message template based on conversion patterns
+     * @param logfile Logfile to use
+     * @details
+     *
+     * This method initializes a file sink. Using a file sink you can write to
+     * a logfile that was specified with \p logfile. The file will be created if
+     * it does not exist otherwise new messages will be appended.
+     *
+     * @note
+     * ealogger will not create any directories for you and you have to make sure
+     * the target location is writeable by the user that runs the application.
+     *
+     * @sa
+     * ConversionPattern and SinkFile
+     * Logger::discard_sink
+     */
     void init_file_sink(bool enabled = true,
                         ealogger::constants::LOG_LEVEL min_lvl =
                             ealogger::constants::LOG_LEVEL::DEBUG,
@@ -209,16 +268,22 @@ public:
      * @param sink
      * @details
      *
-     * You can discard a Sink this will reduce some overhead and can speed logging
-     * a little bit.
+     * You can discard a Sink. This will reduce some overhead and can speed up
+     * logging a little bit.
      */
     void discard_sink(ealogger::constants::LOGGER_SINK sink);
 
     /**
-     * @brief Set message conversion pattern for a Sink
+     * @brief Set message template for a Sink
      *
      * @param sink
-     * @param msg_template
+     * @param msg_template Template consisting of conversion patterns
+     * @details
+     * You can use conversion patterns and arbitrary strings to create a message
+     * template for a Sink.
+     *
+     * @sa
+     * ConversionPattern
      */
     void set_msg_template(ealogger::constants::LOGGER_SINK sink,
                           std::string msg_template);
@@ -290,8 +355,8 @@ private:
     void internal_log_routine(std::shared_ptr<LogMessage> m);
 
     /*
-     * So far controlling the background logger thread is only possible for the logger
-     * object itself.
+     * So far controlling the background logger thread is only possible for the
+     * logger object itself.
      */
     bool get_logger_thread_stop();
     void set_logger_thread_stop(bool stop);

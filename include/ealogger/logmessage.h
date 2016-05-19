@@ -40,7 +40,7 @@ public:
 
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message, EALogger#log_level
+     * @param severity Is the severity of the message, Logger#log_level
      * @param message Message as std::string
      * @param log_type LogMessage#LOGTYPE
      */
@@ -57,7 +57,7 @@ public:
     }
     /**
      * @brief Initializes a log message object
-     * @param severity Is the severity of the message, EALogger#log_level
+     * @param severity Is the severity of the message, Logger#log_level
      * @param message_vec A vector<std::string> containing the stack elements
      * @param log_type LogMessage#LOGTYPE
      */
@@ -84,7 +84,7 @@ public:
     }
     /**
      * @brief Returns the severity of the message
-     * @return Severity returned as int, EALogger#log_level
+     * @return Severity returned as int, Logger#log_level
      */
     int get_severity() { return this->severity; }
     /**

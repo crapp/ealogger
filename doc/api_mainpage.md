@@ -17,9 +17,9 @@ The API documentation has two Modules that should be the first place for you if
 you want to learn about how to use ealogger.
 
 * ealogger base module:
-  The ealogger base module consists of the EALogger class documentation and
+  The ealogger base module consists of the Logger class documentation and
   important namespaces and macros.
-* sink module:
+* [sink module](@ref EALOGGER_GROUP ):
   The Sink module combines all Sink derived classes. A Sink is used to write to a
   specific target like a file or a console. The module also describes the
   conversation patterns ealogger supports.

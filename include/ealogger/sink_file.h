@@ -59,7 +59,7 @@ public:
      * @warning
      * This is method is not exposed by the API currently. You may have the
      * possibility to work with Sink objects directly in the future. If you need
-     * to change the logfile use EALogger::init_file_sink to reinit the SinkFile
+     * to change the logfile use Logger::init_file_sink to reinit the SinkFile
      */
     void set_log_file(std::string log_file);
 

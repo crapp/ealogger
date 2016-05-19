@@ -70,7 +70,7 @@ void eal::Sink::prepare_log_message(
     const std::shared_ptr<LogMessage> &log_message)
 {
     // TODO: Is it a good idea to check whether this Sink is enabled here or
-    // should we check in EALogger?
+    // should we check in Logger?
     if (!this->get_enabled())
         return;
 

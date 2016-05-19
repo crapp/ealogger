@@ -26,8 +26,8 @@ int main(void)
     namespace eal = ealogger;
     namespace con = ealogger::constants;
 
-    std::unique_ptr<eal::EALogger> log =
-        std::unique_ptr<eal::EALogger>(new eal::EALogger(true));
+    std::unique_ptr<eal::Logger> log =
+        std::unique_ptr<eal::Logger>(new eal::Logger(true));
     log->init_console_sink();
 
     std::stringstream version;

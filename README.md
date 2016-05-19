@@ -94,8 +94,8 @@ some messages.
 ```c++
 namespace eal = ealogger;
 namespace con = ealogger::constants;
-std::unique_ptr<eal::EALogger> log = std::unique_ptr<eal::EALogger>(
-    new eal::EALogger());
+std::unique_ptr<eal::Logger> log = std::unique_ptr<eal::Logger>(
+    new eal::Logger());
 log->set_min_lvl(con::LOGGER_SINK::CONSOLEm, con::LOG_LEVEL::INFO);
 log->debug("Do you see me?");
 log->info("An info message")
