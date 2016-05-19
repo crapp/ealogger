@@ -29,7 +29,7 @@
 #include <syslog.h>
 #endif
 
-#include "ealogger/sink.h"
+#include <ealogger/sink.h>
 
 namespace ealogger
 {
@@ -39,6 +39,20 @@ namespace ealogger
 class SinkSyslog : public Sink
 {
 public:
+    /**
+     * @brief Constructor for a syslog sink
+     *
+     * @param msg_template Message template based on conversion patterns
+     * @param datetime_pattern Date and time conversion specifiers
+     * @param enabled Whether or not this sink is enabled
+     * @param min_lvl Minimum severity for this sink
+     *
+     * @details
+     * A sink that can be used to write log messages to system syslog
+     *
+     * @note
+     * This only works on supported platforms
+     */
     SinkSyslog(std::string msg_template, std::string datetime_pattern,
                bool enabled, ealogger::constants::LOG_LEVEL min_lvl);
     virtual ~SinkSyslog();

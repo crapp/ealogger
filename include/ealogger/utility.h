@@ -69,9 +69,12 @@ inline std::string get_file_name(const std::string &absolute_path)
 
 /**
  * @brief Print a demangled stacktrace
- * @param size How many elements of the stack you wish to be printed.
+ * @param size How many elements of the stack this should capture
+ * @param stack_msg_vec Reference to a vector of strings where all stack elements
+ * will be stored
  *
- * The method only works with gcc/llvm compiled software.
+ * @note
+ * The method only works with gcc/llvm compiled software
  */
 inline void stack_trace(unsigned int size,
                         std::vector<std::string> &stack_msg_vec)
@@ -128,8 +131,12 @@ inline void stack_trace(unsigned int size,
 
 /**
  * @brief Get a formatted time string based on
- * @param time_format
- * @return
+ * @param t std::time_t object that will be converted to string
+ * @param time_format conversion pattern
+ * @return Converted time object as string
+ * @details
+ *
+ * This is an overloaded version of format_time_to_string(std::string)
  */
 inline std::string format_time_to_string(std::time_t t,
                                          const std::string &time_format)
@@ -149,8 +156,15 @@ inline std::string format_time_to_string(std::time_t t,
 
 /**
  * @brief Get a formatted time string based
- * @param time_format
- * @return
+ * @param time_format conversion pattern
+ * @return Converted time object as string
+ *
+ * @details
+ *
+ * Converts a std::time_t object using [std::strftime](http://en.cppreference.com/w/cpp/chrono/c/strftime)
+ * based on the conversion patterns in \p time_format
+ * @sa
+ * format_time_to_string(std::time_t, std::string)
  */
 inline std::string format_time_to_string(const std::string &time_format)
 {

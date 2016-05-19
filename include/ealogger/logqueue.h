@@ -27,12 +27,13 @@
  */
 #include <condition_variable>
 
-#include "ealogger/logmessage.h"
+#include <ealogger/logmessage.h>
 
 namespace ealogger
 {
 /**
- * @brief The LogQueue class represents a threadsafe queue we use to store log messages
+ * @brief The LogQueue class represents a threadsafe queue ealogger uses to store
+ * log messages
  * @author Christian Rapp (crapp)
  *
  * A big problem of most logger implementations is performance. If you are logging
@@ -40,12 +41,17 @@ namespace ealogger
  * ealogger can write to an iostream, a fstream or a syslog sink at the same time. These
  * operations take time. To minimize the overhead created by writing to a stream
  * we are using a threadsafe queue. This queue is filled by the logger and a separate
- * thread object and works with the FIFO principle. Please note this is _not_ a lock free
- * solution so far.
+ * thread object and works with the FIFO principle and pops the messages from the
+ * queue and hands them over to the sinks.
+ *
+ * Please note this is _not_ a lock free solution so far.
  */
 class LogQueue
 {
 public:
+    /**
+     * @brief LogQueue constructor
+     */
     LogQueue();
 
     /**

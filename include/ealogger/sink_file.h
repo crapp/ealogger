@@ -25,12 +25,18 @@
 
 #include <fstream>
 
-#include "ealogger/sink.h"
+#include <ealogger/sink.h>
 
 namespace ealogger
 {
 /**
  * @brief Sink to write to a log file
+ * @details
+ *
+ * This sink allows you to write to a log file. It does not support rotating files
+ * based on elapsed time or file size.
+ * You also have to make sure the application hass appropriate write permissions
+ * and the target directory exists.
  */
 class SinkFile : public Sink
 {
@@ -43,8 +49,9 @@ public:
      * @param enabled Whether or not this sink is enabled
      * @param min_lvl Minimum severity
      * @param log_file Log file
+     *
      * @details
-     * Make sure you have write permissions for the log file and the corresponding
+     * Make sure you have write permissions for \p log_file and the corresponding
      * directories exist.
      */
     SinkFile(std::string msg_template, std::string datetime_pattern,
@@ -60,6 +67,7 @@ public:
      * This is method is not exposed by the API currently. You may have the
      * possibility to work with Sink objects directly in the future. If you need
      * to change the logfile use Logger::init_file_sink to reinit the SinkFile
+     * sink with a different logfile
      */
     void set_log_file(std::string log_file);
 

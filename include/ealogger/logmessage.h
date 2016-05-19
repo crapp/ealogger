@@ -22,6 +22,20 @@
 
 namespace ealogger
 {
+/**
+ * @brief Log message struct
+ * @details
+ *
+ * A log message in ealogger stores lots of information besides the message string
+ * a user has provided.
+ *
+ * First of all there are two types of messages in ealogger. LogMessage::LOGTYPE
+ * has two members. STACK messages are messages that are containing a stacktrace.
+ *
+ * Additionally a LogMessage stores the message severity, the file from where the
+ * message was issued as well as the line number and the function name. All these
+ * properties are exposed with appropriate getter functions.
+ */
 struct LogMessage {
 public:
     /**
@@ -40,9 +54,13 @@ public:
 
     /**
      * @brief Initializes a log message object
+     *
      * @param severity Is the severity of the message, Logger#log_level
      * @param message Message as std::string
      * @param log_type LogMessage#LOGTYPE
+     * @param file File from where this log message was issued
+     * @param lnumber Line number in file from where this log message was issued
+     * @param func Function from where this log message was issued
      */
     LogMessage(int severity, std::string message, LOGTYPE log_type,
                std::string file, int lnumber, std::string func)
@@ -56,10 +74,14 @@ public:
         this->t = std::chrono::system_clock::now();
     }
     /**
-     * @brief Initializes a log message object
+     * @brief Initializes a log message object with a vector of message strings
+     *
      * @param severity Is the severity of the message, Logger#log_level
      * @param message_vec A vector<std::string> containing the stack elements
      * @param log_type LogMessage#LOGTYPE
+     * @param file File from where this log message was issued
+     * @param lnumber Line number in file from where this log message was issued
+     * @param func Function from where this log message was issued
      */
     LogMessage(int severity, std::vector<std::string> message_vec,
                LOGTYPE log_type, std::string file, int lnumber, std::string func)

@@ -34,10 +34,10 @@
 
 #include <iostream>
 
-#include "ealogger/conversion_pattern.h"
-#include "ealogger/global.h"
-#include "ealogger/logmessage.h"
-#include "ealogger/utility.h"
+#include <ealogger/conversion_pattern.h>
+#include <ealogger/global.h>
+#include <ealogger/logmessage.h>
+#include <ealogger/utility.h>
 
 namespace ealogger
 {
@@ -135,22 +135,26 @@ public:
     void prepare_log_message(const std::shared_ptr<LogMessage> &log_message);
 
 protected:
-    std::string msg_template;
-    std::string datetime_pattern;
-    bool enabled;
-    ealogger::constants::LOG_LEVEL min_level;
+    // TODO: I think some of these protected members could be moved to private
+    std::string
+        msg_template; /**< Message template string consisting of conversion patterns */
+    std::string datetime_pattern; /**< Date / time conversion pattern */
+    bool enabled;                 /**< Is this Sink enabled  */
+    ealogger::constants::LOG_LEVEL
+        min_level; /**< Minimum log message severity for this sink */
 
     // Mutexes for all important members
-    std::mutex mtx_msg_template;
-    std::mutex mtx_datetime_pattern;
-    std::mutex mtx_enabled;
-    std::mutex mtx_min_lvl;
-    std::mutex mtx_conv_pattern;
+    std::mutex mtx_msg_template;     /**< Sink#msg_template mutex  */
+    std::mutex mtx_datetime_pattern; /**< Sink#datetime_pattern mutex */
+    std::mutex mtx_enabled;          /**< Sink#enabled mutex */
+    std::mutex mtx_min_lvl;          /**< Sink#min_levek mutex */
+    std::mutex mtx_conv_pattern;     /**< Sink#vec_conv_patterns mutex */
 
-    std::vector<ConversionPattern> vec_conv_patterns;
+    std::vector<ConversionPattern>
+        vec_conv_patterns; /**< Vector of conversion patterns a Sink uses*/
 
-    /** lookup table for loglevel Strings */
-    std::map<ealogger::constants::LOG_LEVEL, std::string> loglevel_lookup;
+    std::map<ealogger::constants::LOG_LEVEL, std::string>
+        loglevel_lookup; /**< Lookup table for loglevel Strings */
 
     /**
      * @brief Fill Sink#vec_conv_patterns with ConverionPattern depending on

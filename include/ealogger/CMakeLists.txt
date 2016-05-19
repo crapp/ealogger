@@ -7,6 +7,7 @@ set(EALOGGER_HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/sink.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sink_console.h
     ${CMAKE_CURRENT_SOURCE_DIR}/sink_file.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/sink_syslog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/utility.h
     PARENT_SCOPE
 )

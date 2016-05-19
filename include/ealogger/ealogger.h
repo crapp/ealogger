@@ -35,20 +35,14 @@
 #include <thread>
 #include <vector>
 
+#include <ealogger/global.h>
+#include <ealogger/logmessage.h>
+#include <ealogger/logqueue.h>
+#include <ealogger/sink_console.h>
+#include <ealogger/sink_file.h>
+#include <ealogger/sink_syslog.h>
 #include "config.h"
-#include "ealogger/global.h"
-#include "ealogger/logmessage.h"
-#include "ealogger/logqueue.h"
-#include "ealogger/sink_console.h"
-#include "ealogger/sink_file.h"
-#include "ealogger/sink_syslog.h"
 
-/**
- *@brief Main namespace for ealogger
- */
-namespace ealogger
-{
-// Define macros for all log levels and call public member write_log()
 /**
  * @defgroup EALOGGER_GROUP Base
  * @brief The base group of ealogger describes the core functionality of the
@@ -58,6 +52,13 @@ namespace ealogger
  *
  * @{
  */
+
+/**
+ *@brief Main namespace for ealogger
+ */
+namespace ealogger
+{
+// Define macros for all log levels and call public member write_log()
 
 /**
  * @def debug(msg)
@@ -111,7 +112,7 @@ namespace ealogger
  * to log messages. It can be as simple as in the following example.
  *
  * @code
- * #include "ealogger/ealogger.h"
+ * #include <ealogger/ealogger.h>
  * int main() {
  *     ealogger::Logger logger;
  *     logger.init_console_sink();
@@ -194,6 +195,7 @@ public:
      * @param enabled Choose whether this sink is enabled or not
      * @param min_lvl Minimum severity for this sink
      * @param msg_template Message template based on conversion patterns
+     * @param datetime_pattern Datetime conversion patterns
      * @details
      *
      * This initializes a sink that allows you to write a message to the system
@@ -216,6 +218,7 @@ public:
      * @param enabled Choose whether this sink is enabled or not
      * @param min_lvl Minimum severity for this sink
      * @param msg_template Message template based on conversion patterns
+     * @param datetime_pattern Datetime conversion patterns
      * @details
      *
      * Initializes a sink to write a message to the console. The layout of the
@@ -236,6 +239,7 @@ public:
      * @param enabled Choose whether this sink is enabled or not
      * @param min_lvl Minimum severity for this sink
      * @param msg_template Message template based on conversion patterns
+     * @param datetime_pattern Datetime conversion patterns
      * @param logfile Logfile to use
      * @details
      *
@@ -362,10 +366,6 @@ private:
     void set_logger_thread_stop(bool stop);
 };
 }
-/**
- *
- * @}
- *
- */
+/** @} */
 
 #endif  // EALOGGER_H

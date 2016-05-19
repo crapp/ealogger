@@ -25,7 +25,7 @@
 
 #include <iostream>
 
-#include "ealogger/sink.h"
+#include <ealogger/sink.h>
 
 namespace ealogger
 {
@@ -35,6 +35,14 @@ namespace ealogger
 class SinkConsole : public Sink
 {
 public:
+    /**
+     * @brief Console sink constructor
+     *
+     * @param msg_template Message template based on conversion patterns
+     * @param datetime_pattern Date and time conversion specifiers
+     * @param enabled Whether or not this sink is enabled
+     * @param min_lvl Minimum severity for this sink
+     */
     SinkConsole(std::string msg_template, std::string datetime_pattern,
                 bool enabled, ealogger::constants::LOG_LEVEL min_lvl);
     virtual ~SinkConsole();

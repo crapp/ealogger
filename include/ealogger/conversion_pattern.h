@@ -19,16 +19,26 @@
 #include <iostream>
 #include <string>
 
-#include "ealogger/global.h"
+#include <ealogger/global.h>
+
+/**
+ * @file conversion_pattern.h
+ */
+
+/**
+ * @addtogroup EALOGGER_GROUP
+ *
+ * @{
+ */
 
 namespace ealogger
 {
 /**
- * @brief A conversion pattern for message strings
+ * @brief A conversion pattern for message templates
  *
  * @details
  * ealogger supports several conversion patterns that let you substitude a pattern
- * within a string with a appropriate value. This way the style of the log messages
+ * within a string with an appropriate value. This way the style of the log messages
  * can be set for each log sink. Currently we support these conversion patterns
  *
  * %d  :  Date Time as provided
@@ -44,6 +54,9 @@ namespace ealogger
  */
 struct ConversionPattern {
 public:
+    /**
+     * @brief Identifiers for patterns supported by ealogger
+     */
     enum PATTERN_TYPE {
         DT = 0,        /**< Datetime Pattern */
         FILE,          /**< Caller Filename */
@@ -56,6 +69,12 @@ public:
         LVL            /**< Log level/severity */
     };
 
+    /**
+     * @brief Constructor for the a conversion pattern
+     *
+     * @param conv_pattern The conversion pattern
+     * @param ptype conversion pattern identifier
+     */
     ConversionPattern(std::string conv_pattern, const PATTERN_TYPE ptype)
         : conv_pattern(std::move(conv_pattern)), ptype(ptype){};
 
@@ -63,14 +82,20 @@ public:
     /**
      * @brief Replace conversion pattern with new_value
      *
-     * @param msg_template Message pattern
-     * @param new_value Value to replace the conversion pattern with
+     * @param msg Message template reference
+     * @param new_value Value to replace all occurences of the conversion pattern with
      */
     void replace_conversion_pattern(std::string &msg, T new_value) const
     {
         this->replace_conversion_pattern(msg, std::to_string(new_value));
     }
 
+    /**
+     * @brief Get the conversion pattern type
+     *
+     * @return Conversion pattern identifier
+     *
+     */
     ConversionPattern::PATTERN_TYPE get_pattern_type() const
     {
         return this->ptype;
@@ -107,4 +132,5 @@ inline void ConversionPattern::replace_conversion_pattern(
     }
 }
 }
+/** @} */
 #endif /* ifndef CONVERSION_PATTERN_H */

@@ -16,15 +16,14 @@ config file in the doc subfolder of the project.
 The API documentation has two Modules that should be the first place for you if
 you want to learn about how to use ealogger.
 
-* ealogger base module:
-  The ealogger base module consists of the Logger class documentation and
-  important namespaces and macros.
-* [sink module](@ref EALOGGER_GROUP ):
+* [ealogger base module](@ref EALOGGER_GROUP):
+  The ealogger base module consists of the Logger and ConversionPattern class
+  documentation. You will also find information about important namespaces and macros.
+* [sink module](@ref SINK_GROUP):
   The Sink module combines all Sink derived classes. A Sink is used to write to a
-  specific target like a file or a console. The module also describes the
-  conversation patterns ealogger supports.
+  specific target like a file or a console.
 
-
+I also advice you to have a look at the examples in the `examples` sub folder.
 
 ## License
 > Copyright (C) 2013 - 2016 Christian Rapp

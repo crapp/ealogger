@@ -45,8 +45,9 @@ can easily build it on different platforms.
 
 There are some cmake options you can customize for your requirements
 
-* BUILD_TEST (default off) : Setting this to **ON** will compile a tester
-  application
+* BUILD_EXAMPLES (default off)  : Setting this to **ON** will compile all the example
+  applications in the `examples` sub folder.
+* BUILD_UNIT_TESTS (default off): Build the Catch based unit test apllication
 * BUILD_SHARED_LIBS (default on): Whether or not to compile as shared library
 
 #### Linux / OS X
@@ -159,9 +160,30 @@ Time untill all messages were written to the logfile: 3042ms
 
 ## Development
 
-ealogger uses [travis ci](https://travis-ci.org/crapp/ealogger) for continuous
-integration. Currently we use this service to automatically compile the source
-code with each pull request on different platforms and compilers.
+The most important facts of the ealogger development process are explained here
+
+### Unit Tests
+
+I am using the great [Catch](https://github.com/philsquared/Catch) automated test
+framework. Currently only small parts of the code are covered by unit tests.
+
+The unit tester can be run with `ealogger_test`. This will execute all test cases
+and output the results. have a look at the Catch framework documentation for
+command line options you can use to run only specific test cases, or change the
+application output.
+
+### Continuous Integration
+
+[![Build Status](https://travis-ci.org/crapp/ealogger.svg?branch=master)](https://travis-ci.org/crapp/ealogger)
+
+
+[Travis CI](https://travis-ci.org/) is used as continuous integration service.
+The [ealogger github](https://github.com/crapp/ealogger) repository is linked
+to Travis CI. You can see the build history for the master branch and all release
+branches on the [travis project page](https://travis-ci.org/crapp/ealogger).
+
+Besides testing compilation on different systems and compilers I also run the
+unit tests after the application was compiled successfully.
 
 ### Branches
 
@@ -217,7 +239,7 @@ We are currently at this stage
 This library has not reached a stable version yet. Meaning the public API and
 other things may be subjected to changes at any time. There have been no code
 reviews so far and unit tests only cover small parts of the source code. In spite
-of all that the library is absolutely usable and works great for what is was
+of all that the library is absolutely usable and works great for what it was
 developed for.
 
 ## Bugs, feature requests, ideas

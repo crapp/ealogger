@@ -19,7 +19,8 @@
 
 #include "catch.hpp"
 #include "config.h"
-#include "ealogger/utility.h"
+
+#include <ealogger/utility.h>
 
 namespace ut = ealogger::utility;
 

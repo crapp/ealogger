@@ -13,7 +13,7 @@
 //   See the License for the specific language governing permissions and
 //   limitations under the License.
 
-#include "ealogger/sink_console.h"
+#include <ealogger/sink_console.h>
 
 namespace eal = ealogger;
 namespace con = ealogger::constants;
