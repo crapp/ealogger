@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['msg_5fvec_5fit',['msg_vec_it',['../struct_log_message.html#a6defe593d4caf21d5a2148862f559883',1,'LogMessage']]]
+  ['msg_5fvec_5fit',['msg_vec_it',['../structealogger_1_1_log_message.html#a0ca933664be74786a07dcc791bc4e508',1,'ealogger::LogMessage']]]
 ];

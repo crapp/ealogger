@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ealogger',['EALogger',['../class_e_a_logger.html',1,'']]]
+  ['conversionpattern',['ConversionPattern',['../structealogger_1_1_conversion_pattern.html',1,'ealogger']]]
 ];

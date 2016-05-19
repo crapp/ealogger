@@ -1,10 +1,15 @@
 var searchData=
 [
-  ['set_5fdt_5fformat',['set_dt_format',['../class_e_a_logger.html#acb0f7b568b930bc144cf2538e23adb11',1,'EALogger']]],
-  ['setlogtofile',['setLogToFile',['../class_e_a_logger.html#a51b135b64c6d3c1aa20cbe839d274af4',1,'EALogger']]],
-  ['setlogtostdout',['setLogToSTDOUT',['../class_e_a_logger.html#a2519977e569f09476bbedb88f5740309',1,'EALogger']]],
-  ['setlogtosyslog',['setLogToSyslog',['../class_e_a_logger.html#ac428c0dcb0696840a6f3e0ce45579739',1,'EALogger']]],
-  ['setprintthreadid',['setPrintThreadID',['../class_e_a_logger.html#a381b3bebe5c5b51ca747b02671d20925',1,'EALogger']]],
-  ['stack',['STACK',['../struct_log_message.html#ada68dbef049172adc689c1c6ad908668a5a9abb23f5663625b374be0cf4bb7f07',1,'LogMessage']]],
-  ['stack_5ftrace',['stack_trace',['../class_e_a_logger.html#a8ac46af16fe24fffcddf52d0502348ec',1,'EALogger']]]
+  ['line',['LINE',['../structealogger_1_1_conversion_pattern.html#a67bff25c03a4f0002b8accf0e9a12974a361a8ac17209077c5e53d6038d2d654c',1,'ealogger::ConversionPattern']]],
+  ['log_5flevel',['LOG_LEVEL',['../namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46',1,'ealogger::constants']]],
+  ['logger',['Logger',['../classealogger_1_1_logger.html',1,'ealogger']]],
+  ['logger',['Logger',['../classealogger_1_1_logger.html#ac2ac15cefede78d66243fcfcc448ca77',1,'ealogger::Logger']]],
+  ['logger_5fsink',['LOGGER_SINK',['../namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bdd',1,'ealogger::constants']]],
+  ['loglevel_5flookup',['loglevel_lookup',['../classealogger_1_1_sink.html#aab279073b5c172ce06bdbd703da691b8',1,'ealogger::Sink']]],
+  ['logmessage',['LogMessage',['../structealogger_1_1_log_message.html',1,'ealogger']]],
+  ['logmessage',['LogMessage',['../structealogger_1_1_log_message.html#a765b0753522d276bbd7d4a44537f9a2b',1,'ealogger::LogMessage::LogMessage(int severity, std::string message, LOGTYPE log_type, std::string file, int lnumber, std::string func)'],['../structealogger_1_1_log_message.html#a9bf8dded1ccd8b44d4be40730c19da69',1,'ealogger::LogMessage::LogMessage(int severity, std::vector&lt; std::string &gt; message_vec, LOGTYPE log_type, std::string file, int lnumber, std::string func)']]],
+  ['logqueue',['LogQueue',['../classealogger_1_1_log_queue.html',1,'ealogger']]],
+  ['logqueue',['LogQueue',['../classealogger_1_1_log_queue.html#ad7123be68bc9e8300104db611548d62f',1,'ealogger::LogQueue']]],
+  ['logtype',['LOGTYPE',['../structealogger_1_1_log_message.html#a98d136b9f26b36223f43f4e0ce315e86',1,'ealogger::LogMessage']]],
+  ['lvl',['LVL',['../structealogger_1_1_conversion_pattern.html#a67bff25c03a4f0002b8accf0e9a12974a71257e8e2f64e197b4e98635da633383',1,'ealogger::ConversionPattern']]]
 ];

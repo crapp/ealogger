@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['log_5flevel',['log_level',['../class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11',1,'EALogger']]],
-  ['logtype',['LOGTYPE',['../struct_log_message.html#ada68dbef049172adc689c1c6ad908668',1,'LogMessage']]]
+  ['log_5flevel',['LOG_LEVEL',['../namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46',1,'ealogger::constants']]],
+  ['logger_5fsink',['LOGGER_SINK',['../namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bdd',1,'ealogger::constants']]],
+  ['logtype',['LOGTYPE',['../structealogger_1_1_log_message.html#a98d136b9f26b36223f43f4e0ce315e86',1,'ealogger::LogMessage']]]
 ];

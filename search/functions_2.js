@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fatal',['fatal',['../class_e_a_logger.html#aa3730c6db6e0e8f7f50ba92249dd623b',1,'EALogger']]]
+  ['empty',['empty',['../classealogger_1_1_log_queue.html#a310c4776086eb1b019d3a66c2515fec9',1,'ealogger::LogQueue']]]
 ];

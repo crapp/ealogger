@@ -40,6 +40,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -64,6 +66,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -90,36 +93,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="class_e_a_logger.html">EALogger</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a740724697d8bebb002ad4bc25d900aed">debug</a>(std::string msg)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11a685e5787c740f6591adc118149b34a51">DEBUG</a> enum value</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a74f463a3ecc25decc1a2426a3ad23525">EALogger</a>(log_level min_level=EALogger::log_level::DEBUG, bool logToSTDOUT=true, bool logToFile=false, bool logToSyslog=false, bool async=true, bool printThreadID=false, std::string dt_format=&quot;%F %T&quot;, std::string logfile=&quot;&quot;)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#afa84f16c2f696f7f0c36bf2ff20d9fe9">error</a>(std::string msg)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11a13f1e048d890dcc601c5e84a1964fd06">ERROR</a> enum value</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#aa3730c6db6e0e8f7f50ba92249dd623b">fatal</a>(std::string msg)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11a5d0a498c7b1662fca0eb7023af45c879">FATAL</a> enum value</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>get_dt_format</b>() (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>getLogToFile</b>() (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>getLogToSTDOUT</b>() (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>getLogToSyslog</b>() (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>getPrintThreadID</b>() (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a0f3aebf9a3de29cf75a5916e19cd8feb">info</a>(std::string msg)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11a21957dab7945018bdc48218829e3dc18">INFO</a> enum value</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11a3299a946e88afe09ab05a93be9c58d15">INTERNAL</a> enum value</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11">log_level</a> enum name</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#acb0f7b568b930bc144cf2538e23adb11">set_dt_format</a>(std::string fmt)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#a51b135b64c6d3c1aa20cbe839d274af4">setLogToFile</a>(bool b)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a2519977e569f09476bbedb88f5740309">setLogToSTDOUT</a>(bool b)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#ac428c0dcb0696840a6f3e0ce45579739">setLogToSyslog</a>(bool b)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a381b3bebe5c5b51ca747b02671d20925">setPrintThreadID</a>(bool b)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#a8ac46af16fe24fffcddf52d0502348ec">stack_trace</a>(unsigned int size)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#af421f6b088a91d01c89c0f081611c4aa">warn</a>(std::string msg)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#ad4aaf1084ae29be9cf295698ee623c11a613a2f053f79b3fff460a7f3bcab7398">WARNING</a> enum value</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#adffff1c8ca0a1e8e32e9cfd76652632b">write_log</a>(EALogger::log_level lvl, std::string msg)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#ad222522794aa9533ab32bdd0170be3b5">discard_sink</a>(ealogger_constants::LOGGER_SINK sink)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#a0855966db2d6e508d6f5d7828e326a0e">EALogger</a>(bool async=true)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>init_console_sink</b>(bool enabled=true, ealogger_constants::LOG_LEVEL min_lvl=ealogger_constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%d %s: %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;) (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>init_file_sink</b>(bool enabled=true, ealogger_constants::LOG_LEVEL min_lvl=ealogger_constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%d %s [%f:%l] %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;, std::string logfile=&quot;ealogger_logfile.log&quot;) (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>init_syslog_sink</b>(bool enabled=true, ealogger_constants::LOG_LEVEL min_lvl=ealogger_constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%s: %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;) (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#ab89abeb8845a980a107956186dc765cb">queue_empty</a>()</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a4de4e52695ae55de1b71b4e118139e1d">set_datetime_pattern</a>(ealogger_constants::LOGGER_SINK sink, std::string datetime_pattern)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#a5140b09cecb035b039fca1ba4c33f4ab">set_enabled</a>(ealogger_constants::LOGGER_SINK sink, bool enabled)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a7a033bc0ce9c94dc107eeabe32c0a1ca">set_min_lvl</a>(ealogger_constants::LOGGER_SINK sink, ealogger_constants::LOG_LEVEL min_level)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_e_a_logger.html#af6d06b6cf4fd0f73a53ddfc44f28de70">set_msg_template</a>(ealogger_constants::LOGGER_SINK sink, std::string msg_template)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_e_a_logger.html#a60797fe43f81d9187c7680877fa77915">write_log</a>(std::string msg, ealogger_constants::LOG_LEVEL lvl, std::string file, int lnumber, std::string func)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>~EALogger</b>() (defined in <a class="el" href="class_e_a_logger.html">EALogger</a>)</td><td class="entry"><a class="el" href="class_e_a_logger.html">EALogger</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 28 2016 13:44:44 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 18 2016 16:25:03 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

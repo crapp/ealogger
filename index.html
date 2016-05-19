@@ -40,6 +40,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -80,17 +82,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">ealogger API Documentation </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="Introduction"></a>
-Introduction</h1>
-<p>The __e__asy __a__synchronous logger is a blazing fast and easy to use C++ logger library.</p>
-<h1><a class="anchor" id="Installation"></a>
-Installation</h1>
-<p>Installation and dependencies are covered in the <a class="el" href="README.html">README</a> file</p>
-<h1><a class="anchor" id="Usage"></a>
-Usage</h1>
-<p>See the API documentation of the <a class="el" href="class_e_a_logger.html" title="ealogger main header ">EALogger</a> class, it provides you with all necessary information.</p>
-<h1><a class="anchor" id="License"></a>
-License</h1>
+<div class="textblock"><h2>Introduction</h2>
+<p>The easy asynchronous logger is a blazing fast and easy to use C++ logger library.</p>
+<h2>Installation</h2>
+<p>Installation and dependencies are covered in the README file</p>
+<h2>Usage</h2>
+<p>As you have already discovered ealogger is extensively documented using <a href="http://www.stack.nl/~dimitri/doxygen/index.html">Doxygen</a>. The latest version of the API docs are hosted at <a href="https://crapp.github.io/ealogger">github.io</a>. If you need a local version you can use doxygen to create one. There is a doxygen config file in the doc subfolder of the project.</p>
+<p>The API documentation has two Modules that should be the first place for you if you want to learn about how to use ealogger.</p>
+<ul>
+<li>ealogger base module: The ealogger base module consists of the Logger class documentation and important namespaces and macros.</li>
+<li><a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html">sink module</a>: The Sink module combines all Sink derived classes. A Sink is used to write to a specific target like a file or a console. The module also describes the conversation patterns ealogger supports.</li>
+</ul>
+<h2>License</h2>
 <blockquote class="doxtable">
 <p>Copyright (C) 2013 - 2016 Christian Rapp</p>
 <p>Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at</p>
@@ -100,7 +103,7 @@ License</h1>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 28 2016 13:44:44 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu May 19 2016 23:08:31 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
