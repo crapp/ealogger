@@ -18,7 +18,7 @@ var searchData=
   ['sinkfile',['SinkFile',['../classealogger_1_1_sink_file.html',1,'ealogger']]],
   ['sinksyslog',['SinkSyslog',['../classealogger_1_1_sink_syslog.html#a87bcfb2efe9335fdf69ea795c817628b',1,'ealogger::SinkSyslog']]],
   ['sinksyslog',['SinkSyslog',['../classealogger_1_1_sink_syslog.html',1,'ealogger']]],
-  ['stack',['STACK',['../structealogger_1_1_log_message.html#a98d136b9f26b36223f43f4e0ce315e86a00983494d2b5289e511835f58153dc39',1,'ealogger::LogMessage::STACK()'],['../namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46ae6efff27f4c6a7d106cf9f2cddb80b15',1,'ealogger::constants::STACK()'],['../ealogger_8h.html#a732bb49ca7dfaf5c4a6a6a5575439e35',1,'stack():&#160;ealogger.h']]],
+  ['stack',['STACK',['../structealogger_1_1_log_message.html#a98d136b9f26b36223f43f4e0ce315e86a00983494d2b5289e511835f58153dc39',1,'ealogger::LogMessage::STACK()'],['../namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46ae6efff27f4c6a7d106cf9f2cddb80b15',1,'ealogger::constants::STACK()'],['../group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga732bb49ca7dfaf5c4a6a6a5575439e35',1,'stack():&#160;ealogger.h']]],
   ['stack_5ftrace',['stack_trace',['../utility_8h.html#aaa85a1a005a655da9f28eb84a3ca266c',1,'ealogger::utility']]],
   ['syslog',['SYSLOG',['../namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bddaae0b06410e4f7a91ce32433e5911799e',1,'ealogger::constants']]]
 ];

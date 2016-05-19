@@ -94,7 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classealogger_1_1_logger-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">ealogger::Logger Class Reference</div>  </div>
+<div class="title">ealogger::Logger Class Reference<div class="ingroups"><a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html">Base</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -146,8 +146,8 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ealogger_8h.html">ealogger/ealogger.h</a>&gt;</span></div><div class="line"><span class="keywordtype">int</span> main() {</div><div class="line">    <a class="code" href="classealogger_1_1_logger.html">ealogger::Logger</a> logger;</div><div class="line">    logger.<a class="code" href="classealogger_1_1_logger.html#ac61a9363bcfacea2e9d27370a087c4d2">init_console_sink</a>();</div><div class="line">    logger.debug(<span class="stringliteral">&quot;My application is just awesome&quot;</span>);</div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --><p>This will print <em>My application is awesome</em> to the console.</p>
 <p>ealogger uses sinks to write to different targets. Each <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> supports different message <a class="el" href="structealogger_1_1_conversion_pattern.html">conversion patterns</a> and a datetime pattern. Each sink can be enabled or disabled independently and the minimum severity can be set. You have to use Logger::init_console_* to init a sink. This methods define sane defaults for their options. But of course you can change them to whatever you want.</p>
 <p>The Methods set_msg_template, set_datetime_pattern, set_enabled and set_min_lvl allow you to change the configuration of a sink. If the sink supports more options you have to use the dedicated init method to reinitialize the sink.</p>
-<p>To make it easy to write messages with a specific severity there are some macro functions for each log level and one for stacktrace. <a class="el" href="ealogger_8h.html#a06818542b3c471ba114965d1526d106d" title="Write a debug message. ">debug(msg)</a> <a class="el" href="ealogger_8h.html#a774a5645cd581d6e9d3d96c4a01d5191" title="Write a info message. ">info(msg)</a> <a class="el" href="classealogger_1_1_logger.html#a5aca1debdfc047730d659a5bff1c8924" title="Issue a Logmessage. ">Logger::write_log</a> allows you to write log messages without using these macros.</p>
-<p>ealogger and its sinks are threadsafe. Meaning if you use the same instance all over your application it will make sure only one message at a time is written to an iostream and the internal message queue is synchronized. </p>
+<p>To make it easy to write messages with a specific severity there are some macro functions for each log level and one for stacktrace (<a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga06818542b3c471ba114965d1526d106d" title="Write a debug message. ">debug(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga774a5645cd581d6e9d3d96c4a01d5191" title="Write a info message. ">info(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#gacfc07d35bae358b83cf4fe4e0e7c232d" title="Write a warning message. ">warn(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga5924a4a2ac1a09a8c6679579dc22249e" title="Write an error message. ">error(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#gaeea4b81bd7822083f8b976d73ee68e21" title="Write a fatal message. ">fatal(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga732bb49ca7dfaf5c4a6a6a5575439e35" title="Write a message with a stacktrace. ">stack()</a>) <a class="el" href="classealogger_1_1_logger.html#a5aca1debdfc047730d659a5bff1c8924" title="Issue a Logmessage. ">Logger::write_log</a> allows you to write log messages without using these macros.</p>
+<p>ealogger and its sinks are threadsafe. Meaning if you use the same instance all over your application it will make sure only one message at a time is written to an iostream for example and the internal message queue is synchronized. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac2ac15cefede78d66243fcfcc448ca77"></a>
 <div class="memitem">
@@ -588,7 +588,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 19 2016 23:41:43 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri May 20 2016 00:13:54 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

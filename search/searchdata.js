@@ -9,9 +9,8 @@ var indexSectionsWithContent =
   6: "m",
   7: "lp",
   8: "cdefhilmstw",
-  9: "defisw",
-  10: "bs",
-  11: "e"
+  9: "bs",
+  10: "e"
 };
 
 var indexSectionNames =
@@ -25,9 +24,8 @@ var indexSectionNames =
   6: "typedefs",
   7: "enums",
   8: "enumvalues",
-  9: "defines",
-  10: "groups",
-  11: "pages"
+  9: "groups",
+  10: "pages"
 };
 
 var indexSectionLabels =
@@ -41,8 +39,7 @@ var indexSectionLabels =
   6: "Typedefs",
   7: "Enumerations",
   8: "Enumerator",
-  9: "Macros",
-  10: "Modules",
-  11: "Pages"
+  9: "Modules",
+  10: "Pages"
 };
 
