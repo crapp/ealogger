@@ -85,17 +85,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><p>|</p>
 <p><a href="https://travis-ci.org/crapp/ealogger"></a> <a href="#license"></a></p>
 <p>The <b>e**asy **a**synchronous logger provides a simple to use yet powerful logging functionality for C++ applications. You can use it to log to **console</b>, to a <b>file</b> or <b>system log (syslog)</b>. It was designed to be fast (uses Threads) and flexible. The library registers a signal handler for SIGUSR1 and is compatible with logrotate (only available on linux currently). It was tested on Linux, Windows and OS X.</p>
-<p><b>Table of Contents</b> <em>generated with <a href="http://doctoc.herokuapp.com/">DocToc</a></em></p>
 <ul>
 <li><a href="#ealogger">ealogger</a><ul>
-<li><a href="#compilation">Compilation</a></li>
-<li><a href="#usage">Usage</a><ul>
-<li><a href="#minimum-code-example">Minimum Code example</a></li>
-<li><a href="#colorized-logfiles-with-multitail">Colorized Logfiles with multitail</a></li>
-</ul>
-</li>
-<li><a href="#source-code-documentation">Source Code Documentation</a></li>
-<li><a href="#todo">ToDo</a></li>
+<li><a href="#setting-up-ealogger">Setting up ealogger</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#api-documentation">API Documentation</a></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#status">Status</a></li>
+<li><a href="#bugs-feature-requests-ideas">Bugs, feature requests, ideas</a></li>
 <li><a href="#faq">FAQ</a></li>
 <li><a href="#license">License</a></li>
 </ul>
@@ -117,7 +115,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>There are some cmake options you can customize for your requirements</p>
 <ul>
 <li>BUILD_EXAMPLES (default off) : Setting this to <b>ON</b> will compile all the example applications in the <code>examples</code> sub folder.</li>
-<li>BUILD_UNIT_TESTS (default off): Build the Catch based unit test apllication</li>
+<li>BUILD_UNIT_TEST (default off): Build the Catch based unit test application</li>
 <li>BUILD_SHARED_LIBS (default on): Whether or not to compile as shared library</li>
 </ul>
 <h4>Linux / OS X</h4>
@@ -150,7 +148,7 @@ cs_re:,green:^.+INFO:.+
 <p>The most important facts of the ealogger development process are explained here</p>
 <h3>Unit Tests</h3>
 <p>I am using the great <a href="https://github.com/philsquared/Catch">Catch</a> automated test framework. Currently only small parts of the code are covered by unit tests.</p>
-<p>The unit tester can be run with <code>ealogger_test</code>. This will execute all test cases and output the results. have a look at the Catch framework documentation for command line options you can use to run only specific test cases, or change the application output.</p>
+<p>The unit tester can be run with <code>ealogger_test</code>. This will execute all test cases and output the results. Have a look at the Catch framework documentation for command line options you can use to run only specific test cases, or change the application output.</p>
 <h3>Continuous Integration</h3>
 <p><a href="https://travis-ci.org/crapp/ealogger"></a></p>
 <p><a href="https://travis-ci.org/">Travis CI</a> is used as continuous integration service. The <a href="https://github.com/crapp/ealogger">ealogger github</a> repository is linked to Travis CI. You can see the build history for the master branch and all release branches on the <a href="https://travis-ci.org/crapp/ealogger">travis project page</a>.</p>
@@ -185,14 +183,14 @@ cs_re:,green:^.+INFO:.+
 <p>Please use the <a href="https://github.com/crapp/ealogger/issues">github bugtracker</a> to submit bugs or feature requests</p>
 <h2>FAQ</h2>
 <p><b>Yet another logger lib, why?</b></p>
-<p>I wanted to have a flexible and easy to use logger lib for my c++ projects. This project started 2013 and there wasn't any c++ library that suited my needs. I am doing lots of things with embedded hardware and other time / performance critical things so it was important for me to have a really fast logger and not one with a lot of features.</p>
+<p>I wanted to have a flexible and easy to use logger lib without any dependencies for my C++ projects. This project started in 2013 and there wasn't any C++ library that suited my needs. I am doing lots of things with embedded hardware and other time / performance critical things so it was important for me to have a really fast logger and not one with a lot of features.</p>
 <p><b>Why does it not have feature X?</b></p>
 <p>Feel free to fork the project and make a pull request!</p>
 <h2>License</h2>
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;Copyright (C) 2013 - 2016 Christian Rapp</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;you may not use this file except in compliance with the License.</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;You may obtain a copy of the License at</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  http://www.apache.org/licenses/LICENSE-2.0</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;Unless required by applicable law or agreed to in writing, software</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;See the License for the specific language governing permissions and</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;limitations under the License.</div></div><!-- fragment --> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 20 2016 10:00:28 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri May 20 2016 10:58:01 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
