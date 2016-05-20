@@ -10,17 +10,22 @@ It was designed to be fast (uses Threads) and flexible. The library registers a
 signal handler for SIGUSR1 and is compatible with logrotate (only available on
 linux currently). It was tested on Linux, Windows and OS X.
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 - [ealogger](#ealogger)
-	- [Compilation](#compilation)
-	- [Usage](#usage)
-		- [Minimum Code example](#minimum-code-example)
-		- [Colorized Logfiles with multitail](#colorized-logfiles-with-multitail)
-	- [Source Code Documentation](#source-code-documentation)
-	- [ToDo](#todo)
-	- [FAQ](#faq)
-	- [License](#license)
+  - [Setting up ealogger](#setting-up-ealogger)
+  - [Usage](#usage)
+  - [API Documentation](#api-documentation)
+  - [Performance](#performance)
+  - [Development](#development)
+  - [Status](#status)
+  - [Bugs, feature requests, ideas](#bugs-feature-requests-ideas)
+  - [FAQ](#faq)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Setting up ealogger
 
