@@ -25,14 +25,14 @@
  * @file conversion_pattern.h
  */
 
+namespace ealogger
+{
 /**
  * @addtogroup EALOGGER_GROUP
  *
  * @{
  */
 
-namespace ealogger
-{
 /**
  * @brief A conversion pattern for message templates
  *
@@ -106,6 +106,8 @@ private:
     const PATTERN_TYPE ptype;
 };
 
+/** @} */
+
 template <>
 /**
  * @brief Replace conversion pattern with new_value
@@ -115,8 +117,8 @@ template <>
  * @details
  *
  * This method is a specialization of ConversionPattern::replace_conversion_pattern(std::string, T)
- * Here the actual replacement of all instances of the conversion pattern take
- * place.
+ * Here the actual replacement of all occurences of the conversion pattern with a
+ * dedicated value takes place.
  */
 inline void ConversionPattern::replace_conversion_pattern(
     std::string &msg, std::string new_value) const
@@ -132,5 +134,4 @@ inline void ConversionPattern::replace_conversion_pattern(
     }
 }
 }
-/** @} */
 #endif /* ifndef CONVERSION_PATTERN_H */

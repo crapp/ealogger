@@ -18,17 +18,16 @@
 
 /** @file sink_console.h */
 
-/**
- * @addtogroup SINK_GROUP
- * @{
- */
-
 #include <iostream>
 
 #include <ealogger/sink.h>
 
 namespace ealogger
 {
+/**
+ * @addtogroup SINK_GROUP
+ * @{
+ */
 /**
  * @brief Sink to write to a console
  */
@@ -53,7 +52,7 @@ private:
     void write_message(const std::string &msg);
     void config_changed();
 };
-}
 /** @} */
+}
 
 #endif /* SINK_CONSOLE_H */

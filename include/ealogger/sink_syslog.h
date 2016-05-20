@@ -20,11 +20,6 @@
  * @file sink_syslog.h
  */
 
-/**
- * @addtogroup SINK_GROUP
- * @{
- */
-
 #ifdef EALOGGER_SYSLOG
 #include <syslog.h>
 #endif
@@ -33,6 +28,10 @@
 
 namespace ealogger
 {
+/**
+ * @addtogroup SINK_GROUP
+ * @{
+ */
 /**
  * @brief Sink writing to unix syslog
  */
@@ -66,9 +65,9 @@ private:
     void write_message(ATTR_UNUSED const std::string &msg);
     void config_changed();
 };
-}
 /**
  * @}
  */
+}
 
 #endif /* SINK_SYSLOG_H */

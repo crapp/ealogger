@@ -20,12 +20,6 @@
  *@file sink.h
  */
 
-/**
- * @defgroup SINK_GROUP Sinks
- * @brief Documentation for all sinks ealogger is able to use
- * @{
- */
-
 #include <algorithm>
 #include <map>
 #include <memory>
@@ -41,6 +35,12 @@
 
 namespace ealogger
 {
+/**
+ * @defgroup SINK_GROUP Sinks
+ * @brief Documentation for all sinks ealogger is able to use
+ * @{
+ */
+
 /**
  * @brief A sink is an object that writes the log message to a specific target
  * @author Christian Rapp
@@ -181,10 +181,9 @@ protected:
      */
     virtual void config_changed() = 0;
 };
-}
-
 /**
  * @}
  */
+}
 
 #endif /* SINK_H */

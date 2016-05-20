@@ -18,17 +18,17 @@
 
 /** @file sink_file.h */
 
-/**
- * @addtogroup SINK_GROUP
- * @{
- */
-
 #include <fstream>
 
 #include <ealogger/sink.h>
 
 namespace ealogger
 {
+/**
+ * @addtogroup SINK_GROUP
+ * @{
+ */
+
 /**
  * @brief Sink to write to a log file
  * @details
@@ -94,8 +94,7 @@ private:
      */
     void close_file();
 };
-}
-
 /** @} */
+}
 
 #endif /* SINK_FILE_H */

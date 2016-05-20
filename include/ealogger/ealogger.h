@@ -44,6 +44,11 @@
 #include "config.h"
 
 /**
+ *@brief Main namespace for ealogger
+ */
+namespace ealogger
+{
+/**
  * @defgroup EALOGGER_GROUP Base
  * @brief The base group of ealogger describes the core functionality of the
  * logger lib
@@ -53,13 +58,7 @@
  * @{
  */
 
-/**
- *@brief Main namespace for ealogger
- */
-namespace ealogger
-{
 // Define macros for all log levels and call public member write_log()
-
 /**
  * @def debug(msg)
  * @brief Write a debug message
@@ -135,14 +134,13 @@ namespace ealogger
  * options you have to use the dedicated init method to reinitialize the sink.
  *
  * To make it easy to write messages with a specific severity there are some macro
- * functions for each log level and one for stacktrace.
- * #debug(msg)
- * #info(msg)
+ * functions for each log level and one for stacktrace (#debug(msg) #info(msg)
+ * #warn(msg) #error(msg) #fatal(msg) #stack())
  * Logger::write_log allows you to write log messages without using these macros.
  *
  * ealogger and its sinks are threadsafe. Meaning if you use the same instance all
  * over your application it will make sure only one message at a time is written
- * to an iostream and the internal message queue is synchronized.
+ * to an iostream for example and the internal message queue is synchronized.
  */
 class Logger
 {
@@ -152,12 +150,11 @@ public:
      * @param async Boolean if activated ealogger uses a background thread to
      * write messages to a Sink
      *
+     * @details
      * Use the Parameter async to activate a background logger thread. This way
      * logging will no longer slow down your application which is important for high
      * performance or time critical events. The only overhead is creating a LogMessage
      * object and pushing it on a std::queue.
-     *
-     *
      */
     Logger(bool async = true);
     ~Logger();
@@ -365,7 +362,7 @@ private:
     bool get_logger_thread_stop();
     void set_logger_thread_stop(bool stop);
 };
-}
 /** @} */
+}
 
 #endif  // EALOGGER_H
