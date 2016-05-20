@@ -60,45 +60,45 @@ namespace ealogger
 
 // Define macros for all log levels and call public member write_log()
 /**
- * @def debug(msg)
+ * @def eal_debug(msg)
  * @brief Write a debug message
  */
-#define debug(msg)                                                            \
+#define eal_debug(msg)                                                        \
     write_log(msg, ealogger::constants::LOG_LEVEL::DEBUG, __FILE__, __LINE__, \
               __func__)
 /**
- * @def info(msg)
+ * @def eal_info(msg)
  * @brief Write a info message
  */
-#define info(msg)                                                            \
+#define eal_info(msg)                                                        \
     write_log(msg, ealogger::constants::LOG_LEVEL::INFO, __FILE__, __LINE__, \
               __func__)
 /**
- * @def warn(msg)
+ * @def eal_warn(msg)
  * @brief Write a warning message
  */
-#define warn(msg)                                                               \
+#define eal_warn(msg)                                                           \
     write_log(msg, ealogger::constants::LOG_LEVEL::WARNING, __FILE__, __LINE__, \
               __func__)
 /**
  * @def error(msg)
  * @brief Write an error message
  */
-#define error(msg)                                                            \
+#define eal_error(msg)                                                        \
     write_log(msg, ealogger::constants::LOG_LEVEL::ERROR, __FILE__, __LINE__, \
               __func__)
 /**
  * @def fatal(msg)
  * @brief Write a fatal message
  */
-#define fatal(msg)                                                            \
+#define eal_fatal(msg)                                                        \
     write_log(msg, ealogger::constants::LOG_LEVEL::FATAL, __FILE__, __LINE__, \
               __func__)
 /**
- * @def stack()
+ * @def eal_stack()
  * @brief Write a message with a stacktrace
  */
-#define stack()                                                              \
+#define eal_stack()                                                          \
     write_log("", ealogger::constants::LOG_LEVEL::STACK, __FILE__, __LINE__, \
               __func__)
 
@@ -185,6 +185,21 @@ public:
      */
     void write_log(std::string msg, ealogger::constants::LOG_LEVEL lvl,
                    std::string file, int lnumber, std::string func);
+
+    /**
+     * @brief Write a log message
+     *
+     * @param msg Message text
+     * @param lvl Severity of the message, Logger#log_level
+     *
+     * @details
+     * This is an overloaded method of write_log(sd::string, ealogger::constants::LOG_LEVEL, std::string, int, std::string)
+     * @note
+     * Using conversion patterns for source file, line number or function with
+     * this function will not give you the appropriate information as it is not
+     * available
+     */
+    void write_log(std::string msg, ealogger::constants::LOG_LEVEL lvl);
 
     /**
      * @brief Init a syslog Sink

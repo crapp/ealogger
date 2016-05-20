@@ -94,6 +94,11 @@ void eal::Logger::write_log(std::string msg, con::LOG_LEVEL lvl,
     }
 }
 
+void eal::Logger::write_log(std::string msg, con::LOG_LEVEL lvl)
+{
+    this->write_log(std::move(msg), lvl, "", 0, "");
+}
+
 void eal::Logger::init_syslog_sink(bool enabled, con::LOG_LEVEL min_lvl,
                                    std::string msg_template,
                                    std::string datetime_pattern)

@@ -33,7 +33,7 @@ int main(void)
     std::chrono::system_clock::time_point t = std::chrono::system_clock::now();
     // log 1000000 messages
     for (int i = 0; i < 1000000; i++) {
-        log->info("Hello Afrika - Tell me how you're doin'! ");
+        log->eal_info("Hello Afrika - Tell me how you're doin'! ");
     }
     // end time. this is to calculate how long it took ealogger to creat LogMessage
     // objects and push them on a queue
