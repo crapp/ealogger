@@ -72,6 +72,7 @@ script:
     cmake -DCMAKE_CXX_COMPILER=$COMPILER -DBUILD_EXAMPLES=ON ../
     make -j2
     examples/ealogger_basic
+    src/test/ealogger_test -s
     # valgrind --leak-check=full --error-exitcode=1 test/ealogger_test
 
 # blacklist
