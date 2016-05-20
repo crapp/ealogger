@@ -47,7 +47,7 @@ There are some cmake options you can customize for your requirements
 
 * BUILD_EXAMPLES (default off)  : Setting this to **ON** will compile all the example
   applications in the `examples` sub folder.
-* BUILD_UNIT_TESTS (default off): Build the Catch based unit test apllication
+* BUILD_UNIT_TEST (default off): Build the Catch based unit test application
 * BUILD_SHARED_LIBS (default on): Whether or not to compile as shared library
 
 #### Linux / OS X
@@ -168,7 +168,7 @@ I am using the great [Catch](https://github.com/philsquared/Catch) automated tes
 framework. Currently only small parts of the code are covered by unit tests.
 
 The unit tester can be run with `ealogger_test`. This will execute all test cases
-and output the results. have a look at the Catch framework documentation for
+and output the results. Have a look at the Catch framework documentation for
 command line options you can use to run only specific test cases, or change the
 application output.
 
@@ -251,11 +251,11 @@ to submit bugs or feature requests
 
 **Yet another logger lib, why?**
 
-I wanted to have a flexible and easy to use logger lib for my c++ projects. This
-project started 2013 and there wasn't any c++ library that suited my needs. I am
-doing lots of things with embedded hardware and other time / performance critical
-things so it was important for me to have a really fast logger and not one with a
-lot of features.
+I wanted to have a flexible and easy to use logger lib without any dependencies
+for my C++ projects. This project started in 2013 and there wasn't any C++ library
+that suited my needs. I am doing lots of things with embedded hardware and other
+time / performance critical things so it was important for me to have a really
+fast logger and not one with a lot of features.
 
 **Why does it not have feature X?**
 

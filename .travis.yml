@@ -69,7 +69,7 @@ script:
     cd ${TRAVIS_BUILD_DIR}
     mkdir build
     cd build
-    cmake -DCMAKE_CXX_COMPILER=$COMPILER -DBUILD_EXAMPLES=ON ../
+    cmake -DCMAKE_CXX_COMPILER=$COMPILER -DBUILD_EXAMPLES=ON -DBUILD_UNIT_TEST=ON ../
     make -j2
     examples/ealogger_basic
     src/test/ealogger_test -s
