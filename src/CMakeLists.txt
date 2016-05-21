@@ -10,6 +10,7 @@ set(EALOGGER_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/sink_syslog.cpp
 )
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 if(UNIX)
@@ -38,7 +39,7 @@ configure_file (
 #define library with headers and source files
 add_library(ealogger ${EALOGGER_SOURCE} ${EALOGGER_HEADER})
 #link with this libraries
-target_link_libraries(ealogger ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(ealogger Threads::Threads)
 
 #generate_export_header(ealogger)
 
