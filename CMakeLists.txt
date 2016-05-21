@@ -4,7 +4,7 @@ project(ealogger)
 # Version Number
 set(ealogger_VERSION_MAJOR 0)
 set(ealogger_VERSION_MINOR 7)
-set(ealogger_VERSION_PATCH 1)
+set(ealogger_VERSION_PATCH 2)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 option(BUILD_EXAMPLES "Build example and benchmark applications for ealogger" OFF)
