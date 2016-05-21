@@ -81,14 +81,14 @@ namespace ealogger
     write_log(msg, ealogger::constants::LOG_LEVEL::WARNING, __FILE__, __LINE__, \
               __func__)
 /**
- * @def error(msg)
+ * @def eal_error(msg)
  * @brief Write an error message
  */
 #define eal_error(msg)                                                        \
     write_log(msg, ealogger::constants::LOG_LEVEL::ERROR, __FILE__, __LINE__, \
               __func__)
 /**
- * @def fatal(msg)
+ * @def eal_fatal(msg)
  * @brief Write a fatal message
  */
 #define eal_fatal(msg)                                                        \
@@ -134,8 +134,8 @@ namespace ealogger
  * options you have to use the dedicated init method to reinitialize the sink.
  *
  * To make it easy to write messages with a specific severity there are some macro
- * functions for each log level and one for stacktrace (#debug(msg) #info(msg)
- * #warn(msg) #error(msg) #fatal(msg) #stack())
+ * functions for each log level and one for stacktrace (#eal_debug(msg) #eal_info(msg)
+ * #eal_warn(msg) #eal_error(msg) #eal_fatal(msg) #eal_stack())
  * Logger::write_log allows you to write log messages without using these macros.
  *
  * ealogger and its sinks are threadsafe. Meaning if you use the same instance all
