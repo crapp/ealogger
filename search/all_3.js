@@ -2,6 +2,8 @@ var searchData=
 [
   ['constants',['constants',['../namespaceealogger_1_1constants.html',1,'ealogger']]],
   ['eal_5fdebug',['eal_debug',['../group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#gae335d2bb8dc163e8a976a4dbdb2a80ea',1,'ealogger.h']]],
+  ['eal_5ferror',['eal_error',['../group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#gafecc01c310386d87be0aefd0216ef3fb',1,'ealogger.h']]],
+  ['eal_5ffatal',['eal_fatal',['../group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga6b227bdd878dc2632400c07276e5dede',1,'ealogger.h']]],
   ['eal_5finfo',['eal_info',['../group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga12c6876fe5ef2d0ff3115a63d632b595',1,'ealogger.h']]],
   ['eal_5fstack',['eal_stack',['../group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga95b2530dc73f894a6d15b9ed00e98bfc',1,'ealogger.h']]],
   ['eal_5fwarn',['eal_warn',['../group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga720614bddf44a78d026f46506b07ad65',1,'ealogger.h']]],
