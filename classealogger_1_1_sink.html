@@ -103,16 +103,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>A sink is an object that writes the log message to a specific target.  
  <a href="classealogger_1_1_sink.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="sink_8h_source.html">sink.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="include_2ealogger_2sink_8h_source.html">sink.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ealogger::Sink:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classealogger_1_1_sink.png" usemap="#ealogger::Sink_map" alt=""/>
   <map id="ealogger::Sink_map" name="ealogger::Sink_map">
-<area href="classealogger_1_1_sink_console.html" title="Sink to write to a console. " alt="ealogger::SinkConsole" shape="rect" coords="0,56,138,80"/>
-<area href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. " alt="ealogger::SinkFile" shape="rect" coords="148,56,286,80"/>
-<area href="classealogger_1_1_sink_syslog.html" title="Sink writing to unix syslog. " alt="ealogger::SinkSyslog" shape="rect" coords="296,56,434,80"/>
+<area href="classealogger_1_1_sink_console.html" title="Sink to write to a console. " alt="ealogger::SinkConsole" shape="rect" coords="148,56,286,80"/>
+<area href="classealogger_1_1_sink_console.html" title="Sink to write to a console. " alt="ealogger::SinkConsole" shape="rect" coords="148,112,286,136"/>
+<area href="classealogger_1_1_sink_console.html" title="Sink to write to a console. " alt="ealogger::SinkConsole" shape="rect" coords="148,168,286,192"/>
+<area href="classealogger_1_1_sink_console.html" title="Sink to write to a console. " alt="ealogger::SinkConsole" shape="rect" coords="148,224,286,248"/>
+<area href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. " alt="ealogger::SinkFile" shape="rect" coords="148,280,286,304"/>
+<area href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. " alt="ealogger::SinkFile" shape="rect" coords="148,336,286,360"/>
+<area href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. " alt="ealogger::SinkFile" shape="rect" coords="148,392,286,416"/>
+<area href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. " alt="ealogger::SinkFile" shape="rect" coords="148,448,286,472"/>
+<area href="classealogger_1_1_sink_syslog.html" title="Sink writing to unix syslog. " alt="ealogger::SinkSyslog" shape="rect" coords="148,504,286,528"/>
+<area href="classealogger_1_1_sink_syslog.html" title="Sink writing to unix syslog. " alt="ealogger::SinkSyslog" shape="rect" coords="148,560,286,584"/>
+<area href="classealogger_1_1_sink_syslog.html" title="Sink writing to unix syslog. " alt="ealogger::SinkSyslog" shape="rect" coords="148,616,286,640"/>
+<area href="classealogger_1_1_sink_syslog.html" title="Sink writing to unix syslog. " alt="ealogger::SinkSyslog" shape="rect" coords="148,672,286,696"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -139,12 +148,105 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a07d811efd1b86c7f8db858a8f51249b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a07d811efd1b86c7f8db858a8f51249b9">prepare_log_message</a> (const std::shared_ptr&lt; <a class="el" href="structealogger_1_1_log_message.html">LogMessage</a> &gt; &amp;log_message)</td></tr>
 <tr class="memdesc:a07d811efd1b86c7f8db858a8f51249b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare a log message before it is written to the targets.  <a href="#a07d811efd1b86c7f8db858a8f51249b9">More...</a><br /></td></tr>
 <tr class="separator:a07d811efd1b86c7f8db858a8f51249b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dfe07102b4e2a202106462886ce12eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a3dfe07102b4e2a202106462886ce12eb">Sink</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>, std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>, bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl)</td></tr>
+<tr class="memdesc:a3dfe07102b4e2a202106462886ce12eb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> constructor.  <a href="#a3dfe07102b4e2a202106462886ce12eb">More...</a><br /></td></tr>
+<tr class="separator:a3dfe07102b4e2a202106462886ce12eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654cbdc5d25baa4535f21d02b4d1de09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a654cbdc5d25baa4535f21d02b4d1de09">set_msg_template</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>)</td></tr>
+<tr class="memdesc:a654cbdc5d25baa4535f21d02b4d1de09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the message template with conversion patterns.  <a href="#a654cbdc5d25baa4535f21d02b4d1de09">More...</a><br /></td></tr>
+<tr class="separator:a654cbdc5d25baa4535f21d02b4d1de09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd4958890f808010c46b7ac9c29997f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aacd4958890f808010c46b7ac9c29997f">set_datetime_pattern</a> (std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>)</td></tr>
+<tr class="memdesc:aacd4958890f808010c46b7ac9c29997f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the date time conversion pattern.  <a href="#aacd4958890f808010c46b7ac9c29997f">More...</a><br /></td></tr>
+<tr class="separator:aacd4958890f808010c46b7ac9c29997f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#ac7e1db6fdab47ab5cbd5f87d2d6ba12a">set_enabled</a> (bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>)</td></tr>
+<tr class="memdesc:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the sink.  <a href="#ac7e1db6fdab47ab5cbd5f87d2d6ba12a">More...</a><br /></td></tr>
+<tr class="separator:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42bd7f8c7654fb29e80024760c5c16f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a42bd7f8c7654fb29e80024760c5c16f8">get_enabled</a> ()</td></tr>
+<tr class="memdesc:a42bd7f8c7654fb29e80024760c5c16f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if this sink is enabled.  <a href="#a42bd7f8c7654fb29e80024760c5c16f8">More...</a><br /></td></tr>
+<tr class="separator:a42bd7f8c7654fb29e80024760c5c16f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a377631fef16a30742fcf6eb34983206d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a377631fef16a30742fcf6eb34983206d">set_min_lvl</a> (<a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl)</td></tr>
+<tr class="memdesc:a377631fef16a30742fcf6eb34983206d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set minimum severity for this sink.  <a href="#a377631fef16a30742fcf6eb34983206d">More...</a><br /></td></tr>
+<tr class="separator:a377631fef16a30742fcf6eb34983206d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d811efd1b86c7f8db858a8f51249b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a07d811efd1b86c7f8db858a8f51249b9">prepare_log_message</a> (const std::shared_ptr&lt; <a class="el" href="structealogger_1_1_log_message.html">LogMessage</a> &gt; &amp;log_message)</td></tr>
+<tr class="memdesc:a07d811efd1b86c7f8db858a8f51249b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare a log message before it is written to the targets.  <a href="#a07d811efd1b86c7f8db858a8f51249b9">More...</a><br /></td></tr>
+<tr class="separator:a07d811efd1b86c7f8db858a8f51249b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dfe07102b4e2a202106462886ce12eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a3dfe07102b4e2a202106462886ce12eb">Sink</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>, std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>, bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl)</td></tr>
+<tr class="memdesc:a3dfe07102b4e2a202106462886ce12eb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> constructor.  <a href="#a3dfe07102b4e2a202106462886ce12eb">More...</a><br /></td></tr>
+<tr class="separator:a3dfe07102b4e2a202106462886ce12eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654cbdc5d25baa4535f21d02b4d1de09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a654cbdc5d25baa4535f21d02b4d1de09">set_msg_template</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>)</td></tr>
+<tr class="memdesc:a654cbdc5d25baa4535f21d02b4d1de09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the message template with conversion patterns.  <a href="#a654cbdc5d25baa4535f21d02b4d1de09">More...</a><br /></td></tr>
+<tr class="separator:a654cbdc5d25baa4535f21d02b4d1de09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd4958890f808010c46b7ac9c29997f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aacd4958890f808010c46b7ac9c29997f">set_datetime_pattern</a> (std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>)</td></tr>
+<tr class="memdesc:aacd4958890f808010c46b7ac9c29997f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the date time conversion pattern.  <a href="#aacd4958890f808010c46b7ac9c29997f">More...</a><br /></td></tr>
+<tr class="separator:aacd4958890f808010c46b7ac9c29997f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#ac7e1db6fdab47ab5cbd5f87d2d6ba12a">set_enabled</a> (bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>)</td></tr>
+<tr class="memdesc:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the sink.  <a href="#ac7e1db6fdab47ab5cbd5f87d2d6ba12a">More...</a><br /></td></tr>
+<tr class="separator:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42bd7f8c7654fb29e80024760c5c16f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a42bd7f8c7654fb29e80024760c5c16f8">get_enabled</a> ()</td></tr>
+<tr class="memdesc:a42bd7f8c7654fb29e80024760c5c16f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if this sink is enabled.  <a href="#a42bd7f8c7654fb29e80024760c5c16f8">More...</a><br /></td></tr>
+<tr class="separator:a42bd7f8c7654fb29e80024760c5c16f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a377631fef16a30742fcf6eb34983206d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a377631fef16a30742fcf6eb34983206d">set_min_lvl</a> (<a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl)</td></tr>
+<tr class="memdesc:a377631fef16a30742fcf6eb34983206d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set minimum severity for this sink.  <a href="#a377631fef16a30742fcf6eb34983206d">More...</a><br /></td></tr>
+<tr class="separator:a377631fef16a30742fcf6eb34983206d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d811efd1b86c7f8db858a8f51249b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a07d811efd1b86c7f8db858a8f51249b9">prepare_log_message</a> (const std::shared_ptr&lt; <a class="el" href="structealogger_1_1_log_message.html">LogMessage</a> &gt; &amp;log_message)</td></tr>
+<tr class="memdesc:a07d811efd1b86c7f8db858a8f51249b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare a log message before it is written to the targets.  <a href="#a07d811efd1b86c7f8db858a8f51249b9">More...</a><br /></td></tr>
+<tr class="separator:a07d811efd1b86c7f8db858a8f51249b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3dfe07102b4e2a202106462886ce12eb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a3dfe07102b4e2a202106462886ce12eb">Sink</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>, std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>, bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl)</td></tr>
+<tr class="memdesc:a3dfe07102b4e2a202106462886ce12eb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> constructor.  <a href="#a3dfe07102b4e2a202106462886ce12eb">More...</a><br /></td></tr>
+<tr class="separator:a3dfe07102b4e2a202106462886ce12eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a654cbdc5d25baa4535f21d02b4d1de09"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a654cbdc5d25baa4535f21d02b4d1de09">set_msg_template</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>)</td></tr>
+<tr class="memdesc:a654cbdc5d25baa4535f21d02b4d1de09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the message template with conversion patterns.  <a href="#a654cbdc5d25baa4535f21d02b4d1de09">More...</a><br /></td></tr>
+<tr class="separator:a654cbdc5d25baa4535f21d02b4d1de09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd4958890f808010c46b7ac9c29997f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aacd4958890f808010c46b7ac9c29997f">set_datetime_pattern</a> (std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>)</td></tr>
+<tr class="memdesc:aacd4958890f808010c46b7ac9c29997f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the date time conversion pattern.  <a href="#aacd4958890f808010c46b7ac9c29997f">More...</a><br /></td></tr>
+<tr class="separator:aacd4958890f808010c46b7ac9c29997f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#ac7e1db6fdab47ab5cbd5f87d2d6ba12a">set_enabled</a> (bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>)</td></tr>
+<tr class="memdesc:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable or disable the sink.  <a href="#ac7e1db6fdab47ab5cbd5f87d2d6ba12a">More...</a><br /></td></tr>
+<tr class="separator:ac7e1db6fdab47ab5cbd5f87d2d6ba12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42bd7f8c7654fb29e80024760c5c16f8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a42bd7f8c7654fb29e80024760c5c16f8">get_enabled</a> ()</td></tr>
+<tr class="memdesc:a42bd7f8c7654fb29e80024760c5c16f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if this sink is enabled.  <a href="#a42bd7f8c7654fb29e80024760c5c16f8">More...</a><br /></td></tr>
+<tr class="separator:a42bd7f8c7654fb29e80024760c5c16f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a377631fef16a30742fcf6eb34983206d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a377631fef16a30742fcf6eb34983206d">set_min_lvl</a> (<a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl)</td></tr>
+<tr class="memdesc:a377631fef16a30742fcf6eb34983206d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set minimum severity for this sink.  <a href="#a377631fef16a30742fcf6eb34983206d">More...</a><br /></td></tr>
+<tr class="separator:a377631fef16a30742fcf6eb34983206d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d811efd1b86c7f8db858a8f51249b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a07d811efd1b86c7f8db858a8f51249b9">prepare_log_message</a> (const std::shared_ptr&lt; <a class="el" href="structealogger_1_1_log_message.html">LogMessage</a> &gt; &amp;log_message)</td></tr>
+<tr class="memdesc:a07d811efd1b86c7f8db858a8f51249b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare a log message before it is written to the targets.  <a href="#a07d811efd1b86c7f8db858a8f51249b9">More...</a><br /></td></tr>
+<tr class="separator:a07d811efd1b86c7f8db858a8f51249b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:aaf41be7549d48380e0c9b53439d9a31b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf41be7549d48380e0c9b53439d9a31b"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aaf41be7549d48380e0c9b53439d9a31b">fill_conv_patterns</a> (bool lock)</td></tr>
-<tr class="memdesc:aaf41be7549d48380e0c9b53439d9a31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill <a class="el" href="classealogger_1_1_sink.html#afa6ff9433cfe67dc754d017bf751d029">Sink::vec_conv_patterns</a> with ConverionPattern depending on <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a>. <br /></td></tr>
+<tr class="memdesc:aaf41be7549d48380e0c9b53439d9a31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill <a class="el" href="classealogger_1_1_sink.html#a58d264b0a700cfad6cde3b85f16e606a">Sink::vec_conv_patterns</a> with ConverionPattern depending on <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a>. <br /></td></tr>
+<tr class="separator:aaf41be7549d48380e0c9b53439d9a31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad501676b9878b8f84aaec441be53f94e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#ad501676b9878b8f84aaec441be53f94e">write_message</a> (const std::string &amp;msg)=0</td></tr>
+<tr class="memdesc:ad501676b9878b8f84aaec441be53f94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a <a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object to the logger sink.  <a href="#ad501676b9878b8f84aaec441be53f94e">More...</a><br /></td></tr>
+<tr class="separator:ad501676b9878b8f84aaec441be53f94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9667eb4321c06e7a097dd903eb046505"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a9667eb4321c06e7a097dd903eb046505">config_changed</a> ()=0</td></tr>
+<tr class="memdesc:a9667eb4321c06e7a097dd903eb046505"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method will be called when the SinkConfig option changes.  <a href="#a9667eb4321c06e7a097dd903eb046505">More...</a><br /></td></tr>
+<tr class="separator:a9667eb4321c06e7a097dd903eb046505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf41be7549d48380e0c9b53439d9a31b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf41be7549d48380e0c9b53439d9a31b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aaf41be7549d48380e0c9b53439d9a31b">fill_conv_patterns</a> (bool lock)</td></tr>
+<tr class="memdesc:aaf41be7549d48380e0c9b53439d9a31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill <a class="el" href="classealogger_1_1_sink.html#a58d264b0a700cfad6cde3b85f16e606a">Sink::vec_conv_patterns</a> with ConverionPattern depending on <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a>. <br /></td></tr>
+<tr class="separator:aaf41be7549d48380e0c9b53439d9a31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad501676b9878b8f84aaec441be53f94e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#ad501676b9878b8f84aaec441be53f94e">write_message</a> (const std::string &amp;msg)=0</td></tr>
+<tr class="memdesc:ad501676b9878b8f84aaec441be53f94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a <a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object to the logger sink.  <a href="#ad501676b9878b8f84aaec441be53f94e">More...</a><br /></td></tr>
+<tr class="separator:ad501676b9878b8f84aaec441be53f94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9667eb4321c06e7a097dd903eb046505"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a9667eb4321c06e7a097dd903eb046505">config_changed</a> ()=0</td></tr>
+<tr class="memdesc:a9667eb4321c06e7a097dd903eb046505"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method will be called when the SinkConfig option changes.  <a href="#a9667eb4321c06e7a097dd903eb046505">More...</a><br /></td></tr>
+<tr class="separator:a9667eb4321c06e7a097dd903eb046505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf41be7549d48380e0c9b53439d9a31b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf41be7549d48380e0c9b53439d9a31b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aaf41be7549d48380e0c9b53439d9a31b">fill_conv_patterns</a> (bool lock)</td></tr>
+<tr class="memdesc:aaf41be7549d48380e0c9b53439d9a31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill <a class="el" href="classealogger_1_1_sink.html#a58d264b0a700cfad6cde3b85f16e606a">Sink::vec_conv_patterns</a> with ConverionPattern depending on <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a>. <br /></td></tr>
+<tr class="separator:aaf41be7549d48380e0c9b53439d9a31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad501676b9878b8f84aaec441be53f94e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#ad501676b9878b8f84aaec441be53f94e">write_message</a> (const std::string &amp;msg)=0</td></tr>
+<tr class="memdesc:ad501676b9878b8f84aaec441be53f94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a <a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object to the logger sink.  <a href="#ad501676b9878b8f84aaec441be53f94e">More...</a><br /></td></tr>
+<tr class="separator:ad501676b9878b8f84aaec441be53f94e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9667eb4321c06e7a097dd903eb046505"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a9667eb4321c06e7a097dd903eb046505">config_changed</a> ()=0</td></tr>
+<tr class="memdesc:a9667eb4321c06e7a097dd903eb046505"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method will be called when the SinkConfig option changes.  <a href="#a9667eb4321c06e7a097dd903eb046505">More...</a><br /></td></tr>
+<tr class="separator:a9667eb4321c06e7a097dd903eb046505"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf41be7549d48380e0c9b53439d9a31b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf41be7549d48380e0c9b53439d9a31b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aaf41be7549d48380e0c9b53439d9a31b">fill_conv_patterns</a> (bool lock)</td></tr>
+<tr class="memdesc:aaf41be7549d48380e0c9b53439d9a31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fill <a class="el" href="classealogger_1_1_sink.html#a58d264b0a700cfad6cde3b85f16e606a">Sink::vec_conv_patterns</a> with ConverionPattern depending on <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a>. <br /></td></tr>
 <tr class="separator:aaf41be7549d48380e0c9b53439d9a31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad501676b9878b8f84aaec441be53f94e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#ad501676b9878b8f84aaec441be53f94e">write_message</a> (const std::string &amp;msg)=0</td></tr>
 <tr class="memdesc:ad501676b9878b8f84aaec441be53f94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a <a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object to the logger sink.  <a href="#ad501676b9878b8f84aaec441be53f94e">More...</a><br /></td></tr>
@@ -173,16 +275,175 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a17c0dab4d62bd67f004f53ea148353cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a245503c15d6174b0ec28b42b1b6d5d0d"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a245503c15d6174b0ec28b42b1b6d5d0d">mtx_conv_pattern</a></td></tr>
 <tr class="separator:a245503c15d6174b0ec28b42b1b6d5d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa6ff9433cfe67dc754d017bf751d029"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structealogger_1_1_conversion_pattern.html">ConversionPattern</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#afa6ff9433cfe67dc754d017bf751d029">vec_conv_patterns</a></td></tr>
-<tr class="separator:afa6ff9433cfe67dc754d017bf751d029"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab279073b5c172ce06bdbd703da691b8"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#aab279073b5c172ce06bdbd703da691b8">loglevel_lookup</a></td></tr>
-<tr class="separator:aab279073b5c172ce06bdbd703da691b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58d264b0a700cfad6cde3b85f16e606a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structealogger_1_1_conversion_pattern.html">ConversionPattern</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a58d264b0a700cfad6cde3b85f16e606a">vec_conv_patterns</a></td></tr>
+<tr class="separator:a58d264b0a700cfad6cde3b85f16e606a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c52e5f5c68dc9ab10e53f2d2d8df224"><td class="memItemLeft" align="right" valign="top">std::map&lt; <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink.html#a2c52e5f5c68dc9ab10e53f2d2d8df224">loglevel_lookup</a></td></tr>
+<tr class="separator:a2c52e5f5c68dc9ab10e53f2d2d8df224"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A sink is an object that writes the log message to a specific target. </p>
 <dl class="section author"><dt>Author</dt><dd>Christian Rapp</dd></dl>
 <p>The virtual class <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> has to be implemented by each possible target. To add a new <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> to ealogger you have to provide an implementation for <a class="el" href="classealogger_1_1_sink.html#ad501676b9878b8f84aaec441be53f94e" title="Writes a LogMessage object to the logger sink. ">Sink::write_message</a> </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a3dfe07102b4e2a202106462886ce12eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ealogger::Sink::Sink </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>msg_template</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>datetime_pattern</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
+          <td class="paramname"><em>min_lvl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_template</td><td>Message template for this sink </td></tr>
+    <tr><td class="paramname">datetime_pattern</td><td>datetime conversion pattern </td></tr>
+    <tr><td class="paramname">enabled</td><td>Whether or not this sink is enabled </td></tr>
+    <tr><td class="paramname">min_lvl</td><td>The minimum log severity</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>A Log message can use conversion patterns in the message template <code>msg_template</code>. Every <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> uses its own message template.</p>
+<p>Internally std::strftime is used from header ctime to create formatted time strings. So for parameter <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">Sink::datetime_pattern</a> you have to use conversion patterns that are recognised by <a href="http://en.cppreference.com/w/cpp/chrono/c/strftime">strftime</a> For example "%H:%M:%S" returns a 24-hour based time string like 20:12:02</p>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> objects are not exposed to the user directly. You have to use the <a class="el" href="classealogger_1_1_logger.html" title="ealogger main class ">Logger</a> class to change a sinks settings. Some options for a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> are only exposed via Logger::init_sink_* methods.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3dfe07102b4e2a202106462886ce12eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ealogger::Sink::Sink </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>msg_template</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>datetime_pattern</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
+          <td class="paramname"><em>min_lvl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_template</td><td>Message template for this sink </td></tr>
+    <tr><td class="paramname">datetime_pattern</td><td>datetime conversion pattern </td></tr>
+    <tr><td class="paramname">enabled</td><td>Whether or not this sink is enabled </td></tr>
+    <tr><td class="paramname">min_lvl</td><td>The minimum log severity</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>A Log message can use conversion patterns in the message template <code>msg_template</code>. Every <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> uses its own message template.</p>
+<p>Internally std::strftime is used from header ctime to create formatted time strings. So for parameter <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">Sink::datetime_pattern</a> you have to use conversion patterns that are recognised by <a href="http://en.cppreference.com/w/cpp/chrono/c/strftime">strftime</a> For example "%H:%M:%S" returns a 24-hour based time string like 20:12:02</p>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> objects are not exposed to the user directly. You have to use the <a class="el" href="classealogger_1_1_logger.html" title="ealogger main class ">Logger</a> class to change a sinks settings. Some options for a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> are only exposed via Logger::init_sink_* methods.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3dfe07102b4e2a202106462886ce12eb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ealogger::Sink::Sink </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>msg_template</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>datetime_pattern</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
+          <td class="paramname"><em>min_lvl</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_template</td><td>Message template for this sink </td></tr>
+    <tr><td class="paramname">datetime_pattern</td><td>datetime conversion pattern </td></tr>
+    <tr><td class="paramname">enabled</td><td>Whether or not this sink is enabled </td></tr>
+    <tr><td class="paramname">min_lvl</td><td>The minimum log severity</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>A Log message can use conversion patterns in the message template <code>msg_template</code>. Every <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> uses its own message template.</p>
+<p>Internally std::strftime is used from header ctime to create formatted time strings. So for parameter <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">Sink::datetime_pattern</a> you have to use conversion patterns that are recognised by <a href="http://en.cppreference.com/w/cpp/chrono/c/strftime">strftime</a> For example "%H:%M:%S" returns a 24-hour based time string like 20:12:02</p>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> objects are not exposed to the user directly. You have to use the <a class="el" href="classealogger_1_1_logger.html" title="ealogger main class ">Logger</a> class to change a sinks settings. Some options for a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> are only exposed via Logger::init_sink_* methods.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> </dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="a3dfe07102b4e2a202106462886ce12eb"></a>
 <div class="memitem">
 <div class="memproto">
@@ -263,6 +524,84 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a9667eb4321c06e7a097dd903eb046505"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ealogger::Sink::config_changed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This method will be called when the SinkConfig option changes. </p>
+<p>Derived <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> classes have to implement this and take necessary steps regarding a changed configuration file </p>
+
+</div>
+</div>
+<a class="anchor" id="a9667eb4321c06e7a097dd903eb046505"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ealogger::Sink::config_changed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This method will be called when the SinkConfig option changes. </p>
+<p>Derived <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> classes have to implement this and take necessary steps regarding a changed configuration file </p>
+
+</div>
+</div>
+<a class="anchor" id="a9667eb4321c06e7a097dd903eb046505"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ealogger::Sink::config_changed </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This method will be called when the SinkConfig option changes. </p>
+<p>Derived <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> classes have to implement this and take necessary steps regarding a changed configuration file </p>
+
+</div>
+</div>
 <a class="anchor" id="a42bd7f8c7654fb29e80024760c5c16f8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -278,6 +617,135 @@ Protected Attributes</h2></td></tr>
 
 <p>Check if this sink is enabled. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a42bd7f8c7654fb29e80024760c5c16f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ealogger::Sink::get_enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if this sink is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a42bd7f8c7654fb29e80024760c5c16f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ealogger::Sink::get_enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if this sink is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a42bd7f8c7654fb29e80024760c5c16f8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ealogger::Sink::get_enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if this sink is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a07d811efd1b86c7f8db858a8f51249b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::prepare_log_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="structealogger_1_1_log_message.html">LogMessage</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>log_message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prepare a log message before it is written to the targets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">log_message</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Preparing means conversion patterns will be substituted with the corresponding information </p>
+
+</div>
+</div>
+<a class="anchor" id="a07d811efd1b86c7f8db858a8f51249b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::prepare_log_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="structealogger_1_1_log_message.html">LogMessage</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>log_message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prepare a log message before it is written to the targets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">log_message</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Preparing means conversion patterns will be substituted with the corresponding information </p>
+
+</div>
+</div>
+<a class="anchor" id="a07d811efd1b86c7f8db858a8f51249b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::prepare_log_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="structealogger_1_1_log_message.html">LogMessage</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>log_message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prepare a log message before it is written to the targets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">log_message</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Preparing means conversion patterns will be substituted with the corresponding information </p>
 
 </div>
 </div>
@@ -331,6 +799,81 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="aacd4958890f808010c46b7ac9c29997f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_datetime_pattern </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>datetime_pattern</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the date time conversion pattern. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">datetime_pattern</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>You can use all conversion patterns that are used by <a href="http://en.cppreference.com/w/cpp/chrono/c/strftime">strftime</a> The position of the date time information can be specified with ealogger <a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="aacd4958890f808010c46b7ac9c29997f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_datetime_pattern </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>datetime_pattern</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the date time conversion pattern. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">datetime_pattern</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>You can use all conversion patterns that are used by <a href="http://en.cppreference.com/w/cpp/chrono/c/strftime">strftime</a> The position of the date time information can be specified with ealogger <a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="aacd4958890f808010c46b7ac9c29997f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_datetime_pattern </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>datetime_pattern</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the date time conversion pattern. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">datetime_pattern</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>You can use all conversion patterns that are used by <a href="http://en.cppreference.com/w/cpp/chrono/c/strftime">strftime</a> The position of the date time information can be specified with ealogger <a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a>. </p>
+
+</div>
+</div>
 <a class="anchor" id="ac7e1db6fdab47ab5cbd5f87d2d6ba12a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -349,6 +892,150 @@ Protected Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">enabled</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac7e1db6fdab47ab5cbd5f87d2d6ba12a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_enabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable the sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enabled</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac7e1db6fdab47ab5cbd5f87d2d6ba12a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_enabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable the sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enabled</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac7e1db6fdab47ab5cbd5f87d2d6ba12a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_enabled </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable or disable the sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">enabled</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a377631fef16a30742fcf6eb34983206d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_min_lvl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
+          <td class="paramname"><em>min_lvl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set minimum severity for this sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_lvl</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a377631fef16a30742fcf6eb34983206d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_min_lvl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
+          <td class="paramname"><em>min_lvl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set minimum severity for this sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_lvl</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a377631fef16a30742fcf6eb34983206d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_min_lvl </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
+          <td class="paramname"><em>min_lvl</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set minimum severity for this sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">min_lvl</td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -402,6 +1089,183 @@ Protected Attributes</h2></td></tr>
 </dl>
 <p>You can define a message template for every <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>. Every conversion specifier will be substituted with the corresponding information.</p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a654cbdc5d25baa4535f21d02b4d1de09"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_msg_template </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>msg_template</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the message template with conversion patterns. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_template</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>You can define a message template for every <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>. Every conversion specifier will be substituted with the corresponding information.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a654cbdc5d25baa4535f21d02b4d1de09"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_msg_template </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>msg_template</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the message template with conversion patterns. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_template</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>You can define a message template for every <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>. Every conversion specifier will be substituted with the corresponding information.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a654cbdc5d25baa4535f21d02b4d1de09"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ealogger::Sink::set_msg_template </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>msg_template</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the message template with conversion patterns. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg_template</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<p>You can define a message template for every <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>. Every conversion specifier will be substituted with the corresponding information.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad501676b9878b8f84aaec441be53f94e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ealogger::Sink::write_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes a <a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object to the logger sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td><a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This interface method has to be implemented by every logger sink. The sink is required to format the log message according to <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a> and <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">Sink::datetime_pattern</a>. After the message is ready it will be written to the specified sink. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad501676b9878b8f84aaec441be53f94e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ealogger::Sink::write_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes a <a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object to the logger sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td><a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This interface method has to be implemented by every logger sink. The sink is required to format the log message according to <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a> and <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">Sink::datetime_pattern</a>. After the message is ready it will be written to the specified sink. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad501676b9878b8f84aaec441be53f94e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ealogger::Sink::write_message </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>msg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Writes a <a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object to the logger sink. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">msg</td><td><a class="el" href="structealogger_1_1_log_message.html" title="Log message struct. ">LogMessage</a> object</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This interface method has to be implemented by every logger sink. The sink is required to format the log message according to <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">Sink::msg_template</a> and <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">Sink::datetime_pattern</a>. After the message is ready it will be written to the specified sink. </p>
 
 </div>
 </div>
@@ -481,7 +1345,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aab279073b5c172ce06bdbd703da691b8"></a>
+<a class="anchor" id="a2c52e5f5c68dc9ab10e53f2d2d8df224"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -489,7 +1353,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt;<a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>, std::string&gt; ealogger::Sink::loglevel_lookup</td>
+          <td class="memname">std::map&lt; <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>, std::string &gt; ealogger::Sink::loglevel_lookup</td>
         </tr>
       </table>
   </td>
@@ -561,7 +1425,7 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p><a class="el" href="classealogger_1_1_sink.html#afa6ff9433cfe67dc754d017bf751d029">Sink::vec_conv_patterns</a> mutex </p>
+<p><a class="el" href="classealogger_1_1_sink.html#a58d264b0a700cfad6cde3b85f16e606a">Sink::vec_conv_patterns</a> mutex </p>
 
 </div>
 </div>
@@ -649,7 +1513,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="afa6ff9433cfe67dc754d017bf751d029"></a>
+<a class="anchor" id="a58d264b0a700cfad6cde3b85f16e606a"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -657,7 +1521,7 @@ Protected Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="structealogger_1_1_conversion_pattern.html">ConversionPattern</a>&gt; ealogger::Sink::vec_conv_patterns</td>
+          <td class="memname">std::vector&lt; <a class="el" href="structealogger_1_1_conversion_pattern.html">ConversionPattern</a> &gt; ealogger::Sink::vec_conv_patterns</td>
         </tr>
       </table>
   </td>
@@ -671,13 +1535,13 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/saedelaere/Projekte/library/ealogger/include/ealogger/<a class="el" href="sink_8h_source.html">sink.h</a></li>
-<li>/home/saedelaere/Projekte/library/ealogger/src/sink.cpp</li>
+<li>/home/saedelaere/Projekte/library/ealogger/include/ealogger/<a class="el" href="include_2ealogger_2sink_8h_source.html">sink.h</a></li>
+<li>/home/saedelaere/Projekte/library/ealogger/package/archlinux/src/ealogger-0.7/src/sink.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri May 20 2016 10:58:02 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat May 21 2016 09:16:00 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
