@@ -115,7 +115,7 @@ namespace ealogger
  * int main() {
  *     ealogger::Logger logger;
  *     logger.init_console_sink();
- *     logger.debug("My application is just awesome");
+ *     logger.eal_debug("My application is just awesome");
  *     return 0;
  * }
  * @endcode
@@ -180,7 +180,9 @@ public:
      * for the different log levels. You can of course call this method yourself
      * @code
      * mylogger.write_log("This is a warning", ealogger::constants::LOG_LEVEL::WARNING,
-     *                    __FILE__, __LINE__, __func__)
+     *                    __FILE__, __LINE__, __func__);
+     * mylogger.write_log("This is a warning without line file and func",
+     *                    ealogger::constants::LOG_LEVEL::WARNING);
      * @endcode
      */
     void write_log(std::string msg, ealogger::constants::LOG_LEVEL lvl,

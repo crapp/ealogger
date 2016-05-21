@@ -103,11 +103,11 @@ namespace con = ealogger::constants;
 std::unique_ptr<eal::Logger> log = std::unique_ptr<eal::Logger>(
     new eal::Logger());
 log->set_min_lvl(con::LOGGER_SINK::CONSOLEm, con::LOG_LEVEL::INFO);
-log->debug("Do you see me?");
-log->info("An info message")
-log->warn("A warning message");
-log->error("An error message");
-log->fatal("A fatal message");
+log->eal_debug("Do you see me?");
+log->eal_info("An info message")
+log->eal_warn("A warning message");
+log->eal_error("An error message");
+log->eal_fatal("A fatal message");
 ```
 This will output:
 ```shell
