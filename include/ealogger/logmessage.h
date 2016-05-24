@@ -21,6 +21,8 @@
 #include <string>
 #include <vector>
 
+#include <ealogger/global.h>
+
 namespace ealogger
 {
 /**
@@ -63,8 +65,8 @@ public:
      * @param lnumber Line number in file from where this log message was issued
      * @param func Function from where this log message was issued
      */
-    LogMessage(int severity, std::string message, LOGTYPE log_type,
-               std::string file, int lnumber, std::string func)
+    LogMessage(ealogger::constants::LOG_LEVEL severity, std::string message,
+               LOGTYPE log_type, std::string file, int lnumber, std::string func)
         : severity(severity),
           message(std::move(message)),
           log_type(log_type),
@@ -84,8 +86,9 @@ public:
      * @param lnumber Line number in file from where this log message was issued
      * @param func Function from where this log message was issued
      */
-    LogMessage(int severity, std::vector<std::string> message_vec,
-               LOGTYPE log_type, std::string file, int lnumber, std::string func)
+    LogMessage(ealogger::constants::LOG_LEVEL severity,
+               std::vector<std::string> message_vec, LOGTYPE log_type,
+               std::string file, int lnumber, std::string func)
         : severity(severity),
           message_vec(std::move(message_vec)),
           log_type(log_type),
@@ -107,9 +110,9 @@ public:
     }
     /**
      * @brief Returns the severity of the message
-     * @return Severity returned as int, Logger#log_level
+     * @return Return severity
      */
-    int get_severity() { return this->severity; }
+    ealogger::constants::LOG_LEVEL get_severity() { return this->severity; }
     /**
      * @brief Get the log message
      * @return Log message as std::string
@@ -149,7 +152,7 @@ private:
     /** Time Point when this log message was created*/
     std::chrono::system_clock::time_point t;
     /** Severity of this message */
-    int severity;
+    ealogger::constants::LOG_LEVEL severity;
     /** The log message */
     std::string message;
     /** A vector of messages */

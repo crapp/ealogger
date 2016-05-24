@@ -74,8 +74,7 @@ void eal::Sink::prepare_log_message(
     if (!this->get_enabled())
         return;
 
-    con::LOG_LEVEL msg_lvl =
-        static_cast<con::LOG_LEVEL>(log_message->get_severity());
+    con::LOG_LEVEL msg_lvl = log_message->get_severity();
 
     std::unique_lock<std::mutex> min_level_lock(this->mtx_min_lvl);
     if (msg_lvl < this->min_level &&
@@ -138,8 +137,7 @@ void eal::Sink::prepare_log_message(
                 break;
             case ConversionPattern::PATTERN_TYPE::LVL:
                 cp.replace_conversion_pattern(
-                    msg, this->loglevel_lookup.at(static_cast<con::LOG_LEVEL>(
-                             log_message->get_severity())));
+                    msg, this->loglevel_lookup.at(log_message->get_severity()));
                 break;
             default:
                 break;
