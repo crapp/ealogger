@@ -130,7 +130,8 @@ void eal::Logger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
 void eal::Logger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
                                  std::string msg_template,
                                  std::string datetime_pattern,
-                                 std::string logfile)
+                                 std::string logfile,
+                                 bool flush_buffer)
 {
     try {
         std::lock_guard<std::mutex> lock(
@@ -138,7 +139,8 @@ void eal::Logger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
         this->logger_sink_map[con::LOGGER_SINK::FILE_SIMPLE] =
             std::make_shared<SinkFile>(std::move(msg_template),
                                        std::move(datetime_pattern), enabled,
-                                       min_lvl, std::move(logfile));
+                                       min_lvl, std::move(logfile),
+                                       flush_buffer);
     } catch (const std::exception &ex) {
     }
 }
@@ -203,6 +205,20 @@ void eal::Logger::discard_sink(con::LOGGER_SINK sink)
     } catch (const std::exception &ex) {
         // TODO: What do we do here if the sink does not exist?
     }
+}
+
+bool eal::Logger::is_initialized(con::LOGGER_SINK sink)
+{
+    bool ret = false;
+    try {
+        std::lock_guard<std::mutex> lock(*(this->logger_mutex_map[sink].get()));
+        if (this->logger_sink_map.find(sink) != this->logger_sink_map.end()) {
+            ret = true;
+        }
+    } catch(const std::exception &ex) {
+
+    }
+    return ret;
 }
 
 bool eal::Logger::queue_empty() { return this->log_msg_queue.empty(); }

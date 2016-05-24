@@ -20,10 +20,10 @@ namespace con = ealogger::constants;
 
 eal::SinkFile::SinkFile(std::string msg_template, std::string datetime_pattern,
                         bool enabled, con::LOG_LEVEL min_lvl,
-                        std::string log_file)
+                        std::string log_file, bool flush_buffer)
     : eal::Sink(std::move(msg_template), std::move(datetime_pattern), enabled,
                 min_lvl),
-      log_file(log_file)
+      log_file(log_file), flush_buffer(flush_buffer)
 {
     if (this->get_enabled()) {
         this->open_file();
@@ -45,10 +45,10 @@ void eal::SinkFile::write_message(const std::string &msg)
     std::lock_guard<std::mutex> lock(this->mtx_file_stream);
     try {
         if (this->file_stream.is_open()) {
-            // TODO: The file stream is not flushed so when the application
-            // crashes
-            // it could be some information is lost.
             this->file_stream << msg << "\n";
+            if (this->flush_buffer) {
+                this->file_stream.flush();
+            }
         }
     } catch (const std::exception &ex) {
         // TODO: And now?

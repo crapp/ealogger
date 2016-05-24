@@ -255,6 +255,7 @@ public:
      * @param msg_template Message template based on conversion patterns
      * @param datetime_pattern Datetime conversion patterns
      * @param logfile Logfile to use
+     * @param flush_buffer Flush the ofstream buffer with every message
      * @details
      *
      * This method initializes a file sink. Using a file sink you can write to
@@ -274,7 +275,8 @@ public:
                             ealogger::constants::LOG_LEVEL::DEBUG,
                         std::string msg_template = "%d %s [%f:%l] %m",
                         std::string datetime_pattern = "%F %T",
-                        std::string logfile = "ealogger_logfile.log");
+                        std::string logfile = "ealogger_logfile.log",
+                        bool flush_buffer = false);
     // void init_file_sink_rotating(bool enabled,
     // ealogger::constants::LOG_LEVEL min_lvl,
     // std::string msg_template,
@@ -283,13 +285,22 @@ public:
     /**
      * @brief Discard a Sink and delete the object
      *
-     * @param sink
+     * @param sink The Sink you want to discard
      * @details
      *
      * You can discard a Sink. This will reduce some overhead and can speed up
      * logging a little bit.
      */
     void discard_sink(ealogger::constants::LOGGER_SINK sink);
+
+    /**
+     * @brief Check if a Sink has been initialized already
+     *
+     * @param sink The Sink you want to check
+     *
+     * @return True if the Sink has been initialized
+     */
+    bool is_initialized(ealogger::constants::LOGGER_SINK sink);
 
     /**
      * @brief Set message template for a Sink

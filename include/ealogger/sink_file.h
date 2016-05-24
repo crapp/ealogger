@@ -49,14 +49,21 @@ public:
      * @param enabled Whether or not this sink is enabled
      * @param min_lvl Minimum severity
      * @param log_file Log file
+     * @param flush_buffer Flush the ofstream buffer with every message
      *
      * @details
      * Make sure you have write permissions for \p log_file and the corresponding
      * directories exist.
+     *
+     * The parameter \p flush_buffer can be used to influence the flushing of
+     * internal buffers. Normally ealogger leaves this to the system. This means
+     * not every message might be written immediately to the file. If you want a
+     * different behaviour set flush_buffer to true at the cost of decreasing
+     * performance.
      */
     SinkFile(std::string msg_template, std::string datetime_pattern,
              bool enabled, ealogger::constants::LOG_LEVEL min_lvl,
-             std::string log_file);
+             std::string log_file, bool flush_buffer);
     virtual ~SinkFile();
 
     /**
@@ -77,6 +84,7 @@ private:
 
     std::ofstream file_stream;
     std::string log_file;
+    bool flush_buffer;
 
     void write_message(const std::string &msg);
     /**

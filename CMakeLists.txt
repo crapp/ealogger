@@ -3,8 +3,8 @@ project(ealogger)
 
 # Version Number
 set(ealogger_VERSION_MAJOR 0)
-set(ealogger_VERSION_MINOR 7)
-set(ealogger_VERSION_PATCH 2)
+set(ealogger_VERSION_MINOR 8)
+set(ealogger_VERSION_PATCH 0)
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 option(BUILD_EXAMPLES "Build example and benchmark applications for ealogger" OFF)
@@ -54,11 +54,11 @@ elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
     endif()
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    if (${MSVC_VERSION} LESS 1800)
+    if (${MSVC_VERSION} LESS 1900)
         message(
           FATAL_ERROR
           "This Project does not support compiling on Windows with "
-          "MSVC ${CMAKE_CXX_COMPILER_ID}. Please use MSVC 12 or higher.")
+          "MSVC ${CMAKE_CXX_COMPILER_ID}. Please use MSVC 14 or higher.")
     endif ()
 else ()
     message(FATAL_ERROR "Your C++ compiler does not support C++11.")
