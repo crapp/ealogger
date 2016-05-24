@@ -25,7 +25,7 @@ namespace con = ealogger::constants;
 eal::Logger::Logger(bool async) : async(async)
 {
     this->logger_mutex_map.emplace(
-        con::LOGGER_SINK::CONSOLES,
+        con::LOGGER_SINK::CONSOLE,
         std::unique_ptr<std::mutex>(new std::mutex()));
     this->logger_mutex_map.emplace(
         con::LOGGER_SINK::SYSLOG, std::unique_ptr<std::mutex>(new std::mutex()));
@@ -119,8 +119,8 @@ void eal::Logger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
 {
     try {
         std::lock_guard<std::mutex> lock(
-            *(this->logger_mutex_map[con::LOGGER_SINK::CONSOLES].get()));
-        this->logger_sink_map[con::LOGGER_SINK::CONSOLES] =
+            *(this->logger_mutex_map[con::LOGGER_SINK::CONSOLE].get()));
+        this->logger_sink_map[con::LOGGER_SINK::CONSOLE] =
             std::make_shared<SinkConsole>(std::move(msg_template),
                                           std::move(datetime_pattern), enabled,
                                           min_lvl);

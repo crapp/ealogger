@@ -50,7 +50,7 @@ int main(void)
     }
 
     // change minimum severity for the console sink to warning
-    log->set_min_lvl(con::LOGGER_SINK::CONSOLES, con::LOG_LEVEL::WARNING);
+    log->set_min_lvl(con::LOGGER_SINK::CONSOLE, con::LOG_LEVEL::WARNING);
 
     // this message will not appear in the console
     log->eal_info("Info is not visible because minimum severity is WARNING");
@@ -61,17 +61,17 @@ int main(void)
     }
 
     // set severity to info
-    log->set_min_lvl(con::LOGGER_SINK::CONSOLES, con::LOG_LEVEL::INFO);
+    log->set_min_lvl(con::LOGGER_SINK::CONSOLE, con::LOG_LEVEL::INFO);
     // the next message will be visible again
     log->eal_info("This message should be visible in the console");
 
     // change the datetime conversion pattern
-    log->set_datetime_pattern(con::LOGGER_SINK::CONSOLES, "%A %r");
+    log->set_datetime_pattern(con::LOGGER_SINK::CONSOLE, "%A %r");
     log->eal_info("You should now see the new datetime conversion pattern");
 
     // change the message template for the console sink
     // datetime [file name:"line number" "function name"] severity: log message
-    log->set_msg_template(con::LOGGER_SINK::CONSOLES, "%d [%f:%l %u] %s: %m");
+    log->set_msg_template(con::LOGGER_SINK::CONSOLE, "%d [%f:%l %u] %s: %m");
     log->eal_info("You should now see a new message template in use");
     log->eal_info("The change will affect all messages currently in the queue");
 

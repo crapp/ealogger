@@ -42,7 +42,7 @@ namespace constants
  * @brief Supported logger Sinks
  */
 enum LOGGER_SINK {
-    CONSOLES = 0, /**< Sink writing to a console SinkConsole */
+    CONSOLE = 0, /**< Sink writing to a console SinkConsole */
     SYSLOG,      /**< Sink writing to linux syslog SinkSyslog */
     FILE_SIMPLE   /**< Sink writing to a file SinkFile */
 };
