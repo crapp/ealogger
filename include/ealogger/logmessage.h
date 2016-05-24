@@ -17,6 +17,7 @@
 #define LOGMESSAGE_H
 
 #include <chrono>
+#include <ctime>
 #include <string>
 #include <vector>
 

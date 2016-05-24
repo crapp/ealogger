@@ -24,6 +24,9 @@
 #ifndef _WIN32
 #include <unistd.h>
 #endif
+#ifdef _WIN32
+#include <Winsock2.h>
+#endif
 #include <algorithm>
 #include <ctime>
 #include <regex>
