@@ -120,12 +120,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac61a9363bcfacea2e9d27370a087c4d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#ac61a9363bcfacea2e9d27370a087c4d2">init_console_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=ealogger::constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%d %s: %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;)</td></tr>
 <tr class="memdesc:ac61a9363bcfacea2e9d27370a087c4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the console <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#ac61a9363bcfacea2e9d27370a087c4d2">More...</a><br /></td></tr>
 <tr class="separator:ac61a9363bcfacea2e9d27370a087c4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47e026c83daade065834ef9598ef8142"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#a47e026c83daade065834ef9598ef8142">init_file_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=ealogger::constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%d %s [%f:%l] %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;, std::string logfile=&quot;ealogger_logfile.log&quot;)</td></tr>
-<tr class="memdesc:a47e026c83daade065834ef9598ef8142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the simple file <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#a47e026c83daade065834ef9598ef8142">More...</a><br /></td></tr>
-<tr class="separator:a47e026c83daade065834ef9598ef8142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea93c84f152aecfdabd2583ff4160dfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#aea93c84f152aecfdabd2583ff4160dfa">init_file_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=ealogger::constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%d %s [%f:%l] %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;, std::string logfile=&quot;ealogger_logfile.log&quot;, bool flush_buffer=false)</td></tr>
+<tr class="memdesc:aea93c84f152aecfdabd2583ff4160dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the simple file <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#aea93c84f152aecfdabd2583ff4160dfa">More...</a><br /></td></tr>
+<tr class="separator:aea93c84f152aecfdabd2583ff4160dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1be7975ac3f40d7308a1aac1291803b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#a1be7975ac3f40d7308a1aac1291803b4">discard_sink</a> (<a class="el" href="namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bdd">ealogger::constants::LOGGER_SINK</a> sink)</td></tr>
 <tr class="memdesc:a1be7975ac3f40d7308a1aac1291803b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Discard a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> and delete the object.  <a href="#a1be7975ac3f40d7308a1aac1291803b4">More...</a><br /></td></tr>
 <tr class="separator:a1be7975ac3f40d7308a1aac1291803b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aadb10549448602685462a5946a707e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#a6aadb10549448602685462a5946a707e">is_initialized</a> (<a class="el" href="namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bdd">ealogger::constants::LOGGER_SINK</a> sink)</td></tr>
+<tr class="memdesc:a6aadb10549448602685462a5946a707e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> has been initialized already.  <a href="#a6aadb10549448602685462a5946a707e">More...</a><br /></td></tr>
+<tr class="separator:a6aadb10549448602685462a5946a707e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7902abcd556a61b4f80c176f512b7cbf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#a7902abcd556a61b4f80c176f512b7cbf">set_msg_template</a> (<a class="el" href="namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bdd">ealogger::constants::LOGGER_SINK</a> sink, std::string msg_template)</td></tr>
 <tr class="memdesc:a7902abcd556a61b4f80c176f512b7cbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set message template for a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#a7902abcd556a61b4f80c176f512b7cbf">More...</a><br /></td></tr>
 <tr class="separator:a7902abcd556a61b4f80c176f512b7cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,7 +198,7 @@ Public Member Functions</h2></td></tr>
 <p>Discard a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> and delete the object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sink</td><td></td></tr>
+    <tr><td class="paramname">sink</td><td>The <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> you want to discard</td></tr>
   </table>
   </dd>
 </dl>
@@ -254,7 +257,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a47e026c83daade065834ef9598ef8142"></a>
+<a class="anchor" id="aea93c84f152aecfdabd2583ff4160dfa"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -286,7 +289,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>logfile</em> = <code>&quot;ealogger_logfile.log&quot;</code>&#160;</td>
+          <td class="paramname"><em>logfile</em> = <code>&quot;ealogger_logfile.log&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flush_buffer</em> = <code>false</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -303,7 +312,8 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramname">min_lvl</td><td>Minimum severity for this sink </td></tr>
     <tr><td class="paramname">msg_template</td><td>Message template based on conversion patterns </td></tr>
     <tr><td class="paramname">datetime_pattern</td><td>Datetime conversion patterns </td></tr>
-    <tr><td class="paramname">logfile</td><td>Logfile to use</td></tr>
+    <tr><td class="paramname">logfile</td><td>Logfile to use </td></tr>
+    <tr><td class="paramname">flush_buffer</td><td>Flush the ofstream buffer with every message</td></tr>
   </table>
   </dd>
 </dl>
@@ -362,6 +372,31 @@ Public Member Functions</h2></td></tr>
 <p>This initializes a sink that allows you to write a message to the system syslog.</p>
 <dl class="section note"><dt>Note</dt><dd>This does only work on supported systems</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structealogger_1_1_conversion_pattern.html" title="A conversion pattern for message templates. ">ConversionPattern</a> and <a class="el" href="classealogger_1_1_sink_syslog.html" title="Sink writing to unix syslog. ">SinkSyslog</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6aadb10549448602685462a5946a707e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ealogger::Logger::is_initialized </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bdd">ealogger::constants::LOGGER_SINK</a>&#160;</td>
+          <td class="paramname"><em>sink</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> has been initialized already. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sink</td><td>The <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> you want to check</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> has been initialized </dd></dl>
 
 </div>
 </div>
@@ -627,7 +662,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 21 2016 09:40:35 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 24 2016 14:51:39 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

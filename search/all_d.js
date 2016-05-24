@@ -14,7 +14,7 @@ var searchData=
   ['sink_5fsyslog_2eh',['sink_syslog.h',['../sink__syslog_8h.html',1,'']]],
   ['sinkconsole',['SinkConsole',['../classealogger_1_1_sink_console.html',1,'ealogger']]],
   ['sinkconsole',['SinkConsole',['../classealogger_1_1_sink_console.html#ae9d6d2ddedf7fdb9f6e92eb567da4f2d',1,'ealogger::SinkConsole']]],
-  ['sinkfile',['SinkFile',['../classealogger_1_1_sink_file.html#ac43edc9404d343cca06c7172038afcf6',1,'ealogger::SinkFile']]],
+  ['sinkfile',['SinkFile',['../classealogger_1_1_sink_file.html#ae6b9316a669f480622f78cb63ae39026',1,'ealogger::SinkFile']]],
   ['sinkfile',['SinkFile',['../classealogger_1_1_sink_file.html',1,'ealogger']]],
   ['sinksyslog',['SinkSyslog',['../classealogger_1_1_sink_syslog.html#a87bcfb2efe9335fdf69ea795c817628b',1,'ealogger::SinkSyslog']]],
   ['sinksyslog',['SinkSyslog',['../classealogger_1_1_sink_syslog.html',1,'ealogger']]],

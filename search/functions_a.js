@@ -7,7 +7,7 @@ var searchData=
   ['set_5fmsg_5ftemplate',['set_msg_template',['../classealogger_1_1_logger.html#a7902abcd556a61b4f80c176f512b7cbf',1,'ealogger::Logger::set_msg_template()'],['../classealogger_1_1_sink.html#a654cbdc5d25baa4535f21d02b4d1de09',1,'ealogger::Sink::set_msg_template()']]],
   ['sink',['Sink',['../classealogger_1_1_sink.html#a3dfe07102b4e2a202106462886ce12eb',1,'ealogger::Sink']]],
   ['sinkconsole',['SinkConsole',['../classealogger_1_1_sink_console.html#ae9d6d2ddedf7fdb9f6e92eb567da4f2d',1,'ealogger::SinkConsole']]],
-  ['sinkfile',['SinkFile',['../classealogger_1_1_sink_file.html#ac43edc9404d343cca06c7172038afcf6',1,'ealogger::SinkFile']]],
+  ['sinkfile',['SinkFile',['../classealogger_1_1_sink_file.html#ae6b9316a669f480622f78cb63ae39026',1,'ealogger::SinkFile']]],
   ['sinksyslog',['SinkSyslog',['../classealogger_1_1_sink_syslog.html#a87bcfb2efe9335fdf69ea795c817628b',1,'ealogger::SinkSyslog']]],
   ['stack_5ftrace',['stack_trace',['../utility_8h.html#aaa85a1a005a655da9f28eb84a3ca266c',1,'ealogger::utility']]]
 ];

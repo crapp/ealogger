@@ -114,9 +114,9 @@ Inheritance diagram for ealogger::SinkFile:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac43edc9404d343cca06c7172038afcf6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink_file.html#ac43edc9404d343cca06c7172038afcf6">SinkFile</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>, std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>, bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl, std::string log_file)</td></tr>
-<tr class="memdesc:ac43edc9404d343cca06c7172038afcf6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. ">SinkFile</a> constructor with additional parameters.  <a href="#ac43edc9404d343cca06c7172038afcf6">More...</a><br /></td></tr>
-<tr class="separator:ac43edc9404d343cca06c7172038afcf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6b9316a669f480622f78cb63ae39026"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink_file.html#ae6b9316a669f480622f78cb63ae39026">SinkFile</a> (std::string <a class="el" href="classealogger_1_1_sink.html#a6f978bd127f5169e9ce4b8aeeed4d40d">msg_template</a>, std::string <a class="el" href="classealogger_1_1_sink.html#af00db71ca6274f2b73a8f3415627f494">datetime_pattern</a>, bool <a class="el" href="classealogger_1_1_sink.html#aabfd60e13e433e91815f2d3442afb8d4">enabled</a>, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl, std::string log_file, bool flush_buffer)</td></tr>
+<tr class="memdesc:ae6b9316a669f480622f78cb63ae39026"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. ">SinkFile</a> constructor with additional parameters.  <a href="#ae6b9316a669f480622f78cb63ae39026">More...</a><br /></td></tr>
+<tr class="separator:ae6b9316a669f480622f78cb63ae39026"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aece20eb178432e7739df1a51858de212"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_sink_file.html#aece20eb178432e7739df1a51858de212">set_log_file</a> (std::string log_file)</td></tr>
 <tr class="memdesc:aece20eb178432e7739df1a51858de212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set log file.  <a href="#aece20eb178432e7739df1a51858de212">More...</a><br /></td></tr>
 <tr class="separator:aece20eb178432e7739df1a51858de212"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -178,7 +178,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="textblock"><p><a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> to write to a log file. </p>
 <p>This sink allows you to write to a log file. It does not support rotating files based on elapsed time or file size. You also have to make sure the application hass appropriate write permissions and the target directory exists. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="ac43edc9404d343cca06c7172038afcf6"></a>
+<a class="anchor" id="ae6b9316a669f480622f78cb63ae39026"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -210,7 +210,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string&#160;</td>
-          <td class="paramname"><em>log_file</em>&#160;</td>
+          <td class="paramname"><em>log_file</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>flush_buffer</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -227,11 +233,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
     <tr><td class="paramname">datetime_pattern</td><td>Conversion specifiers for date time </td></tr>
     <tr><td class="paramname">enabled</td><td>Whether or not this sink is enabled </td></tr>
     <tr><td class="paramname">min_lvl</td><td>Minimum severity </td></tr>
-    <tr><td class="paramname">log_file</td><td>Log file</td></tr>
+    <tr><td class="paramname">log_file</td><td>Log file </td></tr>
+    <tr><td class="paramname">flush_buffer</td><td>Flush the ofstream buffer with every message</td></tr>
   </table>
   </dd>
 </dl>
-<p>Make sure you have write permissions for <code>log_file</code> and the corresponding directories exist. </p>
+<p>Make sure you have write permissions for <code>log_file</code> and the corresponding directories exist.</p>
+<p>The parameter <code>flush_buffer</code> can be used to influence the flushing of internal buffers. Normally ealogger leaves this to the system. This means not every message might be written immediately to the file. If you want a different behaviour set flush_buffer to true at the cost of decreasing performance. </p>
 
 </div>
 </div>
@@ -257,7 +265,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   </table>
   </dd>
 </dl>
-<dl class="section warning"><dt>Warning</dt><dd>This is method is not exposed by the API currently. You may have the possibility to work with <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> objects directly in the future. If you need to change the logfile use <a class="el" href="classealogger_1_1_logger.html#a47e026c83daade065834ef9598ef8142" title="Initialize the simple file Sink. ">Logger::init_file_sink</a> to reinit the <a class="el" href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. ">SinkFile</a> sink with a different logfile </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This is method is not exposed by the API currently. You may have the possibility to work with <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> objects directly in the future. If you need to change the logfile use <a class="el" href="classealogger_1_1_logger.html#aea93c84f152aecfdabd2583ff4160dfa" title="Initialize the simple file Sink. ">Logger::init_file_sink</a> to reinit the <a class="el" href="classealogger_1_1_sink_file.html" title="Sink to write to a log file. ">SinkFile</a> sink with a different logfile </dd></dl>
 
 </div>
 </div>
@@ -268,7 +276,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat May 21 2016 09:40:35 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 24 2016 14:51:39 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
