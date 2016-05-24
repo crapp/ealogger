@@ -114,15 +114,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aae6d8ad16b61470e5d8e1cc9a166542e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#aae6d8ad16b61470e5d8e1cc9a166542e">write_log</a> (std::string msg, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> lvl)</td></tr>
 <tr class="memdesc:aae6d8ad16b61470e5d8e1cc9a166542e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a log message.  <a href="#aae6d8ad16b61470e5d8e1cc9a166542e">More...</a><br /></td></tr>
 <tr class="separator:aae6d8ad16b61470e5d8e1cc9a166542e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a682121d301b0fbacdbb1b5938d52a367"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#a682121d301b0fbacdbb1b5938d52a367">init_syslog_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=ealogger::constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%s: %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;)</td></tr>
-<tr class="memdesc:a682121d301b0fbacdbb1b5938d52a367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Init a syslog <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#a682121d301b0fbacdbb1b5938d52a367">More...</a><br /></td></tr>
-<tr class="separator:a682121d301b0fbacdbb1b5938d52a367"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac61a9363bcfacea2e9d27370a087c4d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#ac61a9363bcfacea2e9d27370a087c4d2">init_console_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=ealogger::constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%d %s: %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;)</td></tr>
-<tr class="memdesc:ac61a9363bcfacea2e9d27370a087c4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the console <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#ac61a9363bcfacea2e9d27370a087c4d2">More...</a><br /></td></tr>
-<tr class="separator:ac61a9363bcfacea2e9d27370a087c4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea93c84f152aecfdabd2583ff4160dfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#aea93c84f152aecfdabd2583ff4160dfa">init_file_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=ealogger::constants::LOG_LEVEL::DEBUG, std::string msg_template=&quot;%d %s [%f:%l] %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;, std::string logfile=&quot;ealogger_logfile.log&quot;, bool flush_buffer=false)</td></tr>
-<tr class="memdesc:aea93c84f152aecfdabd2583ff4160dfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the simple file <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#aea93c84f152aecfdabd2583ff4160dfa">More...</a><br /></td></tr>
-<tr class="separator:aea93c84f152aecfdabd2583ff4160dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d900ad86353713c369b2a69ef3b14f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#a4d900ad86353713c369b2a69ef3b14f9">init_syslog_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=<a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46a076a0c0bb1c49bc91e09adb95f010cd7">ealogger::constants::LOG_LEVEL::EAL_DEBUG</a>, std::string msg_template=&quot;%s: %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;)</td></tr>
+<tr class="memdesc:a4d900ad86353713c369b2a69ef3b14f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Init a syslog <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#a4d900ad86353713c369b2a69ef3b14f9">More...</a><br /></td></tr>
+<tr class="separator:a4d900ad86353713c369b2a69ef3b14f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae33e864648e292a4e4d69a66f1e3d3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#aae33e864648e292a4e4d69a66f1e3d3e">init_console_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=<a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46a076a0c0bb1c49bc91e09adb95f010cd7">ealogger::constants::LOG_LEVEL::EAL_DEBUG</a>, std::string msg_template=&quot;%d %s: %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;)</td></tr>
+<tr class="memdesc:aae33e864648e292a4e4d69a66f1e3d3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the console <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#aae33e864648e292a4e4d69a66f1e3d3e">More...</a><br /></td></tr>
+<tr class="separator:aae33e864648e292a4e4d69a66f1e3d3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc94187cdad24c3f1b595eabc1d5190"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#addc94187cdad24c3f1b595eabc1d5190">init_file_sink</a> (bool enabled=true, <a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a> min_lvl=<a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46a076a0c0bb1c49bc91e09adb95f010cd7">ealogger::constants::LOG_LEVEL::EAL_DEBUG</a>, std::string msg_template=&quot;%d %s [%f:%l] %m&quot;, std::string datetime_pattern=&quot;%F %T&quot;, std::string logfile=&quot;ealogger_logfile.log&quot;, bool flush_buffer=false)</td></tr>
+<tr class="memdesc:addc94187cdad24c3f1b595eabc1d5190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the simple file <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a>.  <a href="#addc94187cdad24c3f1b595eabc1d5190">More...</a><br /></td></tr>
+<tr class="separator:addc94187cdad24c3f1b595eabc1d5190"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1be7975ac3f40d7308a1aac1291803b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classealogger_1_1_logger.html#a1be7975ac3f40d7308a1aac1291803b4">discard_sink</a> (<a class="el" href="namespaceealogger_1_1constants.html#a456f8f83b5ba33fe52f4149b92019bdd">ealogger::constants::LOGGER_SINK</a> sink)</td></tr>
 <tr class="memdesc:a1be7975ac3f40d7308a1aac1291803b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Discard a <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> and delete the object.  <a href="#a1be7975ac3f40d7308a1aac1291803b4">More...</a><br /></td></tr>
 <tr class="separator:a1be7975ac3f40d7308a1aac1291803b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,7 +149,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>ealogger main class </p>
 <dl class="section author"><dt>Author</dt><dd>Christian Rapp (crapp)</dd></dl>
 <p>The <a class="el" href="classealogger_1_1_logger.html" title="ealogger main class ">Logger</a> class provides all the functionality you need for your application to log messages. It can be as simple as in the following example.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ealogger_8h.html">ealogger/ealogger.h</a>&gt;</span></div><div class="line"><span class="keywordtype">int</span> main() {</div><div class="line">    <a class="code" href="classealogger_1_1_logger.html">ealogger::Logger</a> logger;</div><div class="line">    logger.<a class="code" href="classealogger_1_1_logger.html#ac61a9363bcfacea2e9d27370a087c4d2">init_console_sink</a>();</div><div class="line">    logger.eal_debug(<span class="stringliteral">&quot;My application is just awesome&quot;</span>);</div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --><p>This will print <em>My application is awesome</em> to the console.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ealogger_8h.html">ealogger/ealogger.h</a>&gt;</span></div><div class="line"><span class="keywordtype">int</span> main() {</div><div class="line">    <a class="code" href="classealogger_1_1_logger.html">ealogger::Logger</a> logger;</div><div class="line">    logger.<a class="code" href="classealogger_1_1_logger.html#aae33e864648e292a4e4d69a66f1e3d3e">init_console_sink</a>();</div><div class="line">    logger.eal_debug(<span class="stringliteral">&quot;My application is just awesome&quot;</span>);</div><div class="line">    <span class="keywordflow">return</span> 0;</div><div class="line">}</div></div><!-- fragment --><p>This will print <em>My application is awesome</em> to the console.</p>
 <p>ealogger uses sinks to write to different targets. Each <a class="el" href="classealogger_1_1_sink.html" title="A sink is an object that writes the log message to a specific target. ">Sink</a> supports different message <a class="el" href="structealogger_1_1_conversion_pattern.html">conversion patterns</a> and a datetime pattern. Each sink can be enabled or disabled independently and the minimum severity can be set. You have to use Logger::init_console_* to init a sink. This methods define sane defaults for their options. But of course you can change them to whatever you want.</p>
 <p>The Methods set_msg_template, set_datetime_pattern, set_enabled and set_min_lvl allow you to change the configuration of a sink. If the sink supports more options you have to use the dedicated init method to reinitialize the sink.</p>
 <p>To make it easy to write messages with a specific severity there are some macro functions for each log level and one for stacktrace (<a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#gae335d2bb8dc163e8a976a4dbdb2a80ea" title="Write a debug message. ">eal_debug(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga12c6876fe5ef2d0ff3115a63d632b595" title="Write a info message. ">eal_info(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga720614bddf44a78d026f46506b07ad65" title="Write a warning message. ">eal_warn(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#gafecc01c310386d87be0aefd0216ef3fb" title="Write an error message. ">eal_error(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga6b227bdd878dc2632400c07276e5dede" title="Write a fatal message. ">eal_fatal(msg)</a> <a class="el" href="group___e_a_l_o_g_g_e_r___g_r_o_u_p.html#ga95b2530dc73f894a6d15b9ed00e98bfc" title="Write a message with a stacktrace. ">eal_stack()</a>) <a class="el" href="classealogger_1_1_logger.html#a5aca1debdfc047730d659a5bff1c8924" title="Issue a Logmessage. ">Logger::write_log</a> allows you to write log messages without using these macros.</p>
@@ -206,7 +206,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac61a9363bcfacea2e9d27370a087c4d2"></a>
+<a class="anchor" id="aae33e864648e292a4e4d69a66f1e3d3e"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -220,7 +220,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
-          <td class="paramname"><em>min_lvl</em> = <code>ealogger::constants::LOG_LEVEL::DEBUG</code>, </td>
+          <td class="paramname"><em>min_lvl</em> = <code><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46a076a0c0bb1c49bc91e09adb95f010cd7">ealogger::constants::LOG_LEVEL::EAL_DEBUG</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -257,7 +257,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aea93c84f152aecfdabd2583ff4160dfa"></a>
+<a class="anchor" id="addc94187cdad24c3f1b595eabc1d5190"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -271,7 +271,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
-          <td class="paramname"><em>min_lvl</em> = <code>ealogger::constants::LOG_LEVEL::DEBUG</code>, </td>
+          <td class="paramname"><em>min_lvl</em> = <code><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46a076a0c0bb1c49bc91e09adb95f010cd7">ealogger::constants::LOG_LEVEL::EAL_DEBUG</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -323,7 +323,7 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a682121d301b0fbacdbb1b5938d52a367"></a>
+<a class="anchor" id="a4d900ad86353713c369b2a69ef3b14f9"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -337,7 +337,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46">ealogger::constants::LOG_LEVEL</a>&#160;</td>
-          <td class="paramname"><em>min_lvl</em> = <code>ealogger::constants::LOG_LEVEL::DEBUG</code>, </td>
+          <td class="paramname"><em>min_lvl</em> = <code><a class="el" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46a076a0c0bb1c49bc91e09adb95f010cd7">ealogger::constants::LOG_LEVEL::EAL_DEBUG</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -616,7 +616,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>This method is called by the macros that are defined in this header file for the different log levels. You can of course call this method yourself </p><div class="fragment"><div class="line">mylogger.write_log(<span class="stringliteral">&quot;This is a warning&quot;</span>, <a class="code" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46af765d1ed74a93b4d9faa6c275821dcf6">ealogger::constants::LOG_LEVEL::WARNING</a>,</div><div class="line">                   __FILE__, __LINE__, __func__);</div><div class="line">mylogger.write_log(<span class="stringliteral">&quot;This is a warning without line file and func&quot;</span>,</div><div class="line">                   <a class="code" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46af765d1ed74a93b4d9faa6c275821dcf6">ealogger::constants::LOG_LEVEL::WARNING</a>);</div></div><!-- fragment --> 
+<p>This method is called by the macros that are defined in this header file for the different log levels. You can of course call this method yourself </p><div class="fragment"><div class="line">mylogger.write_log(<span class="stringliteral">&quot;This is a warning&quot;</span>, <a class="code" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46ace2ec03a47ef26ec5c419647d84e9882">ealogger::constants::LOG_LEVEL::EAL_WARNING</a>,</div><div class="line">                   __FILE__, __LINE__, __func__);</div><div class="line">mylogger.write_log(<span class="stringliteral">&quot;This is a warning without line file and func&quot;</span>,</div><div class="line">                   <a class="code" href="namespaceealogger_1_1constants.html#ae82a64b7dc6f87d34de3a44760e59b46ace2ec03a47ef26ec5c419647d84e9882">ealogger::constants::LOG_LEVEL::EAL_WARNING</a>);</div></div><!-- fragment --> 
 </div>
 </div>
 <a class="anchor" id="aae6d8ad16b61470e5d8e1cc9a166542e"></a>
@@ -662,7 +662,7 @@ Public Member Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 24 2016 14:51:39 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue May 24 2016 21:29:21 for ealogger by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

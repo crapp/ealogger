@@ -11,7 +11,7 @@ var searchData=
   ['get_5fmsg_5fvec_5fbegin',['get_msg_vec_begin',['../structealogger_1_1_log_message.html#a5405984bbdfe47a4125cbabb5bb85eea',1,'ealogger::LogMessage']]],
   ['get_5fmsg_5fvec_5fend',['get_msg_vec_end',['../structealogger_1_1_log_message.html#a704738b8436b5ebf178c89b6ce97d7d0',1,'ealogger::LogMessage']]],
   ['get_5fpattern_5ftype',['get_pattern_type',['../structealogger_1_1_conversion_pattern.html#ad107f3418733098991bd79913ebba8ae',1,'ealogger::ConversionPattern']]],
-  ['get_5fseverity',['get_severity',['../structealogger_1_1_log_message.html#a8258ce8e22e755c6e7156dfb9d50e00a',1,'ealogger::LogMessage']]],
+  ['get_5fseverity',['get_severity',['../structealogger_1_1_log_message.html#a360fba9705cda1035a76aad310eff2f6',1,'ealogger::LogMessage']]],
   ['get_5ftimepoint',['get_timepoint',['../structealogger_1_1_log_message.html#ad582395c11754ec2c84724829ca6ac52',1,'ealogger::LogMessage']]],
   ['global_2eh',['global.h',['../global_8h.html',1,'']]]
 ];
