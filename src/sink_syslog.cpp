@@ -26,13 +26,13 @@ eal::SinkSyslog::SinkSyslog(std::string msg_template,
 {
 #ifdef EALOGGER_SYSLOG
     this->loglevel_syslog_lookup = {
-        {con::LOG_LEVEL::DEBUG, LOG_DEBUG},
-        {con::LOG_LEVEL::INFO, LOG_INFO},
-        {con::LOG_LEVEL::WARNING, LOG_WARNING},
-        {con::LOG_LEVEL::ERROR, LOG_ERR},
-        {con::LOG_LEVEL::FATAL, LOG_CRIT},
-        {con::LOG_LEVEL::STACK, LOG_CRIT},
-        {con::LOG_LEVEL::INTERNAL,
+        {con::LOG_LEVEL::EAL_DEBUG, LOG_DEBUG},
+        {con::LOG_LEVEL::EAL_INFO, LOG_INFO},
+        {con::LOG_LEVEL::EAL_WARNING, LOG_WARNING},
+        {con::LOG_LEVEL::EAL_ERROR, LOG_ERR},
+        {con::LOG_LEVEL::EAL_FATAL, LOG_CRIT},
+        {con::LOG_LEVEL::EAL_STACK, LOG_CRIT},
+        {con::LOG_LEVEL::EAL_INTERNAL,
          LOG_DEBUG}};  // mapping internal to syslog debug
 #else
     this->loglevel_syslog_lookup = {};

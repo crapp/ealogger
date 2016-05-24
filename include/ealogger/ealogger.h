@@ -63,44 +63,44 @@ namespace ealogger
  * @def eal_debug(msg)
  * @brief Write a debug message
  */
-#define eal_debug(msg)                                                        \
-    write_log(msg, ealogger::constants::LOG_LEVEL::DEBUG, __FILE__, __LINE__, \
-              __func__)
+#define eal_debug(msg)                                                  \
+    write_log(msg, ealogger::constants::LOG_LEVEL::EAL_DEBUG, __FILE__, \
+              __LINE__, __func__)
 /**
  * @def eal_info(msg)
  * @brief Write a info message
  */
-#define eal_info(msg)                                                        \
-    write_log(msg, ealogger::constants::LOG_LEVEL::INFO, __FILE__, __LINE__, \
-              __func__)
+#define eal_info(msg)                                                  \
+    write_log(msg, ealogger::constants::LOG_LEVEL::EAL_INFO, __FILE__, \
+              __LINE__, __func__)
 /**
  * @def eal_warn(msg)
  * @brief Write a warning message
  */
-#define eal_warn(msg)                                                           \
-    write_log(msg, ealogger::constants::LOG_LEVEL::WARNING, __FILE__, __LINE__, \
-              __func__)
+#define eal_warn(msg)                                                     \
+    write_log(msg, ealogger::constants::LOG_LEVEL::EAL_WARNING, __FILE__, \
+              __LINE__, __func__)
 /**
  * @def eal_error(msg)
  * @brief Write an error message
  */
-#define eal_error(msg)                                                        \
-    write_log(msg, ealogger::constants::LOG_LEVEL::ERROR, __FILE__, __LINE__, \
-              __func__)
+#define eal_error(msg)                                                  \
+    write_log(msg, ealogger::constants::LOG_LEVEL::EAL_ERROR, __FILE__, \
+              __LINE__, __func__)
 /**
  * @def eal_fatal(msg)
  * @brief Write a fatal message
  */
-#define eal_fatal(msg)                                                        \
-    write_log(msg, ealogger::constants::LOG_LEVEL::FATAL, __FILE__, __LINE__, \
-              __func__)
+#define eal_fatal(msg)                                                  \
+    write_log(msg, ealogger::constants::LOG_LEVEL::EAL_FATAL, __FILE__, \
+              __LINE__, __func__)
 /**
  * @def eal_stack()
  * @brief Write a message with a stacktrace
  */
-#define eal_stack()                                                          \
-    write_log("", ealogger::constants::LOG_LEVEL::STACK, __FILE__, __LINE__, \
-              __func__)
+#define eal_stack()                                                    \
+    write_log("", ealogger::constants::LOG_LEVEL::EAL_STACK, __FILE__, \
+              __LINE__, __func__)
 
 /**
  * @brief ealogger main class
@@ -179,10 +179,10 @@ public:
      * This method is called by the macros that are defined in this header file
      * for the different log levels. You can of course call this method yourself
      * @code
-     * mylogger.write_log("This is a warning", ealogger::constants::LOG_LEVEL::WARNING,
+     * mylogger.write_log("This is a warning", ealogger::constants::LOG_LEVEL::EAL_WARNING,
      *                    __FILE__, __LINE__, __func__);
      * mylogger.write_log("This is a warning without line file and func",
-     *                    ealogger::constants::LOG_LEVEL::WARNING);
+     *                    ealogger::constants::LOG_LEVEL::EAL_WARNING);
      * @endcode
      */
     void write_log(std::string msg, ealogger::constants::LOG_LEVEL lvl,
@@ -223,7 +223,7 @@ public:
      */
     void init_syslog_sink(bool enabled = true,
                           ealogger::constants::LOG_LEVEL min_lvl =
-                              ealogger::constants::LOG_LEVEL::DEBUG,
+                              ealogger::constants::LOG_LEVEL::EAL_DEBUG,
                           std::string msg_template = "%s: %m",
                           std::string datetime_pattern = "%F %T");
     /**
@@ -243,7 +243,7 @@ public:
      */
     void init_console_sink(bool enabled = true,
                            ealogger::constants::LOG_LEVEL min_lvl =
-                               ealogger::constants::LOG_LEVEL::DEBUG,
+                               ealogger::constants::LOG_LEVEL::EAL_DEBUG,
                            std::string msg_template = "%d %s: %m",
                            std::string datetime_pattern = "%F %T");
 
@@ -272,7 +272,7 @@ public:
      */
     void init_file_sink(bool enabled = true,
                         ealogger::constants::LOG_LEVEL min_lvl =
-                            ealogger::constants::LOG_LEVEL::DEBUG,
+                            ealogger::constants::LOG_LEVEL::EAL_DEBUG,
                         std::string msg_template = "%d %s [%f:%l] %m",
                         std::string datetime_pattern = "%F %T",
                         std::string logfile = "ealogger_logfile.log",

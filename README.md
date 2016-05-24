@@ -102,7 +102,7 @@ namespace eal = ealogger;
 namespace con = ealogger::constants;
 std::unique_ptr<eal::Logger> log = std::unique_ptr<eal::Logger>(
     new eal::Logger());
-log->set_min_lvl(con::LOGGER_SINK::CONSOLEm, con::LOG_LEVEL::INFO);
+log->set_min_lvl(con::LOGGER_SINK::EAL_CONSOLE, con::LOG_LEVEL::EAL_INFO);
 log->eal_debug("Do you see me?");
 log->eal_info("An info message")
 log->eal_warn("A warning message");

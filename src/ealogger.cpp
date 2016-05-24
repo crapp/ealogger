@@ -25,12 +25,13 @@ namespace con = ealogger::constants;
 eal::Logger::Logger(bool async) : async(async)
 {
     this->logger_mutex_map.emplace(
-        con::LOGGER_SINK::CONSOLE,
+        con::LOGGER_SINK::EAL_CONSOLE,
         std::unique_ptr<std::mutex>(new std::mutex()));
     this->logger_mutex_map.emplace(
-        con::LOGGER_SINK::SYSLOG, std::unique_ptr<std::mutex>(new std::mutex()));
+        con::LOGGER_SINK::EAL_SYSLOG,
+        std::unique_ptr<std::mutex>(new std::mutex()));
     this->logger_mutex_map.emplace(
-        con::LOGGER_SINK::FILE_SIMPLE,
+        con::LOGGER_SINK::EAL_FILE_SIMPLE,
         std::unique_ptr<std::mutex>(new std::mutex()));
 // TODO: Make registration of signal handler configurable
 #ifdef __linux__
@@ -59,7 +60,7 @@ eal::Logger::~Logger()
         this->set_logger_thread_stop(true);
         // we need to write one more log message to wakeup the background logger
         // thread it will pop the last message from the queue.
-        this->write_log("Logger EXIT", con::LOG_LEVEL::INTERNAL, "", 0, "");
+        this->write_log("Logger EXIT", con::LOG_LEVEL::EAL_INTERNAL, "", 0, "");
         try {
             logger_thread.join();
         } catch (const std::system_error &ex) {
@@ -74,7 +75,7 @@ void eal::Logger::write_log(std::string msg, con::LOG_LEVEL lvl,
 {
     std::shared_ptr<LogMessage> m;
     LogMessage::LOGTYPE type = LogMessage::LOGTYPE::DEFAULT;
-    if (lvl == con::LOG_LEVEL::STACK) {
+    if (lvl == con::LOG_LEVEL::EAL_STACK) {
         type = LogMessage::LOGTYPE::STACK;
         std::vector<std::string> stack_vec;
         // TODO: Stack size is hard coded
@@ -105,8 +106,8 @@ void eal::Logger::init_syslog_sink(bool enabled, con::LOG_LEVEL min_lvl,
 {
     try {
         std::lock_guard<std::mutex> lock(
-            *(this->logger_mutex_map[con::LOGGER_SINK::SYSLOG].get()));
-        this->logger_sink_map[con::LOGGER_SINK::SYSLOG] =
+            *(this->logger_mutex_map[con::LOGGER_SINK::EAL_SYSLOG].get()));
+        this->logger_sink_map[con::LOGGER_SINK::EAL_SYSLOG] =
             std::make_shared<SinkSyslog>(std::move(msg_template),
                                          std::move(datetime_pattern), enabled,
                                          min_lvl);
@@ -119,8 +120,8 @@ void eal::Logger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
 {
     try {
         std::lock_guard<std::mutex> lock(
-            *(this->logger_mutex_map[con::LOGGER_SINK::CONSOLE].get()));
-        this->logger_sink_map[con::LOGGER_SINK::CONSOLE] =
+            *(this->logger_mutex_map[con::LOGGER_SINK::EAL_CONSOLE].get()));
+        this->logger_sink_map[con::LOGGER_SINK::EAL_CONSOLE] =
             std::make_shared<SinkConsole>(std::move(msg_template),
                                           std::move(datetime_pattern), enabled,
                                           min_lvl);
@@ -130,17 +131,15 @@ void eal::Logger::init_console_sink(bool enabled, con::LOG_LEVEL min_lvl,
 void eal::Logger::init_file_sink(bool enabled, con::LOG_LEVEL min_lvl,
                                  std::string msg_template,
                                  std::string datetime_pattern,
-                                 std::string logfile,
-                                 bool flush_buffer)
+                                 std::string logfile, bool flush_buffer)
 {
     try {
         std::lock_guard<std::mutex> lock(
-            *(this->logger_mutex_map[con::LOGGER_SINK::FILE_SIMPLE].get()));
-        this->logger_sink_map[con::LOGGER_SINK::FILE_SIMPLE] =
-            std::make_shared<SinkFile>(std::move(msg_template),
-                                       std::move(datetime_pattern), enabled,
-                                       min_lvl, std::move(logfile),
-                                       flush_buffer);
+            *(this->logger_mutex_map[con::LOGGER_SINK::EAL_FILE_SIMPLE].get()));
+        this->logger_sink_map[con::LOGGER_SINK::EAL_FILE_SIMPLE] =
+            std::make_shared<SinkFile>(
+                std::move(msg_template), std::move(datetime_pattern), enabled,
+                min_lvl, std::move(logfile), flush_buffer);
     } catch (const std::exception &ex) {
     }
 }
@@ -215,8 +214,7 @@ bool eal::Logger::is_initialized(con::LOGGER_SINK sink)
         if (this->logger_sink_map.find(sink) != this->logger_sink_map.end()) {
             ret = true;
         }
-    } catch(const std::exception &ex) {
-
+    } catch (const std::exception &ex) {
     }
     return ret;
 }

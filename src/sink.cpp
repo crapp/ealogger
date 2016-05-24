@@ -26,13 +26,13 @@ eal::Sink::Sink(std::string msg_template, std::string datetime_pattern,
       min_level(min_lvl)
 {
     this->fill_conv_patterns(true);
-    this->loglevel_lookup = {{con::LOG_LEVEL::DEBUG, "DEBUG"},
-                             {con::LOG_LEVEL::INFO, "INFO"},
-                             {con::LOG_LEVEL::WARNING, "WARNING"},
-                             {con::LOG_LEVEL::ERROR, "ERROR"},
-                             {con::LOG_LEVEL::FATAL, "FATAL"},
-                             {con::LOG_LEVEL::STACK, "Stacktrace"},
-                             {con::LOG_LEVEL::INTERNAL, "INTERNAL"}};
+    this->loglevel_lookup = {{con::LOG_LEVEL::EAL_DEBUG, "DEBUG"},
+                             {con::LOG_LEVEL::EAL_INFO, "INFO"},
+                             {con::LOG_LEVEL::EAL_WARNING, "WARNING"},
+                             {con::LOG_LEVEL::EAL_ERROR, "ERROR"},
+                             {con::LOG_LEVEL::EAL_FATAL, "FATAL"},
+                             {con::LOG_LEVEL::EAL_STACK, "Stacktrace"},
+                             {con::LOG_LEVEL::EAL_INTERNAL, "INTERNAL"}};
 }
 eal::Sink::~Sink() {}
 void eal::Sink::set_msg_template(std::string msg_template)
@@ -84,7 +84,7 @@ void eal::Sink::prepare_log_message(
 
 #ifndef EALOGGER_PRINT_INTERNAL
     // Print INTERNAL messages only when defined
-    if (msg_lvl == con::LOG_LEVEL::INTERNAL) {
+    if (msg_lvl == con::LOG_LEVEL::EAL_INTERNAL) {
         return;
     }
 #endif

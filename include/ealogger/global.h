@@ -42,9 +42,9 @@ namespace constants
  * @brief Supported logger Sinks
  */
 enum class LOGGER_SINK {
-    CONSOLE = 0, /**< Sink writing to a console SinkConsole */
-    SYSLOG,      /**< Sink writing to linux syslog SinkSyslog */
-    FILE_SIMPLE  /**< Sink writing to a file SinkFile */
+    EAL_CONSOLE = 0, /**< Sink writing to a console SinkConsole */
+    EAL_SYSLOG,      /**< Sink writing to linux syslog SinkSyslog */
+    EAL_FILE_SIMPLE  /**< Sink writing to a file SinkFile */
 };
 // enum CONVERSION_PATTERN {};
 
@@ -56,13 +56,13 @@ enum class LOGGER_SINK {
  * minimum loglevel.
  */
 enum class LOG_LEVEL {
-    DEBUG = 0, /**< Debug message */
-    INFO,      /**< Info message */
-    WARNING,   /**< Warning message */
-    ERROR,     /**< Error message */
-    FATAL,     /**< Fatal Message */
-    STACK,     /**< Stack log message */
-    INTERNAL   /**< Internal Message, do not use this loglevel yourself */
+    EAL_DEBUG = 0, /**< Debug message */
+    EAL_INFO,      /**< Info message */
+    EAL_WARNING,   /**< Warning message */
+    EAL_ERROR,     /**< Error message */
+    EAL_FATAL,     /**< Fatal Message */
+    EAL_STACK,     /**< Stack log message */
+    EAL_INTERNAL   /**< Internal Message, do not use this loglevel yourself */
 };
 }
 }
