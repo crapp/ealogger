@@ -40,6 +40,9 @@ configure_file (
 add_library(ealogger ${EALOGGER_SOURCE} ${EALOGGER_HEADER})
 #link with this libraries
 target_link_libraries(ealogger Threads::Threads)
+if(WIN32)
+    target_link_libraries(ealogger ws2_32)
+endif(WIN32)
 
 #generate_export_header(ealogger)
 

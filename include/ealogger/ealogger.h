@@ -160,16 +160,10 @@ public:
     ~Logger();
 
     /**
-     * @brief Issue a Logmessage
-     * @param lvl The severity of the message, Logger#log_level
-     * @param msg The message text
-     */
-
-    /**
      * @brief Write a log message
      *
      * @param msg Message text
-     * @param lvl Severity of the message, Logger#log_level
+     * @param lvl Severity of the message
      * @param file File from where the method was called
      * @param lnumber Line number
      * @param func Function name
@@ -188,14 +182,15 @@ public:
     void write_log(std::string msg, ealogger::constants::LOG_LEVEL lvl,
                    std::string file, int lnumber, std::string func);
 
+
+     // overload void write_log(std::string, ealogger::constants::LOG_LEVEL, std::string, int, std::string)
+
     /**
      * @brief Write a log message
      *
      * @param msg Message text
-     * @param lvl Severity of the message, Logger#log_level
+     * @param lvl Severity of the message
      *
-     * @details
-     * This is an overloaded method of write_log(sd::string, ealogger::constants::LOG_LEVEL, std::string, int, std::string)
      * @note
      * Using conversion patterns for source file, line number or function with
      * this function will not give you the appropriate information as it is not

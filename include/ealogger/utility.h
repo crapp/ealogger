@@ -26,7 +26,7 @@
 #endif
 #ifdef _WIN32
 #include <Winsock2.h>
-#pragma comment(lib, "Ws2_32.lib")
+//#pragma comment(lib, "Ws2_32.lib")
 #endif
 #include <algorithm>
 #include <ctime>

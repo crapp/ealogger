@@ -58,7 +58,7 @@ public:
     /**
      * @brief Initializes a log message object
      *
-     * @param severity Is the severity of the message, Logger#log_level
+     * @param severity Severity of the message
      * @param message Message as std::string
      * @param log_type LogMessage#LOGTYPE
      * @param file File from where this log message was issued
@@ -79,7 +79,7 @@ public:
     /**
      * @brief Initializes a log message object with a vector of message strings
      *
-     * @param severity Is the severity of the message, Logger#log_level
+     * @param severity Severity of the message
      * @param message_vec A vector<std::string> containing the stack elements
      * @param log_type LogMessage#LOGTYPE
      * @param file File from where this log message was issued
