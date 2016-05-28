@@ -25,9 +25,7 @@
 #include <unistd.h>
 #endif
 #ifdef _WIN32
-#define _WINSOCKAPI_ // stop windows.h to include winsock.h
 #include <winsock2.h>
-#include <windows.h>
 #pragma comment(lib, "Ws2_32.lib")
 #endif
 #include <algorithm>
