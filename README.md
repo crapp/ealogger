@@ -14,18 +14,28 @@ linux currently). It was tested on Linux, Windows and OS X.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
-- [ealogger](#ealogger)
-  - [Setting up ealogger](#setting-up-ealogger)
-  - [Usage](#usage)
-  - [API Documentation](#api-documentation)
-  - [Performance](#performance)
-  - [Development](#development)
-  - [Status](#status)
-  - [Bugs, feature requests, ideas](#bugs-feature-requests-ideas)
-  - [FAQ](#faq)
-  - [License](#license)
+- [Features](#features)
+- [Setting up ealogger](#setting-up-ealogger)
+- [Usage](#usage)
+- [API Documentation](#api-documentation)
+- [Performance](#performance)
+- [Development](#development)
+- [Status](#status)
+- [Bugs, feature requests, ideas](#bugs-feature-requests-ideas)
+- [FAQ](#faq)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Features
+
+* Write log files to different sinks like files, console, syslog
+* Easy to add your own sinks/targets
+* Very fast in asynchronous mode
+* Simple to use and no dependencies
+* Extensive API documentation using doxygen
+* Cross Platform
+* Unit Tests based on Catch
 
 ## Setting up ealogger
 
