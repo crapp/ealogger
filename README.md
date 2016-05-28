@@ -82,6 +82,10 @@ cmake ../ -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 make
 ```
 
+Precompiled packages for Linux distributions
+
+* [Archlinux (AUR)](https://aur.archlinux.org/packages/ealogger/)
+
 #### Windows
 
 This shows how to create a Visual Studio Solution with cmake
