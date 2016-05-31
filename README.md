@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/crapp/ealogger.svg?branch=master)](https://travis-ci.org/crapp/ealogger)
 [![ealogger License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](#license)
+[![ealogger latest release](https://img.shields.io/github/release/crapp/ealogger.svg)](https://github.com/crapp/ealogger/releases/latest)
 
 The **e**asy **a**synchronous logger provides a simple to use yet powerful logging
 functionality for C++ applications.
@@ -84,7 +85,7 @@ make
 
 Precompiled packages for Linux distributions
 
-* [Archlinux (AUR)](https://aur.archlinux.org/packages/ealogger/)
+* Archlinux [![Archlinux AUR Version](https://img.shields.io/aur/version/ealogger.svg)](https://aur.archlinux.org/packages/ealogger) 
 
 #### Windows
 
