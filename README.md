@@ -142,7 +142,7 @@ highlighting might be useful. If you are using a Unix system you may try
 [multitail](http://www.vanheusden.com/multitail/)
 
 Here is a screenshot how this might look like
-![ealogger multitail](http://crapp.github.io/ealogger/screenshots/ealogger_multitail.jpeg "ealogger multitail")
+![ealogger multitail](http://crapp.github.io/ealogger/images/ealogger_multitail.jpeg "ealogger multitail")
 
 The color scheme for multitail I used to generate the colors in the
 screenshot looks like this
