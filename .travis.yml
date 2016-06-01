@@ -22,27 +22,36 @@ matrix:
             - g++-5
       env: COMPILER=g++-5
     - os: linux
-      compiler: clang
+      compiler: gcc
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.6
           packages:
-            - g++-5
-            - clang-3.6
-      env: COMPILER=clang++-3.6
-    - os: linux
-      compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-          packages:
-            - g++-5
-            - clang-3.7
-      env: COMPILER=clang++-3.7
+            - g++-6
+      env: COMPILER=g++-6
+    #- os: linux
+      #compiler: clang
+      #addons:
+        #apt:
+          #sources:
+            #- ubuntu-toolchain-r-test
+            #- llvm-toolchain-precise-3.6
+          #packages:
+            #- g++-5
+            #- clang-3.6
+      #env: COMPILER=clang++-3.6
+    #- os: linux
+      #compiler: clang
+      #addons:
+        #apt:
+          #sources:
+            #- ubuntu-toolchain-r-test
+            #- llvm-toolchain-precise-3.7
+          #packages:
+            #- g++-5
+            #- clang-3.7
+      #env: COMPILER=clang++-3.7
     - os: osx
       compiler: clang
     - os: osx
