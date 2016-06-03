@@ -148,10 +148,10 @@ The color scheme for multitail I used to generate the colors in the
 screenshot looks like this
 
     colorscheme:ealogger
-    cs_re:,magenta,bold:^.+FATAL:.+
-    cs_re:,red,bold:^.+ERROR:.+
-    cs_re:,blue:^.+WARNING:.+
-    cs_re:,green:^.+INFO:.+
+    cs_re:,magenta,bold:^.+FATAL.+
+    cs_re:,red,bold:^.+ERROR.+
+    cs_re:,blue:^.+WARNING.+
+    cs_re:,green:^.+INFO.+
 
 Put it in ~/.multitailrc and start mutlitail
 ```shell
