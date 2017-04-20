@@ -18,3 +18,6 @@ add_executable(
     ${TEST_SOURCE}
 )
 
+set_property(TARGET ealogger_test PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET ealogger_test PROPERTY CXX_STANDARD 11)
+
