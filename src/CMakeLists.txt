@@ -41,6 +41,9 @@ add_library(ealogger ${EALOGGER_SOURCE} ${EALOGGER_HEADER})
 #link with this libraries
 target_link_libraries(ealogger Threads::Threads)
 
+# set c++ standard for target
+set_property(TARGET ealogger PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET ealogger PROPERTY CXX_STANDARD 11)
 #generate_export_header(ealogger)
 
 install(TARGETS ealogger DESTINATION lib)

@@ -1,10 +1,7 @@
-cmake_minimum_required(VERSION 3.4)
-project(ealogger)
+cmake_minimum_required(VERSION 3.4 FATAL_ERROR)
+project(ealogger VERSION 0.8.1)
 
-# Version Number
-set(ealogger_VERSION_MAJOR 0)
-set(ealogger_VERSION_MINOR 8)
-set(ealogger_VERSION_PATCH 1)
+# let cmake handle all the export business on windows
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 option(BUILD_EXAMPLES "Build example and benchmark applications for ealogger" OFF)
@@ -12,17 +9,13 @@ option(BUILD_UNIT_TEST "Build a unit test application based on Catch" OFF)
 option(PRINT_INTERNAL_MESSAGES "Print messages with INTERNAL priority. Only usefull for ealogger developers." OFF)
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 
-include(CheckCXXCompilerFlag)
-include(CheckCXXSymbolExists)
+include(CheckCXXCompilerFlag) # check if compiler supports a specific flag
+include(CheckCXXSymbolExists) # check if a symbol exists
 
 # Initialize CXXFLAGS for Linux, OS X and MinGW on Windows
 if (NOT CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    set(CMAKE_CXX_FLAGS                "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
-    set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g")
+    set(CMAKE_CXX_FLAGS                "${CMAKE_CXX_FLAGS} -Wall")
     set(CMAKE_CXX_FLAGS_DEBUG          "${CMAKE_CXX_FLAGS_DEBUG} -Wextra")
-    set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
-    set(CMAKE_CXX_FLAGS_RELEASE        "-O3 -DNDEBUG")
-    set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
     CHECK_CXX_COMPILER_FLAG("-rdynamic" COMPILER_SUPPORTS_RDYNAMIC)
     if (COMPILER_SUPPORTS_RDYNAMIC)
         set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -rdynamic")
